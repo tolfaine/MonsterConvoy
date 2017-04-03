@@ -8,7 +8,7 @@
         "initiative": 0,
         "armor": 8,
         "precision": 5,
-        "fearPower" : 10
+        "fearPower" : 2
 
       },
       {
@@ -19,7 +19,7 @@
         "initiative": 0,
         "armor": 8,
         "precision": 5,
-        "fearPower" : 10
+        "fearPower" : 2
       },
       {
         "id": 2,
@@ -29,7 +29,7 @@
         "initiative": 0,
         "armor": 8,
         "precision": 5,
-        "fearPower" : 10
+        "fearPower" : 2
       },
       {
         "id": 3,
@@ -39,7 +39,7 @@
         "initiative": 0,
         "armor": 8,
         "precision": 5,
-        "fearPower" : 10
+        "fearPower" : 2
       },
       {
         "id": 4,
@@ -49,7 +49,7 @@
         "initiative": 0,
         "armor": 8,
         "precision": 5,
-        "fearPower" : 10
+        "fearPower" : 2
       }
     ],  
     "Humans":[

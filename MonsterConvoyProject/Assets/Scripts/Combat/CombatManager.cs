@@ -63,7 +63,10 @@ public class Order
     }
 }
 
+
 public class CombatManager : MonoBehaviour {
+
+    public enum CombatEndType { MonstersDead, HumansDead, HumansConvinced, HumansFeared }
 
     public GroupFighter     monsterGroupFighter;
     public GroupFighter     humanGroupFighter;     // En espérant que les GD ne demande pas de monster vs monster <3
@@ -84,8 +87,9 @@ public class CombatManager : MonoBehaviour {
     public bool          bActionInProgress; // Quand on lance l'action et que les animations (entre autres) sont en cours. On attend que tout soit finit pour passer au prochain tour
 
     public bool          bCombatStarted = false;
-    public bool         bMonsterWin = false;
+   // public bool         bMonsterWin = false;
     public bool         bCombatEnded = false;
+    public CombatEndType combatEndType;
 
     public GameObject       prefabMonster;
     public GameObject       prefabHuman;
@@ -145,14 +149,27 @@ public class CombatManager : MonoBehaviour {
         if (this.monsterGroupFighter.allFightersDead)
         {
             bCombatEnded = true;
-            bMonsterWin = false;
+            combatEndType = CombatEndType.MonstersDead;
         }
         else if (this.humanGroupFighter.allFightersDead)
         {
             bCombatEnded = true;
-            bMonsterWin = true;
+            combatEndType = CombatEndType.HumansDead;
         }
+
+        if (((GroupHumanFighter)humanGroupFighter).bIsConviced)
+        {
+            bCombatEnded = true;
+            combatEndType = CombatEndType.HumansConvinced;
+        }
+        if (((GroupHumanFighter)humanGroupFighter).bIsFeared)
+        {
+            bCombatEnded = true;
+            combatEndType = CombatEndType.HumansFeared;
+        }
+
     }
+
     void ProcessCombat()
     {
         if (!bCombatStarted)

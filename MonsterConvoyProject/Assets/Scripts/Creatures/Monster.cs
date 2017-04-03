@@ -34,7 +34,12 @@ public class Monster : Fighter{
 
         if (action == ActionType.FEAR)
         {
-          //  ((GroupHumanFighter)groupHuman).GetFeared(this);
+            ((GroupHumanFighter)groupHuman).GetFeared(this);
+        }
+
+        if (action == ActionType.TALK)
+        {
+            ((GroupHumanFighter)groupHuman).GetConvinced(this);
         }
 
     }

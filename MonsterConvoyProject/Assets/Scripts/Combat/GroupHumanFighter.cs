@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GroupHumanFighter : GroupFighter {
 
-    protected int nFear = 50;
-    protected int nCurrentFear = 0;
-    protected int nConvice = 50;
-    protected int nCurrentConvice = 0;
+    public int nFear = 50;
+    public int nCurrentFear = 0;
+    public int nConvice = 50;
+    public int nCurrentConvice = 0;
     protected bool bCanBeFeared = true;
     protected bool bCanListen = true;
 
-    protected bool isFeared;
-    protected bool isConviced;
+    public bool bIsFeared;
+    public bool bIsConviced;
 
     public GroupHumanFighter() : base() {
         this.groupLogic = new GroupIA();
@@ -37,7 +37,7 @@ public class GroupHumanFighter : GroupFighter {
 
         if(nCurrentFear == nFear)
         {
-            isFeared = true;
+            bIsFeared = true;
         }
     }
     public void GetConvinced(Monster monster)
@@ -58,7 +58,7 @@ public class GroupHumanFighter : GroupFighter {
 
         if (nCurrentConvice == nConvice)
         {
-            isConviced = true;
+            bIsConviced = true;
         }
     }
 

@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FearUI : MonoBehaviour {
+public class ConviceUI : MonoBehaviour {
 
     public CombatManager combatManager;
     private TextMesh textMesh;
     public string sDisplayed;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         textMesh = GetComponent<TextMesh>(); ;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        CheckFear();
+
+    // Update is called once per frame
+    void Update()
+    {
+        CheckConvince();
         textMesh.text = sDisplayed;
     }
 
-    void CheckFear()
+    void CheckConvince()
     {
-        sDisplayed = "Fear : ";
+        sDisplayed = "Convince : ";
         GroupHumanFighter group = (GroupHumanFighter)(combatManager.humanGroupFighter);
-        sDisplayed += group.nCurrentFear + " / " + group.nFear;
+        sDisplayed += group.nCurrentConvice + " / " + group.nConvice;
     }
 }
