@@ -1,0 +1,148 @@
+{
+    "Monsters": [
+      {
+        "id": 0,
+        "name": "Slime",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+
+      },
+      {
+        "id": 1,
+        "name": "Zombie",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+      },
+      {
+        "id": 2,
+        "name": "Demon",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+      },
+      {
+        "id": 3,
+        "name": "Angel",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+      },
+      {
+        "id": 4,
+        "name": "Cthulu",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+      }
+    ],  
+    "Humans":[
+      {
+        "id" : 1000,
+        "name": "Rookie",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1001,
+        "name": "Paladin",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1002,
+        "name": "Cleric",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1003,
+        "name": "Mage",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      }
+      ,
+      {
+        "id": 1004,
+        "name": "Ranger",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1005,
+        "name": "Warlock",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1006,
+        "name": "Rogue",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1007,
+        "name": "Warrior",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1008,
+        "name": "Berserk",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      }
+  ]
+}

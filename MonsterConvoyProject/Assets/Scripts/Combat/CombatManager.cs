@@ -1,0 +1,379 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class ActionType {
+
+    public enum ActionEnum { Attack = 0, Escape = 1 , Talk = 2, Fear = 3, Negociate = 4};
+    public enum ActionTargetType { OneTarget , AllTarget, NoTarget};
+
+    public static readonly ActionType ATTACK = new ActionType(0, CreatureType.None, ActionTargetType.OneTarget, "ATTACK");
+    public static readonly ActionType ESCAPE = new ActionType(1, CreatureType.None, ActionTargetType.NoTarget, "ESCAPE");
+    public static readonly ActionType TALK = new ActionType(2, CreatureType.None, ActionTargetType.AllTarget, "TALK");
+    public static readonly ActionType FEAR = new ActionType(3, CreatureType.Monster, ActionTargetType.AllTarget, "FEAR");
+    public static readonly ActionType NEGOTIATE = new ActionType(4, CreatureType.Human, ActionTargetType.AllTarget, "NEGOTIATE");
+
+    private int nId;
+    private CreatureType eCreatureType;
+    private bool bRequireTarget;
+    private ActionTargetType targetType;
+    public string sName;
+
+    private ActionType(int id, CreatureType type, ActionTargetType targetType, string name)
+    {
+        this.nId = id;
+        this.eCreatureType = type;
+        // this.bRequireTarget = requireTarget;
+        this.targetType = targetType;
+        this.sName = name;
+    }
+   // public bool DoesRequireTarget() { return this.bRequireTarget;}
+    public ActionTargetType GetTargetType() { return this.targetType; }
+    public static ActionType GetActionTypeWithID(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                return ATTACK;
+            case 1:
+                return ESCAPE;
+            case 2:
+                return TALK;
+            case 3:
+                return FEAR;
+            case 4:
+                return NEGOTIATE;
+            default:
+                return null;
+        }
+    }
+}
+
+[System.Serializable]
+public class Order
+{
+    public Fighter          fighter;
+    public int              nInitiative;
+
+    public Order(Fighter fighter , int initiative)
+    {
+        this.fighter = fighter;
+        this.nInitiative = initiative;
+    }
+}
+
+public class CombatManager : MonoBehaviour {
+
+    public GroupFighter     monsterGroupFighter;
+    public GroupFighter     humanGroupFighter;     // En espérant que les GD ne demande pas de monster vs monster <3
+    public List<Order>   combatOrder = new List<Order>();
+    public int           currentFighterIndex = -1;
+
+    public bool          bTurnInProgress = false;
+    public Fighter       currentFighter;
+    public GroupLogic    currentGroupLogic;
+
+    public ActionType    actionChoosed = null;
+    public bool          bActionChoosed = false;
+    public bool          bActionRequireTarget; // ???? Je sais pas trop. Mais faut un truc du genre quelque part pour le fear et fuite;
+
+    public Fighter       targetChoosed;
+    public bool          bTargetChoosed = false;
+
+    public bool          bActionInProgress; // Quand on lance l'action et que les animations (entre autres) sont en cours. On attend que tout soit finit pour passer au prochain tour
+
+    public bool          bCombatStarted = false;
+    public bool         bMonsterWin = false;
+    public bool         bCombatEnded = false;
+
+    public GameObject       prefabMonster;
+    public GameObject       prefabHuman;
+
+    public GameObject       logic;
+
+    int                     nNbCreaturePerGroup = 4;
+
+    public Caravane caravane;
+    public FighterMouvementManager fighterMouvementManager;
+
+
+    public bool bFighterInFightPosition = false;
+    public bool bFighterInInitialPosition = true;
+
+    void Start () {
+        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+        fighterMouvementManager = GameObject.FindGameObjectWithTag("FighterMouvementManager").GetComponent<FighterMouvementManager>();
+
+        InstantiateMonster();
+        InstantiateHuman();
+
+        monsterGroupFighter.groupLogic = logic.GetComponent<PlayerLogic>();
+        humanGroupFighter.groupLogic = logic.GetComponent<GroupIA>();
+
+        RollInitiative();
+
+        bCombatStarted = true;
+    }
+
+	void Update () {
+
+        CheckCombatEnded();
+        CheckDeadFighters();
+
+        if (!bCombatEnded)
+            ProcessCombat();
+    }
+
+    void CheckDeadFighters()
+    {
+        foreach(Order order in combatOrder) {
+            if (order.fighter.IsDead())
+                combatOrder.Remove(order);
+        }
+        for(int i =0; i < combatOrder.Count; i++)
+        {
+            if (combatOrder[i].fighter == currentFighter)
+                currentFighterIndex = i;
+        }
+    }
+    void CheckCombatEnded()
+    {
+        this.monsterGroupFighter.CheckFightersLife();
+        this.humanGroupFighter.CheckFightersLife();
+
+        if (this.monsterGroupFighter.allFightersDead)
+        {
+            bCombatEnded = true;
+            bMonsterWin = false;
+        }
+        else if (this.humanGroupFighter.allFightersDead)
+        {
+            bCombatEnded = true;
+            bMonsterWin = true;
+        }
+    }
+    void ProcessCombat()
+    {
+        if (!bCombatStarted)
+        {
+
+        }
+        else
+        {
+            if (bActionInProgress && bFighterInInitialPosition)
+            {
+                ActionEnded();
+            }
+
+            if (!bTurnInProgress)
+            {
+
+                currentFighter = GetNextFighter();
+                currentGroupLogic = GetGroupLogicOfFighter(currentFighter);
+                bTurnInProgress = true;
+                targetChoosed = null;
+                PutFighterInFightPosition();
+
+            }
+            else if (!bActionInProgress && bFighterInFightPosition)
+            {
+
+                if (currentGroupLogic.GetLogicType() == LogicType.IA)
+                {
+                    if (!bActionChoosed)
+                    {
+                        actionChoosed = ((GroupIA)currentGroupLogic).SelectAction(monsterGroupFighter.lFighters, humanGroupFighter.lFighters);
+                        bActionChoosed = true;
+
+                        if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
+                            bActionRequireTarget = true;
+                        else
+                            bActionRequireTarget = false;
+                    }
+                    else if (bActionRequireTarget && !bTargetChoosed)
+                    {
+                        targetChoosed = ((GroupIA)currentGroupLogic).SelectTarget(monsterGroupFighter.lFighters, humanGroupFighter.lFighters);
+                        bTargetChoosed = true;
+                    }
+                    else
+                    {
+                        // Current Fighter perform action on target
+                        PerformAction();
+                    }
+                }
+                else  // If LogicType = Player
+                {
+                    if (!bActionChoosed)
+                    {
+                        // Choose action
+                    }
+                    else if (bActionRequireTarget && !bTargetChoosed)
+                    {
+                        // Chose Target
+                    }
+                    else
+                    {
+                        // Current Fighter perform action on target
+                        // Debug.Log("Action in progress player");
+                        PerformAction();
+                    }
+                }
+            }
+        }
+    }
+    void PerformAction()
+    {
+        if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget || actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
+        {
+            currentFighter.PerformActionOnTarget(actionChoosed, targetChoosed);
+        } else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.AllTarget)
+        {
+            if(currentFighter.GetCreatureType() == CreatureType.Human)
+                currentFighter.PerformActionOnTarget(actionChoosed, monsterGroupFighter);
+            else
+                currentFighter.PerformActionOnTarget(actionChoosed, humanGroupFighter);
+        }
+
+        fighterMouvementManager.bMoveToInitialPosition= true;
+        bActionInProgress = true;
+        bFighterInInitialPosition = false;
+       // Invoke("ActionEnded", 2);
+    }
+
+    void PutFighterInFightPosition()
+    {
+        bFighterInInitialPosition = false;
+        fighterMouvementManager.SetFighter(currentFighter.currentUI.gameObject);
+        fighterMouvementManager.bMoveToFightPosition = true;
+    }
+    void RollInitiative() {
+        foreach (Fighter fighter in monsterGroupFighter.lFighters)
+        {
+            int initiative = fighter.GetRandomInitiative();
+            Order order = new Order(fighter, initiative);
+            combatOrder.Add(order);
+        }
+
+        foreach (Fighter fighter in humanGroupFighter.lFighters)
+        {
+            int initiative = fighter.GetRandomInitiative();
+            Order order = new Order(fighter, initiative);
+            combatOrder.Add(order);
+        }
+        combatOrder.Sort(SortByInitiative);
+    }
+    void InstantiateMonster()
+    {
+        monsterGroupFighter = new GroupMonsterFighter();
+
+        GameObject prefab = prefabMonster;
+        Fighter fighter;
+        CreatureType creatureType = CreatureType.Monster;
+
+        GameObject monstersPositionParent = GameObject.FindGameObjectWithTag("MonstersPosition");
+        List<Transform> monstersPosition = new List<Transform>();
+        foreach (Transform child in monstersPositionParent.transform)
+        {
+            monstersPosition.Add(child);
+        }
+
+        for (int i = 0; i < nNbCreaturePerGroup; i++)
+        {
+            fighter = caravane.lFighters[i];
+            GameObject g =  Instantiate(prefab , monstersPosition[i].position, Quaternion.identity) as GameObject;
+            g.GetComponent<FighterUI>().fighter = fighter;
+            monsterGroupFighter.lFighters.Add(fighter);
+            g.transform.parent = GameObject.FindGameObjectWithTag("Monsters").transform;
+            g.name = fighter.sName;
+        }
+    }
+    void InstantiateHuman()
+    {
+        humanGroupFighter = new GroupHumanFighter();
+
+        GameObject prefab = prefabHuman;
+        Fighter fighter;
+        CreatureType creatureType = CreatureType.Human;
+
+        GameObject humansPositionParent = GameObject.FindGameObjectWithTag("HumansPosition");
+        List<Transform> humansPosition = new List<Transform>();
+        foreach (Transform child in humansPositionParent.transform)
+        {
+            humansPosition.Add(child);
+        }
+
+        for (int i = 0; i < nNbCreaturePerGroup; i++)
+        {
+            fighter = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetRandomFighter<Human>(creatureType);
+            GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.identity) as GameObject;
+            g.GetComponent<FighterUI>().fighter = fighter;
+            humanGroupFighter.lFighters.Add(fighter);
+            g.transform.parent = GameObject.FindGameObjectWithTag("Humans").transform;
+            g.name = fighter.sName;
+        }
+    }
+    void NextFighterTurn() { }
+    void ActionEnded()
+    {
+       // Debug.Log("Action End");
+        bTurnInProgress = false;
+        bActionInProgress = false;
+        bActionChoosed = false;
+        bActionRequireTarget = false;
+        bTargetChoosed = false;
+
+        targetChoosed = null;
+        actionChoosed = null;
+
+    }
+    public void PlayerClickedCreature(Creature creature)
+    {
+      //  Debug.Log("[CombatManager] PlayerClickedCreature()");
+
+        if (creature.GetCreatureType() != currentFighter.GetCreatureType())
+        {
+            targetChoosed = (Fighter)creature;
+            bTargetChoosed = true;
+        }
+    }
+    public void PlayerClickedAction(ActionType actionType)
+    {
+     // Debug.Log("[CombatManager] PlayerClickedAction()");
+
+        actionChoosed = actionType;
+        bActionChoosed = true;
+
+        if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
+            bActionRequireTarget = true;
+        else
+            bActionRequireTarget = false;
+    }
+    GroupLogic GetGroupLogicOfFighter(Fighter fighter)
+    {
+        if (fighter.GetCreatureType() == CreatureType.Monster)
+            return monsterGroupFighter.GetGroupLogic();
+        if (fighter.GetCreatureType() == CreatureType.Human)
+            return humanGroupFighter.GetGroupLogic();
+        else
+            return null;
+    }
+    Fighter GetNextFighter() {
+        currentFighterIndex++;
+  
+        if (combatOrder.Count == 0)
+            Debug.LogError("WTF");
+        if (currentFighterIndex >= combatOrder.Count)
+            currentFighterIndex = 0;
+
+        Fighter fighter = combatOrder[currentFighterIndex].fighter;
+        return fighter;
+
+    }
+
+    static int SortByInitiative(Order o1, Order o2)
+    {
+        return o1.nInitiative.CompareTo(o2.nInitiative);
+    }
+
+}
