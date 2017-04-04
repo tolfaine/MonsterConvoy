@@ -1,0 +1,127 @@
+{
+    "Monsters": [
+      {
+        "id": 0,
+        "name": "Slime",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 2,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+      },
+      {
+        "id": 1,
+        "name": "Quadrapus",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 0,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+      },
+      {
+        "id": 2,
+        "name": "Gentlacule",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 6,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 60
+      },
+      {
+        "id": 3,
+        "name": "Decaculepus",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 4,
+        "armor": 8,
+        "precision": 5,
+        "fearPower" : 10
+      }
+    ],  
+    "Humans":[
+      {
+        "id" : 1000,
+        "name": "Margery",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 1,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1001,
+        "name": "Daenerys",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 7,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1002,
+        "name": "Brun",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 3,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      },
+      {
+        "id": 1003,
+        "name": "Blond",
+        "healthMax": 50,
+        "power": 10,
+        "initiative": 5,
+        "armor": 8,
+        "precision": 5,
+        "fearTolerance" : 10
+      }
+	],
+	"Draft":[
+		{
+			"action": "talk",
+			"result": 0.6,
+			"dialog": "Oh, sorry, I slimed a bit on your bath towel…"
+		},
+		{
+			"action": "talk",
+			"result": 0.7,
+			"dialog": "Well, you jellyfish better clean that shit up. Thanks a lot."
+		},
+		{
+			"action": "talk",
+			"result": 0.1,
+			"dialog": "Robert is not a jellyfish, he is a slime. It’s quite a common form of monsters over here. And you probably don’t know it, but he used to work as a laundryman, so he sure would know how to handle this red stain."
+		},
+		{
+			"action": "fight",
+			"result": 0.55,
+			"dialog": "Come on, cry-baby, we don’t give a shit about the jelly’s curriculum! We’re gonna kick the crap out of you!"
+		},
+		{
+			"action": "fight",
+			"result": 0.6,
+			"dialog": "That’s not very nice of you, you, you… Human-head!"
+		},
+		{
+			"action": "fight",
+			"result": 0.0,
+			"dialog": "OMG, tentacles! I can’t touch this, it’s so chewy!"
+		},
+		{
+			"action": "fear",
+			"result": 1.0,
+			"dialog": "Ok you ugly pink thing! Stop being this rude or I will tentacle you LIKE YOU’VE NEVER BEEN TENTACLED BEFORE!",
+		}
+	]
+	"End":{
+		"dialog":"Nooo, not again :’(",
+		"reward" : "Blonds are afraid by tentacles"
+	}
+}
