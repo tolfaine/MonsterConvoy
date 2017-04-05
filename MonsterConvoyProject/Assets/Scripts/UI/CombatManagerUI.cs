@@ -109,13 +109,13 @@ public class CombatManagerUI : MonoBehaviour {
         }else
         {
             if (combatManager.combatEndType == CombatManager.CombatEndType.HumansConvinced)
-                sDisplayed += "Monsters Win , \n the humans are \n convinced :)";
+                sDisplayed += "Monsters Won , \n the humans are \n convinced :)";
             else if(combatManager.combatEndType == CombatManager.CombatEndType.HumansDead)
-                sDisplayed += "Monsters Win ,\n  the humans are \n dead :)";
+                sDisplayed += "Monsters Won ,\n  the humans are \n dead :)";
             else if (combatManager.combatEndType == CombatManager.CombatEndType.HumansFeared)
-                sDisplayed += "Monsters Win ,\n the humans are \n feared :)";
+                sDisplayed += "Monsters Won ,\n the humans are \n feared :)";
             else if (combatManager.combatEndType == CombatManager.CombatEndType.HumansFeared)
-                sDisplayed += "Humans Win , \nthe monsters are \n dead :(";
+                sDisplayed += "Humans Won , \nthe monsters are \n dead :(";
 
         }
     }

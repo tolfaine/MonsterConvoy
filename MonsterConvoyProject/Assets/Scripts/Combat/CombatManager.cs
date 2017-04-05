@@ -377,7 +377,7 @@ public class CombatManager : MonoBehaviour {
 
             GameObject mo;
             
-            if(i == 1)
+            if(i == 0)
              mo = Instantiate(lMonsterPrefab[i], monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
             else
                 mo = Instantiate(lMonsterPrefab[i], monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
