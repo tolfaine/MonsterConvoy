@@ -6,19 +6,20 @@ public class FighterUI : MonoBehaviour {
 
     public Fighter fighter;
     public TextMesh textMesh;
-    private Renderer fighterRenderer;
+    public Renderer fighterRenderer;
     public GameObject dialogueAnchor;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         SetUIInFighter();
-        fighterRenderer = GetComponent<Renderer>();
+        //fighterRenderer = GetComponent<Renderer>();
     }
 
     void Update()
     {
-        if(fighter.nCurrentHealth == 0)
+        if(fighter.nCurrentHealth == 0 && fighterRenderer!= null)
         {
+
             fighterRenderer.enabled = false;
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -31,7 +32,7 @@ public class FighterUI : MonoBehaviour {
 
     void UpdateText()
     {
-        textMesh.text = fighter.nCurrentHealth + " / " + fighter.nHealthMax;
+        textMesh.text = fighter.nCurrentHealth + ""; //+ " / " + fighter.nHealthMax;
     }
 
     void SetUIInFighter()

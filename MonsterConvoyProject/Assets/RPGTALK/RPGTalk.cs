@@ -439,7 +439,6 @@ public class RPGTalk : MonoBehaviour {
 
 
 		int maxCharsOnUI = maxCharInWidth * maxCharInHeight;
-
 		if (line.Length > maxCharsOnUI) {
 
 			//how many talks would be necessary to fit this text?

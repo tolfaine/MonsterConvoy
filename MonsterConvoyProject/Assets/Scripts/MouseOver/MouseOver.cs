@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MouseOver : MonoBehaviour {
 
-    protected Color mouseOverColor = Color.green;
-    protected Color mouseClickedColor = Color.yellow;
+    protected Color mouseOverColor = Color.red;
+    protected Color mouseClickedColor = Color.red;
     protected Color baseColor;
 
     public bool bMouseOver = false;

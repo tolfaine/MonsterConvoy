@@ -5,6 +5,7 @@ using UnityEngine;
 public class CombatManagerUI : MonoBehaviour {
 
     public CombatManager combatManager;
+
     private TextMesh textMesh;
 
     public string sDisplayed;
@@ -15,6 +16,10 @@ public class CombatManagerUI : MonoBehaviour {
     public RPGTalk rpgTalk;
 
     public bool bHumanFearTriggred = false;
+
+    public GameObject actionWheel;
+
+    public GameObject humanAnchor;
   
     // Action , target, fighter, Type 
 
@@ -29,6 +34,24 @@ public class CombatManagerUI : MonoBehaviour {
         CheckHumanFear();
         CheckCombatManager();
         textMesh.text = sDisplayed;
+
+        if(combatManager.fighterMouvementManager.bIsAtFightPosition && !combatManager.bActionInProgress && combatManager.currentGroupLogic.GetLogicType() == LogicType.Player)
+        {
+            actionWheel.SetActive(true);
+        }else
+        {
+            foreach (Transform child in actionWheel.transform)
+            {
+                MouseOverAction mouse = child.GetComponent<MouseOverAction>();
+                if (mouse != null)
+                {
+                    mouse.bMouseOver = false;
+                    mouse.bMouseClicking = false;
+                }
+            }
+
+            actionWheel.SetActive(false);
+        }
     }
 
     public bool DialogueInProgress()
@@ -46,6 +69,7 @@ public class CombatManagerUI : MonoBehaviour {
             bHumanFearTriggred = true;
             rpgTalk.lineToStart = 9;
             rpgTalk.lineToBreak = 9;
+            rpgTalk.follow = humanAnchor;
             rpgTalk.NewTalk();
         }
     }
@@ -85,13 +109,13 @@ public class CombatManagerUI : MonoBehaviour {
         }else
         {
             if (combatManager.combatEndType == CombatManager.CombatEndType.HumansConvinced)
-                sDisplayed += "Monsters Win , the humans are convinced :)";
+                sDisplayed += "Monsters Win , \n the humans are \n convinced :)";
             else if(combatManager.combatEndType == CombatManager.CombatEndType.HumansDead)
-                sDisplayed += "Monsters Win , the humans are dead :)";
+                sDisplayed += "Monsters Win ,\n  the humans are \n dead :)";
             else if (combatManager.combatEndType == CombatManager.CombatEndType.HumansFeared)
-                sDisplayed += "Monsters Win , the humans are feared :)";
+                sDisplayed += "Monsters Win ,\n the humans are \n feared :)";
             else if (combatManager.combatEndType == CombatManager.CombatEndType.HumansFeared)
-                sDisplayed += "Humans Win , the monsters are dead :(";
+                sDisplayed += "Humans Win , \nthe monsters are \n dead :(";
 
         }
     }

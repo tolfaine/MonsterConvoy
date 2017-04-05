@@ -68,6 +68,9 @@ public class CombatManager : MonoBehaviour {
 
     public enum CombatEndType { MonstersDead, HumansDead, HumansConvinced, HumansFeared }
 
+    public List<GameObject> lMonsterPrefab;
+    public List<GameObject> lHumanPrefab;
+
     public GroupFighter     monsterGroupFighter;
     public GroupFighter     humanGroupFighter;     // En espérant que les GD ne demande pas de monster vs monster <3
     public List<Order>   combatOrder = new List<Order>();
@@ -84,7 +87,7 @@ public class CombatManager : MonoBehaviour {
     public Fighter       targetChoosed;
     public bool          bTargetChoosed = false;
 
-    public bool          bActionInProgress; // Quand on lance l'action et que les animations (entre autres) sont en cours. On attend que tout soit finit pour passer au prochain tour
+    public bool          bActionInProgress = false; // Quand on lance l'action et que les animations (entre autres) sont en cours. On attend que tout soit finit pour passer au prochain tour
 
     public bool          bCombatStarted = false;
    // public bool         bMonsterWin = false;
@@ -226,7 +229,7 @@ public class CombatManager : MonoBehaviour {
                 {
                     if (!bActionChoosed)
                     {
-                        if (scriptManager != null)
+                        if (scriptManager != null && scriptManager.currentTurn != null)
                             actionChoosed = scriptManager.currentTurn.actionType;
                         else
                             actionChoosed = ((GroupIA)currentGroupLogic).SelectAction(monsterGroupFighter.lFighters, humanGroupFighter.lFighters);
@@ -370,11 +373,31 @@ public class CombatManager : MonoBehaviour {
         for (int i = 0; i < nNbCreaturePerGroup; i++)
         {
             fighter = caravane.lFighters[i];
-            GameObject g =  Instantiate(prefab , monstersPosition[i].position, Quaternion.identity) as GameObject;
+            GameObject g =  Instantiate(prefab , monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+
+            GameObject mo;
+            
+            if(i == 1)
+             mo = Instantiate(lMonsterPrefab[i], monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            else
+                mo = Instantiate(lMonsterPrefab[i], monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
+
+            mo.transform.parent = g.transform;
+            mo.transform.localPosition = Vector3.zero;
+            mo.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+            mo.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+
+
             g.GetComponent<FighterUI>().fighter = fighter;
             monsterGroupFighter.lFighters.Add(fighter);
             g.transform.parent = GameObject.FindGameObjectWithTag("Monsters").transform;
             g.name = fighter.sName;
+
+            MouseOverCreature mouseOver = mo.transform.GetChild(0).gameObject.AddComponent<MouseOverCreature>();
+            mouseOver.fighterUI = g.GetComponent<FighterUI>();
+
+            g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
         }
     }
     void InstantiateHuman()
@@ -401,11 +424,24 @@ public class CombatManager : MonoBehaviour {
             else
                 fighter = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetRandomFighter<Human>(creatureType);
 
-            GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.identity) as GameObject;
+            GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+
+            GameObject mo = Instantiate(lHumanPrefab[i], humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            mo.transform.parent = g.transform;
+            mo.transform.localPosition = Vector3.zero;
+            mo.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
+
+            mo.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+
+            MouseOverCreature mouseOver = mo.transform.GetChild(0).gameObject.AddComponent<MouseOverCreature>();
+            mouseOver.fighterUI = g.GetComponent<FighterUI>();
+
             g.GetComponent<FighterUI>().fighter = fighter;
             humanGroupFighter.lFighters.Add(fighter);
             g.transform.parent = GameObject.FindGameObjectWithTag("Humans").transform;
             g.name = fighter.sName;
+
+            g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
         }
     }
     void NextFighterTurn() { }

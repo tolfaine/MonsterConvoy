@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(FighterUI))]
 public class MouseOverCreature : MouseOver
 {
 
     private CombatManager combatManager;
+    public FighterUI fighterUI;
 
     protected override void Start()
     {
@@ -19,7 +19,7 @@ public class MouseOverCreature : MouseOver
         if (bMouseClicking)
         {
             //Debug.Log("[MouseOverAction] bMouseClicking");
-            combatManager.PlayerClickedCreature(GetComponent<FighterUI>().fighter);
+            combatManager.PlayerClickedCreature(fighterUI.fighter);
             gameObject.GetComponent<Renderer>().material.color = mouseClickedColor;
         }
         else if (bMouseOver)

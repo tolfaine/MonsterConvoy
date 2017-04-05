@@ -23,7 +23,7 @@ public class ConviceUI : MonoBehaviour {
 
     void CheckConvince()
     {
-        sDisplayed = "Convince : ";
+        sDisplayed = "Convinced : ";
         GroupHumanFighter group = (GroupHumanFighter)(combatManager.humanGroupFighter);
         sDisplayed += group.nCurrentConvice + " / " + group.nConvice;
     }

@@ -17,7 +17,7 @@ FunnyGuy: By the way... Who are you again?
 *PlayerName*: I'm *PlayerName*. Wait... Does that mean i can use variables?!
 FunnyGuy: Yes you can, *PlayerName*! Easy peasy!
 *PlayerName*: Neat! What else can I do?
-FunnyGuy: Hum... You can have really long texts, and the RPGTalk itself will break it. Something called Word Warp. You can even have insanaly high amount of words! It's pretty cool! Yes it is! It is awesome to work on dialogs later on, or change just one file for different languages. But, for me, the best part is that we can have Callbacks! You can Indeed! Now go talk to my friend on the other room!
+FunnyGuy: Hum... You can have really long texts, and the RPGTalk itself will break it. Something called Word Warp. You can even have insanaly high amount of words! It's pretty cool!
 *PlayerName*: I see! And the text is taken from an external file, isn't that right?
 FunnyGuy: Yes it is! It is awesome to work on dialogs later on, or change just one file for different languages. No extra code needed!
 FunnyGuy: But, for me, the best part is that we can have Callbacks!
