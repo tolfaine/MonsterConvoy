@@ -45,11 +45,11 @@ public class Monster : Fighter{
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }
 
-            if (rand > 0.95)
+            if (rand > 0.99f)
             {
-                ((GroupHumanFighter)groupHuman).GetFeared(this);
+                ((GroupHumanFighter)groupHuman).GetCritFeared(this);
             }
-            else if (rand > 0.3)
+            else if (rand > 0.3f)
             {
                 ((GroupHumanFighter)groupHuman).GetFeared(this);
             }

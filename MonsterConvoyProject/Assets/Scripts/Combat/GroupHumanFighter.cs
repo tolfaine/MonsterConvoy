@@ -25,7 +25,7 @@ public class GroupHumanFighter : GroupFighter {
 
         foreach (Fighter fighter in lFighters)
         {
-            fearDamage += monster.nFearPower * 10;
+            fearDamage += monster.nFearPower * 1;
         }
 
         nCurrentFear += fearDamage;
@@ -36,6 +36,28 @@ public class GroupHumanFighter : GroupFighter {
         }
 
         if(nCurrentFear == nFear)
+        {
+            bIsFeared = true;
+        }
+    }
+
+    public void GetCritFeared(Monster monster)
+    {
+        int fearDamage = 0;
+
+        foreach (Fighter fighter in lFighters)
+        {
+            fearDamage += monster.nFearPower * 10;
+        }
+
+        nCurrentFear += fearDamage;
+
+        if (nCurrentFear > nFear)
+        {
+            nCurrentFear = nFear;
+        }
+
+        if (nCurrentFear == nFear)
         {
             bIsFeared = true;
         }

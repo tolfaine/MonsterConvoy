@@ -21,7 +21,7 @@ public class FearUI : MonoBehaviour {
 
     void CheckFear()
     {
-        sDisplayed = "Fear : ";
+        sDisplayed = "Feared : ";
         GroupHumanFighter group = (GroupHumanFighter)(combatManager.humanGroupFighter);
         sDisplayed += group.nCurrentFear + " / " + group.nFear;
     }
