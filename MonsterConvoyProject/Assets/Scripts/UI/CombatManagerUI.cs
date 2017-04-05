@@ -8,7 +8,16 @@ public class CombatManagerUI : MonoBehaviour {
     private TextMesh textMesh;
 
     public string sDisplayed;
+
+    public GameObject dialogueHumanObj;
+    public GameObject dialogueObj;
+
+    public RPGTalk rpgTalk;
+
+    public bool bHumanFearTriggred = false;
+  
     // Action , target, fighter, Type 
+
 
 	// Use this for initialization
 	void Start () {
@@ -17,11 +26,29 @@ public class CombatManagerUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        CheckHumanFear();
         CheckCombatManager();
         textMesh.text = sDisplayed;
     }
 
+    public bool DialogueInProgress()
+    {
+        if (dialogueHumanObj.activeSelf || dialogueObj.activeSelf)
+            return true;
+        return false;
+    }
+
+    void CheckHumanFear()
+    {
+        if(combatManager.combatEndType== CombatManager.CombatEndType.HumansFeared && !bHumanFearTriggred
+            && !combatManager.fighterMouvementManager.bIsAtFightPosition)
+        {
+            bHumanFearTriggred = true;
+            rpgTalk.lineToStart = 9;
+            rpgTalk.lineToBreak = 9;
+            rpgTalk.NewTalk();
+        }
+    }
     void CheckCombatManager()
     {
         sDisplayed = "";

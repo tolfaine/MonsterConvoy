@@ -25,7 +25,7 @@ public class GroupHumanFighter : GroupFighter {
 
         foreach (Fighter fighter in lFighters)
         {
-            fearDamage += monster.nFearPower * 1;
+            fearDamage += monster.nFearPower * 10;
         }
 
         nCurrentFear += fearDamage;

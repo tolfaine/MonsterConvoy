@@ -12,7 +12,24 @@ public class FighterMouvementManager : MonoBehaviour {
     public bool bMoveToFightPosition = false;
     public bool bIsAtFightPosition = false;
     public bool bMoveToInitialPosition = false;
+
+    public int nCycleToWait = 5;
+    public int nCurrentCycle = 0;
+
+    public bool bWaitOneCycle = false;
     public bool bIsAtInitialPosition = true;
+
+    public bool bAboutToMoveInitialPosition = false;
+
+    public GameObject AllHumanObj;
+    public Transform HumanRunposition;
+    public bool bHumanRun;
+    public bool bHumanAtRunPosition;
+
+    public GameObject AllMonsterObj;
+    public Transform MonsterRunPosition;
+    public bool bMonsterRun;
+    public bool bMonsterAtRunPosition;
 
     public bool bNotifyCombatManagerFightPosition = false;
     public bool bNotifyCombatManagerInitialPosition = false;
@@ -30,8 +47,11 @@ public class FighterMouvementManager : MonoBehaviour {
 	void Update () {
         if (fighterObj != null)
         {
-            CheckMovement();
-            CheckPosition();
+            if (!combatManager.bDialogueInProgres)
+            {
+                CheckMovement();
+                CheckPosition();
+            }
         }
       //  NotifyCombatManager();
 
@@ -76,6 +96,7 @@ public class FighterMouvementManager : MonoBehaviour {
         if (position == fighterInitialPosition)
         {
             bIsAtInitialPosition = true;
+            bAboutToMoveInitialPosition = false;
             combatManager.bFighterInInitialPosition = true;
             if (bMoveToInitialPosition)
             {
@@ -88,11 +109,29 @@ public class FighterMouvementManager : MonoBehaviour {
             bIsAtInitialPosition = false;
         }
 
+        if (AllHumanObj.transform.position == HumanRunposition.position)
+            bHumanAtRunPosition = true;
+        if (AllMonsterObj.transform.position == MonsterRunPosition.position)
+            bMonsterRun = true;
     }
 
     void CheckMovement()
     {
-        if(bMoveToFightPosition && !bIsAtFightPosition)
+        if (bMonsterRun)
+        {
+            float step = speed * Time.deltaTime;
+            AllMonsterObj.transform.position = Vector3.MoveTowards(AllMonsterObj.transform.position, MonsterRunPosition.position, step);
+
+        }
+
+        if (bHumanRun) // && bIsAtInitialPosition
+        {
+            float step = speed * Time.deltaTime;
+            AllHumanObj.transform.position = Vector3.MoveTowards(AllHumanObj.transform.position, HumanRunposition.position, step);
+
+        }
+
+        if (bMoveToFightPosition && !bIsAtFightPosition)
         {
             float step = speed * Time.deltaTime;
             fighterObj.transform.position = Vector3.MoveTowards(fighterObj.transform.position, fightPosition, step);
@@ -100,8 +139,18 @@ public class FighterMouvementManager : MonoBehaviour {
 
         if (bMoveToInitialPosition && !bIsAtInitialPosition)
         {
-            float step = speed * Time.deltaTime;
-            fighterObj.transform.position = Vector3.MoveTowards(fighterObj.transform.position, fighterInitialPosition, step);
+            if (!bWaitOneCycle)
+            {
+
+                    float step = speed * Time.deltaTime;
+                    fighterObj.transform.position = Vector3.MoveTowards(fighterObj.transform.position, fighterInitialPosition, step);
+            }
+            else
+                bWaitOneCycle = false;
+        }
+        else
+        {
+            bWaitOneCycle = true;
         }
 
     }

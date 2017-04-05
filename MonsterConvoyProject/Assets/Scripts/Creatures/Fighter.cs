@@ -40,20 +40,61 @@ public class Fighter : Creature{
             Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName + "on target " + fighter.sName);
 
         if (action == ActionType.ATTACK){
-            fighter.TakeDamage(this.GetDamage());
+
+            CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+
+            float rand = 0.5f;
+
+            if (combatManager.scriptManager != null)
+            {
+                rand = combatManager.scriptManager.currentTurn.fRoll;
+            }
+
+            if(rand > 0.95)
+            {
+                fighter.TakeDamage(this.GetDamage());
+            }
+            else if(rand > 0.3)
+            {
+                fighter.TakeDamage(this.GetDamage());
+            }else
+            {
+                Debug.Log("Fail");
+            }
+
         }
         else if(action == ActionType.ESCAPE){
 
 
-        }else if(action == ActionType.TALK){
-
-
         }
+
+        ActionTalk();
     }
 
     public virtual void PerformActionOnTarget(ActionType action, GroupFighter groupHuman)
     {
         Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName + "on all enemy Group " );
+
+        ActionTalk();
+    }
+
+    private void ActionTalk()
+    {
+        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+        if (g != null && g.GetComponent<CombatManager>().scriptManager != null)
+        {
+            // int index = g.GetComponent<CombatManager>().GetNextIndexLine();
+            int index = g.GetComponent<CombatManager>().scriptManager.currentTurn.indexLineStart;
+
+            if (index != -1)
+            {
+                ScriptManager sm = g.GetComponent<CombatManager>().scriptManager;
+                sm.rpgTalk.lineToStart = index;
+                sm.rpgTalk.lineToBreak = index;
+                sm.rpgTalk.follow = currentUI.dialogueAnchor.gameObject;
+                sm.rpgTalk.NewTalk();
+            }
+        }
     }
 
     public void TakeDamage(int damage)

@@ -34,12 +34,56 @@ public class Monster : Fighter{
 
         if (action == ActionType.FEAR)
         {
-            ((GroupHumanFighter)groupHuman).GetFeared(this);
+         //   ((GroupHumanFighter)groupHuman).GetFeared(this);
+
+            CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+
+            float rand = 0.5f;
+
+            if (combatManager.scriptManager != null)
+            {
+                rand = combatManager.scriptManager.currentTurn.fRoll;
+            }
+
+            if (rand > 0.95)
+            {
+                ((GroupHumanFighter)groupHuman).GetFeared(this);
+            }
+            else if (rand > 0.3)
+            {
+                ((GroupHumanFighter)groupHuman).GetFeared(this);
+            }
+            else
+            {
+                Debug.Log("Fail Fear:" + rand.ToString());
+            }
         }
 
         if (action == ActionType.TALK)
         {
-            ((GroupHumanFighter)groupHuman).GetConvinced(this);
+           //((GroupHumanFighter)groupHuman).GetConvinced(this);
+
+            CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+
+            float rand = 0.5f;
+
+            if (combatManager.scriptManager != null)
+            {
+                rand = combatManager.scriptManager.currentTurn.fRoll;
+            }
+
+            if (rand > 0.95)
+            {
+                ((GroupHumanFighter)groupHuman).GetConvinced(this);
+            }
+            else if (rand > 0.3)
+            {
+                ((GroupHumanFighter)groupHuman).GetConvinced(this);
+            }
+            else
+            {
+                Debug.Log("Fail Convice:" + rand.ToString());
+            }
         }
 
     }

@@ -7,6 +7,7 @@ public class FighterUI : MonoBehaviour {
     public Fighter fighter;
     public TextMesh textMesh;
     private Renderer fighterRenderer;
+    public GameObject dialogueAnchor;
 
 	// Use this for initialization
 	void Start () {

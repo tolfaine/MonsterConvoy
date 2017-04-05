@@ -98,15 +98,25 @@ public class CombatManager : MonoBehaviour {
 
     int                     nNbCreaturePerGroup = 4;
 
-    public Caravane caravane;
+    public MonsterCaravane caravane;
+    public HumanCaravane humanCamp;
+
     public FighterMouvementManager fighterMouvementManager;
 
 
     public bool bFighterInFightPosition = false;
     public bool bFighterInInitialPosition = true;
 
+    public ScriptManager scriptManager;
+    public bool bDialogueInProgres = false;
+    public int nCurrentLine = 0;
+
+    // public bool bDialogueHasEnded = false;
+
+    public CombatManagerUI combatManagerUI;
+
     void Start () {
-        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<MonsterCaravane>();
         fighterMouvementManager = GameObject.FindGameObjectWithTag("FighterMouvementManager").GetComponent<FighterMouvementManager>();
 
         InstantiateMonster();
@@ -122,11 +132,25 @@ public class CombatManager : MonoBehaviour {
 
 	void Update () {
 
+        CheckDialogue();
         CheckCombatEnded();
         CheckDeadFighters();
 
         if (!bCombatEnded)
             ProcessCombat();
+    }
+    /*
+    public int GetNextIndexLine()
+    {
+        return scriptManager.GetNextIndexLine();
+    }
+    */
+    void CheckDialogue()
+    {
+        if (combatManagerUI.DialogueInProgress())
+            bDialogueInProgres = true;
+        else
+            bDialogueInProgres = false;
     }
 
     void CheckDeadFighters()
@@ -166,6 +190,7 @@ public class CombatManager : MonoBehaviour {
         {
             bCombatEnded = true;
             combatEndType = CombatEndType.HumansFeared;
+            fighterMouvementManager.bHumanRun = true;
         }
 
     }
@@ -185,6 +210,7 @@ public class CombatManager : MonoBehaviour {
 
             if (!bTurnInProgress)
             {
+                scriptManager.NextTurn();
 
                 currentFighter = GetNextFighter();
                 currentGroupLogic = GetGroupLogicOfFighter(currentFighter);
@@ -200,7 +226,11 @@ public class CombatManager : MonoBehaviour {
                 {
                     if (!bActionChoosed)
                     {
-                        actionChoosed = ((GroupIA)currentGroupLogic).SelectAction(monsterGroupFighter.lFighters, humanGroupFighter.lFighters);
+                        if (scriptManager != null)
+                            actionChoosed = scriptManager.currentTurn.actionType;
+                        else
+                            actionChoosed = ((GroupIA)currentGroupLogic).SelectAction(monsterGroupFighter.lFighters, humanGroupFighter.lFighters);
+
                         bActionChoosed = true;
 
                         if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
@@ -252,10 +282,15 @@ public class CombatManager : MonoBehaviour {
                 currentFighter.PerformActionOnTarget(actionChoosed, humanGroupFighter);
         }
 
-        fighterMouvementManager.bMoveToInitialPosition= true;
+        PutFighterInInitialPosition();
+        // Invoke("ActionEnded", 2);
+    }
+    void PutFighterInInitialPosition()
+    {
+
+        fighterMouvementManager.bMoveToInitialPosition = true;
         bActionInProgress = true;
         bFighterInInitialPosition = false;
-       // Invoke("ActionEnded", 2);
     }
 
     void PutFighterInFightPosition()
@@ -264,20 +299,57 @@ public class CombatManager : MonoBehaviour {
         fighterMouvementManager.SetFighter(currentFighter.currentUI.gameObject);
         fighterMouvementManager.bMoveToFightPosition = true;
     }
+
     void RollInitiative() {
-        foreach (Fighter fighter in monsterGroupFighter.lFighters)
+
+        if (scriptManager != null)
         {
-            int initiative = fighter.GetRandomInitiative();
-            Order order = new Order(fighter, initiative);
-            combatOrder.Add(order);
+            int idFghter = 0;
+            int initiative = 0;
+
+            foreach (Fighter fighter in monsterGroupFighter.lFighters)
+            {
+                initiative = fighter.GetRandomInitiative();
+                Order order = new Order(fighter, initiative);
+                combatOrder.Add(order);
+            }
+
+            foreach (Fighter fighter in humanGroupFighter.lFighters)
+            {
+                initiative = fighter.GetRandomInitiative();
+                Order order = new Order(fighter, initiative);
+                combatOrder.Add(order);
+            }
+
+
+            foreach (Order order in combatOrder)
+            {
+                int fighterId = order.fighter.nID;
+
+                foreach (ScriptOrder scriptOrder in scriptManager.lOrder)
+                {
+                    if (scriptOrder.nId == fighterId)
+                        order.nInitiative = scriptOrder.nRoll;
+                }
+            }
+        }
+        else
+        {
+            foreach (Fighter fighter in monsterGroupFighter.lFighters)
+            {
+                int initiative = fighter.GetRandomInitiative();
+                Order order = new Order(fighter, initiative);
+                combatOrder.Add(order);
+            }
+
+            foreach (Fighter fighter in humanGroupFighter.lFighters)
+            {
+                int initiative = fighter.GetRandomInitiative();
+                Order order = new Order(fighter, initiative);
+                combatOrder.Add(order);
+            }
         }
 
-        foreach (Fighter fighter in humanGroupFighter.lFighters)
-        {
-            int initiative = fighter.GetRandomInitiative();
-            Order order = new Order(fighter, initiative);
-            combatOrder.Add(order);
-        }
         combatOrder.Sort(SortByInitiative);
     }
     void InstantiateMonster()
@@ -322,7 +394,13 @@ public class CombatManager : MonoBehaviour {
 
         for (int i = 0; i < nNbCreaturePerGroup; i++)
         {
-            fighter = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetRandomFighter<Human>(creatureType);
+            fighter = null;
+
+            if (humanCamp != null)
+                fighter = humanCamp.lFighters[i];
+            else
+                fighter = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetRandomFighter<Human>(creatureType);
+
             GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.identity) as GameObject;
             g.GetComponent<FighterUI>().fighter = fighter;
             humanGroupFighter.lFighters.Add(fighter);
@@ -331,6 +409,7 @@ public class CombatManager : MonoBehaviour {
         }
     }
     void NextFighterTurn() { }
+
     void ActionEnded()
     {
        // Debug.Log("Action End");
