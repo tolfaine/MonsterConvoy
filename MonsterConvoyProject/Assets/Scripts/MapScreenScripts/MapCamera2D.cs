@@ -28,6 +28,8 @@ public class MapCamera2D : MonoBehaviour
 	public float camZoomSpeed = 0.5f; 
 	Vector3 camZoom;
 
+    bool foundPlayer = false;
+
 	public void Start()
 	{
 		sprite = Area.transform.GetComponent<SpriteRenderer> ().sprite;
@@ -40,22 +42,27 @@ public class MapCamera2D : MonoBehaviour
 			Area.transform.localScale.y * sprite.texture.height / pixelUnits);
 		offset = Area.transform.position;
 
-		Update ();
+//		Update ();
 
 		//Position the camera at the center of the background image
 		Vector2 position = Area.transform.position;
 		Vector3 camPosition = position;
 		Vector3 point = Camera.main.WorldToViewportPoint (camPosition);
 
-		//Vector3 delta = camPosition - Camera.main.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, point.z));
-		Vector3 delta = camPosition - Camera.main.ViewportToWorldPoint (Area.GetComponent<MapPopulate> ().player.transform.position + (point.z * Vector3.forward));
+        Vector3 delta = camPosition - Camera.main.ViewportToWorldPoint (new Vector3 (0.5f, 0.5f, point.z));
 		Vector3 destination = transform.position + delta;
 		transform.position = destination;
+        camZoom.z = 5;
 	}
 		
 	//Get zoom constraints and zoom as large as possible for current view
 	private void Update()
 	{
+        if(!foundPlayer)
+        {
+            foundPlayer = true;
+            transform.position = Area.GetComponent<MapPopulate>().player.transform.position + Vector3.back;
+        }
 		currentMousePos = Input.mousePosition; 
 		mouseDelta = currentMousePos - prevMousePos;
 		movement = mouseDelta; 
@@ -73,7 +80,7 @@ public class MapCamera2D : MonoBehaviour
 		if (ratio2 <= ratio)
 			maxZoom /= ratio;
 		minZoom = 1;
-			
+        	
 		camZoom -= Input.mouseScrollDelta.y * Vector3.forward * camZoomSpeed;
 		camZoom.z = Mathf.Clamp (camZoom.z, minZoom, maxZoom);
 
@@ -104,11 +111,5 @@ public class MapCamera2D : MonoBehaviour
 		transform.position = v3;
 
 		prevMousePos = currentMousePos;
-	}
-
-	public void Zoom(float value)
-	{
-		Camera.main.orthographicSize += value;
-		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, minZoom, maxZoom);
 	}
 }

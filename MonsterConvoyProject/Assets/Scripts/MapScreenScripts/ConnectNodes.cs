@@ -7,39 +7,38 @@ public class ConnectNodes : MonoBehaviour {
 	public List<GameObject> neighbourNodes = new List<GameObject>();
 
 	public GameObject path;
-	GameObject[] pathsArr;
+    int numPaths = 0;
+    List<GameObject> pathList = new List<GameObject>();
 
-	public bool activeNode = false; 
+    public static GameObject activeNode;
+    public static GameObject finalNode;
 
-	void Start()
+    public void CreatePath()
 	{
+        for (; numPaths < neighbourNodes.Count; ++numPaths)
+        {
+            pathList.Add(Instantiate(path, transform));
+            pathList[numPaths].GetComponent<LineRenderer>().SetPositions(new Vector3[] { transform.position, neighbourNodes[numPaths].transform.position });
+        }
 	}
-
-	public void updateNeighbours()
-	{
-		pathsArr = new GameObject[neighbourNodes.Count];// * 2];
-			
-		for (int i = 0; i < pathsArr.Length; i++) {
-			pathsArr[i] = Instantiate (path, transform);
-		}
-
-		for (int i = 0; i < neighbourNodes.Count; i++) {
-			pathsArr [i].GetComponent<LineRenderer> ().SetPositions (new Vector3[] {transform.position,neighbourNodes[i].transform.position});
-		}
-	}
-
+    
 	void Update()
 	{
-		if (activeNode)
-			for (int i = 0; i < neighbourNodes.Count; i++) {
-				pathsArr [i].GetComponent<LineRenderer> ().enabled = true;
-			}
-		else
-			for (int i = 0; i < neighbourNodes.Count; i++) {
-				if(!neighbourNodes[i].GetComponent<ConnectNodes>().activeNode)
-					pathsArr [i].GetComponent<LineRenderer> ().enabled = false;
-				else
-					pathsArr [i].GetComponent<LineRenderer> ().enabled = true;				
-			}
-	}
+        if (activeNode.Equals(gameObject))
+            for (int i = 0; i < neighbourNodes.Count; i++)
+                pathList[i].GetComponent<LineRenderer>().enabled = true;
+        else
+            for (int i = 0; i < neighbourNodes.Count; i++)
+                 pathList[i].GetComponent<LineRenderer>().enabled = false;
+    }
+
+    //Adds a new node to our list of neighbour nodes
+    public void AddNeighbour(GameObject newNeighbour)
+    {
+        if (!neighbourNodes.Contains(newNeighbour)) {
+            neighbourNodes.Add(newNeighbour);
+            newNeighbour.GetComponent<ConnectNodes>().AddNeighbour(gameObject); //Add ourselves to the neighbour. 
+            CreatePath();
+        }
+    }
 }
