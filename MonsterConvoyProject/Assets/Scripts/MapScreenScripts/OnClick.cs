@@ -16,8 +16,14 @@ public class OnClick : MonoBehaviour {
 
             Color visited = new Color(0, 255, 0);
             GetComponent<SpriteRenderer>().color = visited;
-            //TODO Place the actual battle scene here. TODO test if this unloads the current Scene thus resetting the map on reload.
-            //SceneManager.LoadScene ("scene 1");
+            //TODO  This unloads the mapscene meaning all will be reinitialise on return
+
+            for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
+            {
+                SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
+            }
+            SceneManager.LoadSceneAsync("Proto", LoadSceneMode.Additive);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Proto"));
         }
     }
 
