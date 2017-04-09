@@ -61,7 +61,7 @@ public class MapCamera2D : MonoBehaviour
         if(!foundPlayer)
         {
             foundPlayer = true;
-            transform.position = Area.GetComponent<MapPopulate>().player.transform.position + Vector3.back;
+            transform.position = Area.GetComponent<MapPlayer>().player.transform.position + Vector3.back;
         }
 		currentMousePos = Input.mousePosition; 
 		mouseDelta = currentMousePos - prevMousePos;

@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/* SUMMARY
+ * Class for placing nodes randomly across a 2D sprite and connecting them. 
+ * Requires RandomMapNode prefab to be added in the editor. 
+ */
 
-public class MapPopulate : MonoBehaviour {
+
+public class GenerateMapRandomNodes: MonoBehaviour
+{
 
     public GameObject mapNode;
     GameObject[] mapNodeArr;
-    int[] triangleIndices;
-
-    public GameObject player;
 
     int minNodes = 12;
     int maxNodes = 30;
@@ -26,9 +29,7 @@ public class MapPopulate : MonoBehaviour {
 
         numNodes = Random.Range(minNodes, maxNodes);
         mapNodeArr = new GameObject[numNodes];
-
-        player = Instantiate(player, transform);
-
+        
         PlaceNodesRandom();
     }
 
@@ -56,7 +57,7 @@ public class MapPopulate : MonoBehaviour {
                 if (i != j)
                 {
                     if (Vector2.Distance(mapNodeArr[i].transform.position, mapNodeArr[j].transform.position) <= shorestDistance
-                        && !mapNodeArr[i].GetComponent<ConnectNodes>().neighbourNodes.Contains(mapNodeArr[j]))
+                        && !mapNodeArr[i].GetComponent<NodeConnections>().neighbourNodes.Contains(mapNodeArr[j]))
                     {
                         //TODO ERROR if the shortest distance happens to be the first one we check. NearestNodeIndex2 will always be default(int)
                         nearestNodeIndex2 = nearestNodeIndex1;
@@ -65,37 +66,30 @@ public class MapPopulate : MonoBehaviour {
                     }
                 }
             }
-            mapNodeArr[i].GetComponent<ConnectNodes>().AddNeighbour(mapNodeArr[nearestNodeIndex1]);
-            mapNodeArr[i].GetComponent<ConnectNodes>().AddNeighbour(mapNodeArr[nearestNodeIndex2]);
+            mapNodeArr[i].GetComponent<NodeConnections>().AddNeighbour(mapNodeArr[nearestNodeIndex1]);
+            mapNodeArr[i].GetComponent<NodeConnections>().AddNeighbour(mapNodeArr[nearestNodeIndex2]);
         }
 
-        ConnectNodes.activeNode = mapNodeArr[0];
+        NodeConnections.activeNode = mapNodeArr[0];
 
         //Set player start to furthest left node. Set end point to furthest right node. 
-        float furthestLeft = ConnectNodes.activeNode.transform.position.x;
-        float furthestRight = ConnectNodes.activeNode.transform.position.x;
+        float furthestLeft = NodeConnections.activeNode.transform.position.x;
+        float furthestRight = NodeConnections.activeNode.transform.position.x;
         for (int i = 0; i < nodePosArr.Length; ++i)
         {
             if (mapNodeArr[i].transform.position.x < furthestLeft)
             {
-                ConnectNodes.activeNode = mapNodeArr[i];
-                furthestLeft = ConnectNodes.activeNode.transform.position.x;
+                NodeConnections.activeNode = mapNodeArr[i];
+                furthestLeft = NodeConnections.activeNode.transform.position.x;
             }
             else if (mapNodeArr[i].transform.position.x >= furthestRight)
             {
-                ConnectNodes.finalNode = mapNodeArr[i];
+                NodeConnections.finalNode = mapNodeArr[i];
                 furthestRight = mapNodeArr[i].transform.position.x;
             }
         }
 
         Color visited = new Color(0, 255, 0);
-        ConnectNodes.activeNode.GetComponent<SpriteRenderer>().color = visited;
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        player.transform.position = ConnectNodes.activeNode.transform.position;
+        NodeConnections.activeNode.GetComponent<SpriteRenderer>().color = visited;
     }
 }

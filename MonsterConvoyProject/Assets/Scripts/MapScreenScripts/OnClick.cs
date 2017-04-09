@@ -10,26 +10,28 @@ public class OnClick : MonoBehaviour {
     
     void OnMouseDown()
 	{
-        if (GetComponent<ConnectNodes>().neighbourNodes.Contains(ConnectNodes.activeNode))
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
-            ConnectNodes.activeNode = gameObject;
+            NodeConnections.activeNode = gameObject;
 
             Color visited = new Color(0, 255, 0);
             GetComponent<SpriteRenderer>().color = visited;
-            //TODO  This unloads the mapscene meaning all will be reinitialise on return
-
+            
+            /*
+            //Change scene on node click
             for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
             {
                 SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
             }
             SceneManager.LoadSceneAsync("Proto", LoadSceneMode.Additive);
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Proto"));
+            */
         }
     }
 
 	void OnMouseOver()
 	{
-        if (GetComponent<ConnectNodes>().neighbourNodes.Contains(ConnectNodes.activeNode))
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             GetComponent<SpriteRenderer> ().sprite = mapNodeHighlighted;
 		}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConnectNodes : MonoBehaviour {
+public class NodeConnections : MonoBehaviour {
 
 	public List<GameObject> neighbourNodes = new List<GameObject>();
 
@@ -21,6 +21,13 @@ public class ConnectNodes : MonoBehaviour {
             pathList[numPaths].GetComponent<LineRenderer>().SetPositions(new Vector3[] { transform.position, neighbourNodes[numPaths].transform.position });
         }
 	}
+
+    public void DestroyPath(int pathIndex)
+    {
+        --numPaths;
+        Destroy(pathList[pathIndex]);
+        pathList.RemoveAt(pathIndex);
+    }
     
 	void Update()
 	{
@@ -29,7 +36,7 @@ public class ConnectNodes : MonoBehaviour {
                 pathList[i].GetComponent<LineRenderer>().enabled = true;
         else
             for (int i = 0; i < neighbourNodes.Count; i++)
-                 pathList[i].GetComponent<LineRenderer>().enabled = false;
+                ;//pathList[i].GetComponent<LineRenderer>().enabled = false;
     }
 
     //Adds a new node to our list of neighbour nodes
@@ -37,8 +44,19 @@ public class ConnectNodes : MonoBehaviour {
     {
         if (!neighbourNodes.Contains(newNeighbour)) {
             neighbourNodes.Add(newNeighbour);
-            newNeighbour.GetComponent<ConnectNodes>().AddNeighbour(gameObject); //Add ourselves to the neighbour. 
+            newNeighbour.GetComponent<NodeConnections>().AddNeighbour(gameObject); //Add ourselves to the neighbour. 
             CreatePath();
+        }
+    }
+
+    //Remove a node from your list of neighbour nodes
+    public void RemoveNeighbour(GameObject removedNeighbour)
+    {
+        if (neighbourNodes.Contains(removedNeighbour))
+        {
+            neighbourNodes.Remove(removedNeighbour);
+            removedNeighbour.GetComponent<NodeConnections>().RemoveNeighbour(gameObject); //Remove ourselves from the neighbour.
+            DestroyPath(neighbourNodes.LastIndexOf(removedNeighbour)); //TODO This will go awry.
         }
     }
 }
