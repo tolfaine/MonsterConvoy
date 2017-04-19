@@ -40,7 +40,7 @@ public class Monster : Fighter{
 
             float rand = 0.5f;
 
-            if (combatManager.scriptManager != null)
+            if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }
@@ -67,7 +67,7 @@ public class Monster : Fighter{
 
             float rand = 0.5f;
 
-            if (combatManager.scriptManager != null)
+            if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }

@@ -81,7 +81,7 @@ public class Fighter : Creature{
     private void ActionTalk()
     {
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
-        if (g != null && g.GetComponent<CombatManager>().scriptManager != null)
+        if (g != null && g.GetComponent<CombatManager>().scriptManager != null && g.GetComponent<CombatManager>().scriptManager.currentTurn != null)
         {
             // int index = g.GetComponent<CombatManager>().GetNextIndexLine();
             int index = g.GetComponent<CombatManager>().scriptManager.currentTurn.indexLineStart;

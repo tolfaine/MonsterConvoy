@@ -213,7 +213,8 @@ public class CombatManager : MonoBehaviour {
 
             if (!bTurnInProgress)
             {
-                scriptManager.NextTurn();
+                if(scriptManager != null )
+                    scriptManager.NextTurn();
 
                 currentFighter = GetNextFighter();
                 currentGroupLogic = GetGroupLogicOfFighter(currentFighter);
