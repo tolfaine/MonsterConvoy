@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 21e025e6737aa534d94855a2c6a9f640
+timeCreated: 1492689817
+licenseType: Free
+ShaderImporter:
+  defaultTextures:
+  - _MossNormal: {fileID: 2800000, guid: 2dd3788f8589b40bf82a92d76ffc5091, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
