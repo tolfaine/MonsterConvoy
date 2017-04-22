@@ -11,7 +11,15 @@ public class NodeConnections : MonoBehaviour {
     List<GameObject> pathList = new List<GameObject>();
 
     public static GameObject activeNode;
-    public static GameObject finalNode;
+
+    private void Start()
+    {
+        foreach (GameObject node in neighbourNodes)
+        {
+            node.GetComponent<NodeConnections>().AddNeighbour(gameObject); //Add ourselves to the neighbour. 
+            CreatePath();
+        }
+    }
 
     public void CreatePath()
 	{
@@ -31,9 +39,10 @@ public class NodeConnections : MonoBehaviour {
     
 	void Update()
 	{
+        //Cleanup 
         if (activeNode.Equals(gameObject))
             for (int i = 0; i < neighbourNodes.Count; i++)
-                pathList[i].GetComponent<LineRenderer>().enabled = true;
+                ;//pathList[i].GetComponent<LineRenderer>().enabled = true;
         else
             for (int i = 0; i < neighbourNodes.Count; i++)
                 ;//pathList[i].GetComponent<LineRenderer>().enabled = false;

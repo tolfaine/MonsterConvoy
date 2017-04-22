@@ -84,7 +84,6 @@ public class GenerateMapRandomNodes: MonoBehaviour
             }
             else if (mapNodeArr[i].transform.position.x >= furthestRight)
             {
-                NodeConnections.finalNode = mapNodeArr[i];
                 furthestRight = mapNodeArr[i].transform.position.x;
             }
         }

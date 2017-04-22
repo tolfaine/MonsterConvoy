@@ -85,7 +85,7 @@ public class GenerateMapFixedNodes : MonoBehaviour
                         }
                     }
                 }
-                sR += searchIncrement; //Increasing the nodses we're searching until e=we can determine we have enough neighbours. 
+                sR += searchIncrement; //Increasing the nodses we're searching until we can determine we have enough neighbours. 
 
             }
 
@@ -113,7 +113,6 @@ public class GenerateMapFixedNodes : MonoBehaviour
             }
             else if (nodeArr[i].transform.position.x >= furthestRight)
             {
-                NodeConnections.finalNode = nodeArr[i];
                 furthestRight = nodeArr[i].transform.position.x;
             }
         }
