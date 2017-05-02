@@ -14,6 +14,8 @@ public class Fighter : Creature{
 
     public FighterUI currentUI;
 
+    public bool bTryToescape = false;
+
     public Fighter() : base() {}
 
 
@@ -63,10 +65,6 @@ public class Fighter : Creature{
             }
 
         }
-        else if(action == ActionType.ESCAPE){
-
-
-        }
 
         ActionTalk();
     }
@@ -76,6 +74,11 @@ public class Fighter : Creature{
         Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName + "on all enemy Group " );
 
         ActionTalk();
+    }
+
+    public virtual void PerformActionOnSelf(ActionType action, GroupFighter groupFighter)
+    {
+       
     }
 
     private void ActionTalk()

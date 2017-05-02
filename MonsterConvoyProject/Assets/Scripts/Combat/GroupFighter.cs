@@ -11,6 +11,8 @@ public class GroupFighter {
     public GroupLogic groupLogic;
     public bool allFightersDead = false;
 
+    public bool bEscaping= false;
+
     public GroupFighter() { }
 
     public GroupLogic GetGroupLogic() { return this.groupLogic; }

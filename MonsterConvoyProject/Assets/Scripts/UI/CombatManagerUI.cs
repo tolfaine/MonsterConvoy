@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatManagerUI : MonoBehaviour {
 
     public CombatManager combatManager;
 
-    private TextMesh textMesh;
+   // private TextMesh textMesh;
+    public Text text;
 
     public string sDisplayed;
 
@@ -26,14 +28,14 @@ public class CombatManagerUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        textMesh = GetComponent<TextMesh>();
+        //text = GetComponent<Text>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         CheckHumanFear();
         CheckCombatManager();
-        textMesh.text = sDisplayed;
+        text.text = sDisplayed;
 
         if(combatManager.fighterMouvementManager.bIsAtFightPosition && !combatManager.bActionInProgress && combatManager.currentGroupLogic.GetLogicType() == LogicType.Player)
         {
@@ -98,6 +100,7 @@ public class CombatManagerUI : MonoBehaviour {
 
             if (combatManager.actionChoosed != null && combatManager.actionChoosed.GetTargetType() == ActionType.ActionTargetType.AllTarget)
                 sDisplayed += "on all enemies \n";
+
             if (combatManager.actionChoosed != null && combatManager.actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
             {
                 if(combatManager.targetChoosed != null)
@@ -116,6 +119,8 @@ public class CombatManagerUI : MonoBehaviour {
                 sDisplayed += "Monsters Won ,\n the humans are \n feared :)";
             else if (combatManager.combatEndType == CombatManager.CombatEndType.HumansFeared)
                 sDisplayed += "Humans Won , \nthe monsters are \n dead :(";
+            else if (combatManager.combatEndType == CombatManager.CombatEndType.MonsterEscape)
+                sDisplayed += "Monsters escape :3";
 
         }
     }

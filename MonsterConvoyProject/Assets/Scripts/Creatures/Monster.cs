@@ -87,4 +87,24 @@ public class Monster : Fighter{
         }
 
     }
+
+    public override void PerformActionOnSelf(ActionType action, GroupFighter monsterFighter)
+    {
+        if (action == ActionType.ESCAPE)
+        {
+            float rand = 0.5f;
+
+            if (rand > 0.2f)
+            {
+                bTryToescape = true;
+                ((GroupMonsterFighter)monsterFighter).MonsterEscaping();
+                // check group fighter
+
+            }
+            else
+            {
+
+            }
+        }
+    }
 }

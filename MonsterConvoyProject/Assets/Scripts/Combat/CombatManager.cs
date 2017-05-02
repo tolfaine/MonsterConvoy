@@ -66,7 +66,7 @@ public class Order
 
 public class CombatManager : MonoBehaviour {
 
-    public enum CombatEndType { MonstersDead, HumansDead, HumansConvinced, HumansFeared }
+    public enum CombatEndType { MonstersDead, HumansDead, HumansConvinced, HumansFeared, MonsterEscape }
 
     public List<GameObject> lMonsterPrefab;
     public List<GameObject> lHumanPrefab;
@@ -178,6 +178,12 @@ public class CombatManager : MonoBehaviour {
             bCombatEnded = true;
             combatEndType = CombatEndType.MonstersDead;
         }
+        else if (this.monsterGroupFighter.bEscaping)
+        {
+            bCombatEnded = true;
+            combatEndType = CombatEndType.MonsterEscape;
+            fighterMouvementManager.bMonsterRun = true;
+        }
         else if (this.humanGroupFighter.allFightersDead)
         {
             bCombatEnded = true;
@@ -275,7 +281,7 @@ public class CombatManager : MonoBehaviour {
     }
     void PerformAction()
     {
-        if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget || actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
+        if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
         {
             currentFighter.PerformActionOnTarget(actionChoosed, targetChoosed);
         } else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.AllTarget)
@@ -284,6 +290,12 @@ public class CombatManager : MonoBehaviour {
                 currentFighter.PerformActionOnTarget(actionChoosed, monsterGroupFighter);
             else
                 currentFighter.PerformActionOnTarget(actionChoosed, humanGroupFighter);
+        }else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
+        {
+            if (currentFighter.GetCreatureType() == CreatureType.Human)
+                currentFighter.PerformActionOnSelf(actionChoosed, humanGroupFighter);
+            else
+                currentFighter.PerformActionOnSelf(actionChoosed, monsterGroupFighter);
         }
 
         PutFighterInInitialPosition();

@@ -8,4 +8,21 @@ public class GroupMonsterFighter : GroupFighter {
         this.groupLogic = new PlayerLogic();
     }
 
+    public void MonsterEscaping()
+    {
+        bool allGroupEscape = true;
+
+        foreach (Fighter fighter in lFighters)
+        {
+            if (fighter.bTryToescape == false)
+                allGroupEscape = false;
+        }
+
+        if (allGroupEscape)
+        {
+            bEscaping = true;
+        }
+
+    }
+
 }
