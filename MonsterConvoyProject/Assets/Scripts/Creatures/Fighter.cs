@@ -47,18 +47,19 @@ public class Fighter : Creature{
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
 
-            float rand = 0.5f;
+            // float rand = 0.5f;
+            float rand = Random.Range(0f, 1f);
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }
 
-            if(rand > 0.95)
+            if(rand >= 0.90)
             {
-                fighter.TakeDamage(this.GetDamage());
+                fighter.TakeDamage(this.GetDamage()*2);
             }
-            else if(rand > 0.3)
+            else if(rand > 0.1)
             {
                 fighter.TakeDamage(this.GetDamage());
             }else
@@ -74,7 +75,6 @@ public class Fighter : Creature{
     public virtual void PerformActionOnTarget(ActionType action, GroupFighter groupHuman)
     {
         Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName + "on all enemy Group " );
-
        // ActionTalk();
     }
 
@@ -110,7 +110,7 @@ public class Fighter : Creature{
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         nCurrentHealth -= damage;
         bHasbeenAttcked = true;
@@ -132,9 +132,14 @@ public class Fighter : Creature{
 
     public bool CanBeAttack()
     {
-        if (!IsDead())
+        if (!IsDead() && !bTryToescape)
             return true;
         return false;
     }
-
+    public bool CanAttack()
+    {
+        if (!IsDead() && !bTryToescape)
+            return true;
+        return false;
+    }
 }

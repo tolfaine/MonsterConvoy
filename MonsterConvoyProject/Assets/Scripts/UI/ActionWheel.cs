@@ -37,4 +37,12 @@ public class ActionWheel : MonoBehaviour {
 
     }
 
+    public void SetAction(ActionType type, bool active)
+    {
+        if (type == ActionType.FEAR)
+            fear.SetActive(active);
+        if (type == ActionType.TALK)
+            talk.SetActive(active);
+    }
+
 }

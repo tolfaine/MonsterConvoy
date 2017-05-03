@@ -38,7 +38,8 @@ public class Monster : Fighter{
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
 
-            float rand = 0.5f;
+            float rand = 0.1f;
+            //float rand = Random.Range(0f, 1f);
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
@@ -49,12 +50,13 @@ public class Monster : Fighter{
             {
                 ((GroupHumanFighter)groupHuman).GetCritFeared(this);
             }
-            else if (rand > 0.3f)
+            else if (rand > 0.2f)
             {
                 ((GroupHumanFighter)groupHuman).GetFeared(this);
             }
             else
             {
+                ((GroupHumanFighter)groupHuman).bCanBeFeared = false;
                 Debug.Log("Fail Fear:" + rand.ToString());
             }
         }
@@ -65,24 +67,26 @@ public class Monster : Fighter{
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
 
-            float rand = 0.5f;
+            float rand = 0.1f;
+            //float rand = Random.Range(0f, 1f);
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }
 
-            if (rand > 0.95)
+            if (rand > 0.9f)
             {
-                ((GroupHumanFighter)groupHuman).GetConvinced(this);
+                ((GroupHumanFighter)groupHuman).GetCritConvinced(this);
             }
-            else if (rand > 0.3)
+            else if (rand > 0.2f)
             {
                 ((GroupHumanFighter)groupHuman).GetConvinced(this);
             }
             else
             {
                 Debug.Log("Fail Convice:" + rand.ToString());
+                ((GroupHumanFighter)groupHuman).bCanListen = false;
             }
 
             ActionTalk(action, rand);
@@ -111,13 +115,23 @@ public class Monster : Fighter{
             {
                 bTryToescape = true;
                 ((GroupMonsterFighter)monsterFighter).MonsterEscaping();
-                // check group fighter
-
             }
             else
             {
 
             }
         }
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+
+        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+        CombatManager cm = g.GetComponent<CombatManager>();
+
+        ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(this)).MonsterEscaping();
+
+
     }
 }

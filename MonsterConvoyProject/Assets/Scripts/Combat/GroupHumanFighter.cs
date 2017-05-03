@@ -8,11 +8,13 @@ public class GroupHumanFighter : GroupFighter {
     public int nCurrentFear = 0;
     public int nConvice = 50;
     public int nCurrentConvice = 0;
-    protected bool bCanBeFeared = true;
-    protected bool bCanListen = true;
+    public  bool bCanBeFeared = true;
+    public bool bCanListen = true;
 
     public bool bIsFeared;
     public bool bIsConviced;
+
+    public bool bInConversation = false;
 
     public GroupHumanFighter() : base() {
         this.groupLogic = new GroupIA();
@@ -21,66 +23,105 @@ public class GroupHumanFighter : GroupFighter {
 
     public void GetFeared(Monster monster)
     {
-        int fearDamage = 0;
-
-        foreach (Fighter fighter in lFighters)
+        if (bCanBeFeared)
         {
-            fearDamage += monster.nFearPower * 1;
-        }
+            int fearDamage = 0;
 
-        nCurrentFear += fearDamage;
+            foreach (Fighter fighter in lFighters)
+            {
+                fearDamage += monster.nFearPower * 1;
+            }
 
-        if(nCurrentFear > nFear)
-        {
-            nCurrentFear = nFear;
-        }
+            nCurrentFear += fearDamage;
 
-        if(nCurrentFear == nFear)
-        {
-            bIsFeared = true;
+            if (nCurrentFear > nFear)
+            {
+                nCurrentFear = nFear;
+            }
+
+            if (nCurrentFear == nFear)
+            {
+                bIsFeared = true;
+            }
         }
     }
 
     public void GetCritFeared(Monster monster)
     {
-        int fearDamage = 0;
-
-        foreach (Fighter fighter in lFighters)
+        if (bCanBeFeared)
         {
-            fearDamage += monster.nFearPower * 10;
-        }
+            int fearDamage = 0;
 
-        nCurrentFear += fearDamage;
+            foreach (Fighter fighter in lFighters)
+            {
+                fearDamage += monster.nFearPower * 20;
+            }
 
-        if (nCurrentFear > nFear)
-        {
-            nCurrentFear = nFear;
-        }
+            nCurrentFear += fearDamage;
 
-        if (nCurrentFear == nFear)
-        {
-            bIsFeared = true;
+            if (nCurrentFear > nFear)
+            {
+                nCurrentFear = nFear;
+            }
+
+            if (nCurrentFear == nFear)
+            {
+                bIsFeared = true;
+            }
         }
     }
+
     public void GetConvinced(Monster monster)
     {
-        int convinceDamage = 0;
-
-        foreach (Fighter fighter in lFighters)
+        if (bCanListen)
         {
-            convinceDamage += monster.nFearPower * 1;
+            bInConversation = true;
+
+            int convinceDamage = 0;
+
+            foreach (Fighter fighter in lFighters)
+            {
+                convinceDamage += monster.nFearPower * 1;
+            }
+
+            nCurrentConvice += convinceDamage;
+
+            if (nCurrentConvice > nConvice)
+            {
+                nCurrentConvice = nConvice;
+            }
+
+            if (nCurrentConvice == nConvice)
+            {
+                bIsConviced = true;
+            }
         }
+    }
 
-        nCurrentConvice += convinceDamage;
-
-        if (nCurrentConvice > nConvice)
+    public void GetCritConvinced(Monster monster)
+    {
+        if (bCanListen)
         {
-            nCurrentConvice = nConvice;
-        }
+            bInConversation = true;
 
-        if (nCurrentConvice == nConvice)
-        {
-            bIsConviced = true;
+            int convinceDamage = 0;
+
+            foreach (Fighter fighter in lFighters)
+            {
+                convinceDamage += monster.nFearPower * 20;
+            }
+
+            nCurrentConvice += convinceDamage;
+
+            if (nCurrentConvice > nConvice)
+            {
+                nCurrentConvice = nConvice;
+            }
+
+            if (nCurrentConvice == nConvice)
+            {
+                bIsConviced = true;
+            }
         }
     }
 

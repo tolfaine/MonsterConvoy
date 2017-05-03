@@ -132,6 +132,8 @@ public class CombatManager : MonoBehaviour {
         monsterGroupFighter.groupLogic = logic.GetComponent<PlayerLogic>();
         humanGroupFighter.groupLogic = logic.GetComponent<GroupIA>();
 
+        ((GroupIA)humanGroupFighter.groupLogic).groupHumanFighter = (GroupHumanFighter)humanGroupFighter;
+
         RollInitiative();
 
         bCombatStarted = true;
@@ -227,7 +229,15 @@ public class CombatManager : MonoBehaviour {
                     scriptManager.NextTurn();
 
                 currentFighter = GetNextFighter();
+
                 actionWheel.SetFighter(currentFighter);
+                
+                if(currentFighter.eCreatureType == CreatureType.Monster)
+                {
+                   // actionWheel.SetAction(ActionType.FEAR, ((GroupHumanFighter)humanGroupFighter).bCanBeFeared);
+                   // actionWheel.SetAction(ActionType.TALK, ((GroupHumanFighter)humanGroupFighter).bCanListen);
+                }
+
                 currentGroupLogic = GetGroupLogicOfFighter(currentFighter);
                 bTurnInProgress = true;
                 targetChoosed = null;
@@ -499,6 +509,17 @@ public class CombatManager : MonoBehaviour {
         else
             bActionRequireTarget = false;
     }
+
+    public GroupFighter GetGroupFighterOfFighter(Fighter fighter)
+    {
+        if (fighter.GetCreatureType() == CreatureType.Monster)
+            return monsterGroupFighter;
+        if (fighter.GetCreatureType() == CreatureType.Human)
+            return humanGroupFighter;
+        else
+            return null;
+    }
+
     GroupLogic GetGroupLogicOfFighter(Fighter fighter)
     {
         if (fighter.GetCreatureType() == CreatureType.Monster)
@@ -509,14 +530,26 @@ public class CombatManager : MonoBehaviour {
             return null;
     }
     Fighter GetNextFighter() {
-        currentFighterIndex++;
-  
-        if (combatOrder.Count == 0)
-            Debug.LogError("WTF");
-        if (currentFighterIndex >= combatOrder.Count)
-            currentFighterIndex = 0;
 
-        Fighter fighter = combatOrder[currentFighterIndex].fighter;
+        int counter = 0;
+        Fighter fighter = null;
+
+        while (fighter == null || counter > 20)
+        {
+            currentFighterIndex++;
+
+            if (combatOrder.Count == 0)
+                Debug.LogError("WTF");
+            if (currentFighterIndex >= combatOrder.Count)
+                currentFighterIndex = 0;
+
+            fighter = combatOrder[currentFighterIndex].fighter;
+
+            if (!fighter.CanAttack())
+                fighter = null;
+            counter++;
+        }
+
         return fighter;
 
     }

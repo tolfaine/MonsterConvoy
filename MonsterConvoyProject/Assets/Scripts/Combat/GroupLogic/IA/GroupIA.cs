@@ -23,6 +23,12 @@ public class GroupIA : GroupLogic {
     
     public ActionType SelectAction(List<Fighter> Enemies , List<Fighter> Allies)
     {
+        if(!groupHumanFighter.bCanBeFeared || !groupHumanFighter.bCanListen)
+            return ActionType.ATTACK;
+        if (groupHumanFighter.bInConversation)
+            return ActionType.TALK;
+
+
         float random = Random.Range(0.0f, 1.0f);
         if (random < 0.7)
             return ActionType.ATTACK;
