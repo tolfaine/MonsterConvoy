@@ -38,8 +38,8 @@ public class Monster : Fighter{
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
 
-            float rand = 0.1f;
-            //float rand = Random.Range(0f, 1f);
+           // float rand = 0.1f;
+            float rand = Random.Range(0f, 1f);
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
@@ -59,6 +59,8 @@ public class Monster : Fighter{
                 ((GroupHumanFighter)groupHuman).bCanBeFeared = false;
                 Debug.Log("Fail Fear:" + rand.ToString());
             }
+
+            ActionTalk(action, rand);
         }
 
         if (action == ActionType.TALK)
@@ -67,8 +69,8 @@ public class Monster : Fighter{
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
 
-            float rand = 0.1f;
-            //float rand = Random.Range(0f, 1f);
+           // float rand = 0.1f;
+            float rand = Random.Range(0f, 1f);
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
@@ -92,17 +94,6 @@ public class Monster : Fighter{
             ActionTalk(action, rand);
         }
 
-    }
-
-    public override void ActionTalk(ActionType action, float roll)
-    {
-        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
-        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
-        {
-            TalkManager sm = g.GetComponent<CombatManager>().talkManager;
-            sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
-            sm.customTalk.NewTalk(CreatureType.Monster, roll);
-        }
     }
 
     public override void PerformActionOnSelf(ActionType action, GroupFighter monsterFighter)
@@ -129,7 +120,7 @@ public class Monster : Fighter{
 
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
         CombatManager cm = g.GetComponent<CombatManager>();
-
+   
         ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(this)).MonsterEscaping();
 
 

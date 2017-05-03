@@ -21,23 +21,14 @@ public class MouseOverAction : MouseOver
 
     protected override void ProcessStates()
     {
+        base.ProcessStates();
+
         if (bMouseClicking && bMouseOver && bIsActive)
         {
             bMouseClicking = false;
             bMouseOver = false;
-            //Debug.Log("[MouseOverAction] bMouseClicking");
             combatManager.PlayerClickedAction(ActionType.GetActionTypeWithID((int)action));
-            gameObject.GetComponent<Renderer>().material.color = mouseClickedColor;
+        }
 
-
-        }
-        else if (bMouseOver)
-        {
-            gameObject.GetComponent<Renderer>().material.color = mouseOverColor;
-        }
-        else
-        {
-            gameObject.GetComponent<Renderer>().material.color = baseColor;
-        }
     }
 }

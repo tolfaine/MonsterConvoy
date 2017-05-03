@@ -13,10 +13,13 @@ public class Fighter : Creature{
     public int nPrecision;
 
     public bool bHasbeenAttcked;
+    
 
     public FighterUI currentUI;
 
     public bool bTryToescape = false;
+
+    public bool justTookDamage = false;
 
     public Fighter() : base() {}
 
@@ -65,11 +68,17 @@ public class Fighter : Creature{
             }else
             {
                 Debug.Log("Fail");
+
+                GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+                CombatManager cm = g.GetComponent<CombatManager>();
+                ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(this)).OneFighterGotTargetted();
+
             }
+            ActionTalk(action, rand);
 
         }
 
-       // ActionTalk();
+
     }
 
     public virtual void PerformActionOnTarget(ActionType action, GroupFighter groupHuman)
@@ -106,13 +115,24 @@ public class Fighter : Creature{
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
         if (g != null && g.GetComponent<CombatManager>().talkManager != null)
         {
-
+            TalkManager sm = g.GetComponent<CombatManager>().talkManager;
+            sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
+            sm.customTalk.NewTalk(eCreatureType, action, roll);
         }
     }
 
     public virtual void TakeDamage(int damage)
     {
+        if (damage > 0)
+        {
+            GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+            CombatManager cm = g.GetComponent<CombatManager>();
+            (cm.GetGroupFighterOfFighter(this)).OneFighterTookDamage();
+        }
+
         nCurrentHealth -= damage;
+        justTookDamage = true;
+
         bHasbeenAttcked = true;
         if (nCurrentHealth < 0)
             nCurrentHealth = 0;

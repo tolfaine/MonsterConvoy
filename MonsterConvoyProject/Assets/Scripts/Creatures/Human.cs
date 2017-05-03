@@ -52,16 +52,5 @@ public class Human : Fighter{
         }
     }
 
-    public override void ActionTalk(ActionType action, float roll)
-    {
-        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
-        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
-        {
-            TalkManager sm = g.GetComponent<CombatManager>().talkManager;
-            sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
-            sm.customTalk.NewTalk(CreatureType.Human, roll);
-        }
-    }
-
 
 }
