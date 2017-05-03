@@ -38,7 +38,7 @@ public class Monster : Fighter{
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
 
-           // float rand = 0.1f;
+            //float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)

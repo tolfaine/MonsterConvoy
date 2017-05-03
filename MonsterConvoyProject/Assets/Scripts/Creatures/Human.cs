@@ -48,6 +48,12 @@ public class Human : Fighter{
                 Debug.Log("Fail Convice:" + rand.ToString());
             }
 
+            GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+            CombatManager cm = g.GetComponent<CombatManager>();
+            ((GroupHumanFighter)cm.GetGroupFighterOfFighter(this)).bInConversation = true; ;
+
+            
+
             ActionTalk(action, rand);
         }
     }

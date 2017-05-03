@@ -125,8 +125,8 @@ public class CustomTalk : MonoBehaviour {
 	[Tooltip("Line to Stop reading the text (Leave -1 if should read until the end)")]
 	public int lineToBreak = -1;
 
-    public int humanFirstNormalLine = 2;
-    public int humanLastNormalLine = 7;
+    public int humanFirstNormalTalkLine = 2;
+    public int humanLastNormalTalkLine = 7;
     public int humanFirstNormalAttaqueLine = 10;
     public int humanLastNormalAttaqueLine = 15;
     public int humanFirstEchecAttaqueLine = 18;
@@ -134,8 +134,8 @@ public class CustomTalk : MonoBehaviour {
     public int humanFirstFuiteLine = 26;
     public int humanLastFuiteLine = 31;
 
-    public int monsterFirstNormalLine = 2;
-    public int monsterLastNormalLine = 7;
+    public int monsterFirstNormalTalkLine = 2;
+    public int monsterLastNormalTalkLine = 7;
     public int monsterFirstNormalFearLine = 10;
     public int monsterLastNormalFearLine = 15;
     public int monsterFirstFailFearLine = 18;
@@ -170,9 +170,9 @@ public class CustomTalk : MonoBehaviour {
         {
             txtToParse = humanTalk;
 
-            if(action == ActionType.ATTACK)
+            if (action == ActionType.ATTACK)
             {
-                if(roll < 0.1f)
+                if (roll < 0.1f)
                 {
                     minLine = humanFirstEchecAttaqueLine;
                     maxLine = humanLastEchecAttaqueLine;
@@ -182,11 +182,14 @@ public class CustomTalk : MonoBehaviour {
                     minLine = humanFirstNormalAttaqueLine;
                     maxLine = humanLastNormalAttaqueLine;
                 }
-            }else if (action == ActionType.TALK)
-            {
-                minLine = humanFirstNormalLine;
-                maxLine = humanLastNormalLine;
             }
+            else if (action == ActionType.TALK)
+            {
+                minLine = humanFirstNormalTalkLine;
+                maxLine = humanLastNormalTalkLine;
+            }
+            else
+                return;
 
         }
         else if (type == CreatureType.Monster)
@@ -200,8 +203,8 @@ public class CustomTalk : MonoBehaviour {
             }
             else if (action == ActionType.TALK)
             {
-                minLine = monsterFirstNormalLine;
-                maxLine = monsterLastNormalLine;
+                minLine = monsterFirstNormalTalkLine;
+                maxLine = monsterLastNormalTalkLine;
             }
             else if (action == ActionType.FEAR)
             {
@@ -216,6 +219,8 @@ public class CustomTalk : MonoBehaviour {
                     maxLine = monsterLastNormalFearLine;
                 }
             }
+            else
+                return;
         }
 
         int rand = Random.Range(minLine, maxLine);

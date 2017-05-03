@@ -13,7 +13,7 @@ public class MouseOver : MonoBehaviour {
 
     protected virtual void Start()
     {
-        baseColor = gameObject.GetComponent<Renderer>().material.color;
+        baseColor = gameObject.GetComponentInChildren<Renderer>().material.color;
     }
     protected virtual void Update()
     {

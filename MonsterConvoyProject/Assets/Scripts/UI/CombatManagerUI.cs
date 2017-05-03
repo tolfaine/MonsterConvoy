@@ -134,7 +134,7 @@ public class CombatManagerUI : MonoBehaviour {
             else if (combatManager.combatEndType == CombatManager.CombatEndType.MonsterEscape)
                 sDisplayed += "Monsters escape :3";
 
-            Invoke("BackToMenu", 2);
+            Invoke("BackToMenu", 4);
         }
     }
 
