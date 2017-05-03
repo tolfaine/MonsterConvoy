@@ -12,6 +12,8 @@ public class Fighter : Creature{
     public int nArmor;
     public int nPrecision;
 
+    public bool bHasbeenAttcked;
+
     public FighterUI currentUI;
 
     public bool bTryToescape = false;
@@ -66,14 +68,14 @@ public class Fighter : Creature{
 
         }
 
-        ActionTalk();
+       // ActionTalk();
     }
 
     public virtual void PerformActionOnTarget(ActionType action, GroupFighter groupHuman)
     {
         Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName + "on all enemy Group " );
 
-        ActionTalk();
+       // ActionTalk();
     }
 
     public virtual void PerformActionOnSelf(ActionType action, GroupFighter groupFighter)
@@ -81,8 +83,9 @@ public class Fighter : Creature{
        
     }
 
-    private void ActionTalk()
+    public virtual void ActionTalk(ActionType action, float roll)
     {
+        /*
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
         if (g != null && g.GetComponent<CombatManager>().scriptManager != null && g.GetComponent<CombatManager>().scriptManager.currentTurn != null)
         {
@@ -98,11 +101,19 @@ public class Fighter : Creature{
                 sm.rpgTalk.NewTalk();
             }
         }
+        */
+
+        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
+        {
+
+        }
     }
 
     public void TakeDamage(int damage)
     {
         nCurrentHealth -= damage;
+        bHasbeenAttcked = true;
         if (nCurrentHealth < 0)
             nCurrentHealth = 0;
         if (nCurrentHealth > nHealthMax)

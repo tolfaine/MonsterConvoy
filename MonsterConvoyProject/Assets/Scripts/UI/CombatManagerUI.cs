@@ -58,7 +58,7 @@ public class CombatManagerUI : MonoBehaviour {
 
     public bool DialogueInProgress()
     {
-        if (dialogueHumanObj.activeSelf || dialogueObj.activeSelf)
+        if ((dialogueHumanObj != null && dialogueHumanObj.activeSelf) || (dialogueObj!= null && dialogueObj.activeSelf))
             return true;
         return false;
     }

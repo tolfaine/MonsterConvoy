@@ -6,6 +6,12 @@ public class MouseOverAction : MouseOver
 {
     public ActionType.ActionEnum action;
     private CombatManager combatManager;
+    private bool bIsActive = true;
+
+    public void  SetActive(bool active)
+    {
+        bIsActive = active;
+    }
 
     protected override void Start()
     {
@@ -15,7 +21,7 @@ public class MouseOverAction : MouseOver
 
     protected override void ProcessStates()
     {
-        if (bMouseClicking && bMouseOver)
+        if (bMouseClicking && bMouseOver && bIsActive)
         {
             bMouseClicking = false;
             bMouseOver = false;

@@ -68,8 +68,8 @@ public class CombatManager : MonoBehaviour {
 
     public enum CombatEndType { MonstersDead, HumansDead, HumansConvinced, HumansFeared, MonsterEscape }
 
-    public List<GameObject> lMonsterPrefab;
-    public List<GameObject> lHumanPrefab;
+   // public List<GameObject> lMonsterPrefab;
+  //  public List<GameObject> lHumanPrefab;
 
     public GroupFighter     monsterGroupFighter;
     public GroupFighter     humanGroupFighter;     // En espérant que les GD ne demande pas de monster vs monster <3
@@ -110,10 +110,14 @@ public class CombatManager : MonoBehaviour {
     public bool bFighterInFightPosition = false;
     public bool bFighterInInitialPosition = true;
 
+
     public ScriptManager scriptManager;
+    public TalkManager talkManager;
+
     public bool bDialogueInProgres = false;
     public int nCurrentLine = 0;
 
+    public ActionWheel actionWheel;
     // public bool bDialogueHasEnded = false;
 
     public CombatManagerUI combatManagerUI;
@@ -223,6 +227,7 @@ public class CombatManager : MonoBehaviour {
                     scriptManager.NextTurn();
 
                 currentFighter = GetNextFighter();
+                actionWheel.SetFighter(currentFighter);
                 currentGroupLogic = GetGroupLogicOfFighter(currentFighter);
                 bTurnInProgress = true;
                 targetChoosed = null;
@@ -391,9 +396,9 @@ public class CombatManager : MonoBehaviour {
             GameObject mo;
             
             if(i == 0)
-             mo = Instantiate(lMonsterPrefab[i], monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+             mo = Instantiate(caravane.lFighters[i].prefab, monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
             else
-                mo = Instantiate(lMonsterPrefab[i], monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
+                mo = Instantiate(caravane.lFighters[i].prefab, monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
 
             mo.transform.parent = g.transform;
             mo.transform.localPosition = Vector3.zero;
@@ -439,7 +444,7 @@ public class CombatManager : MonoBehaviour {
 
             GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
-            GameObject mo = Instantiate(lHumanPrefab[i], humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            GameObject mo = Instantiate(humanCamp.lFighters[i].prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
             mo.transform.parent = g.transform;
             mo.transform.localPosition = Vector3.zero;
             mo.transform.localScale = new Vector3(0.3f,0.3f,0.3f);

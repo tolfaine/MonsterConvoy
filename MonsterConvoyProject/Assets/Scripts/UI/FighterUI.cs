@@ -8,6 +8,8 @@ public class FighterUI : MonoBehaviour {
     public TextMesh textMesh;
     public Renderer fighterRenderer;
     public GameObject dialogueAnchor;
+    public GameObject ui;
+    public GameObject canvas;
 
     // Use this for initialization
     void Start () {
@@ -22,6 +24,8 @@ public class FighterUI : MonoBehaviour {
 
             fighterRenderer.enabled = false;
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            ui.SetActive(false); 
+            canvas.SetActive(false);
         }
     }
     // Update is called once per frame

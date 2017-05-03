@@ -10,6 +10,7 @@ public class Creature {
     public int nID;
     public string sName;
     public CreatureType eCreatureType = CreatureType.None;
+    public GameObject prefab;
 
     public Creature() { }
 

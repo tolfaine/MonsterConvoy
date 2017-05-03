@@ -33,6 +33,8 @@ public class ScriptManager : MonoBehaviour {
     public ScriptTurnInfo currentTurn;
 
     public RPGTalk rpgTalk;
+
+
     public int indexLine = 1;
 
 

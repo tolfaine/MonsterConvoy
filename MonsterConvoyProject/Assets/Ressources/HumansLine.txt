@@ -1,0 +1,21 @@
+-------- Critical Talk ---------
+Je suis le Critical Talk numero 1 Human
+Je suis le Critical Talk numero 2 Human
+Je suis le Critical Talk numero 3 Human
+Je suis le Critical Talk numero 4 Human
+
+-------- Normal Talk ---------
+Je suis le Normal Talk numero 1 Human
+Je suis le Normal Talk numero 2 Human
+Je suis le Normal Talk numero 3 Human
+Je suis le Normal Talk numero 4 Human
+Je suis le Normal Talk numero 5 Human
+Je suis le Normal Talk numero 6 Human
+Je suis le Normal Talk numero 7 Human
+
+-------- Echec Talk ---------
+Je suis le Echec Talk numero 1 Human
+Je suis le Echec Talk numero 2 Human
+Je suis le Echec Talk numero 3 Human
+Je suis le Echec Talk numero 4 Human
+Je suis le Echec Talk numero 5 Human

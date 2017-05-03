@@ -14,7 +14,7 @@ public class GroupMonsterFighter : GroupFighter {
 
         foreach (Fighter fighter in lFighters)
         {
-            if (fighter.bTryToescape == false)
+            if (!fighter.IsDead() && fighter.bTryToescape == false)
                 allGroupEscape = false;
         }
 

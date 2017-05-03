@@ -1,0 +1,21 @@
+-------- Critical Talk ---------
+Je suis le Critical Talk numero 1 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Critical Talk numero 2 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Critical Talk numero 3 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Critical Talk numero 4 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+
+-------- Normal Talk ---------
+Je suis le Normal Talk numero 1 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Normal Talk numero 2 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Normal Talk numero 3 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Normal Talk numero 4 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Normal Talk numero 5 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Normal Talk numero 6 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Normal Talk numero 7 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+
+-------- Echec Talk ---------
+Je suis le Echec Talk numero 1 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Echec Talk numero 2 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Echec Talk numero 3 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Echec Talk numero 4 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 
+Je suis le Echec Talk numero 5 Monster 11111 2222 33333 4444 55555 66666 77777 88888 99999 

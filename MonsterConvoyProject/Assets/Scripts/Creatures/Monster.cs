@@ -84,8 +84,21 @@ public class Monster : Fighter{
             {
                 Debug.Log("Fail Convice:" + rand.ToString());
             }
+
+            ActionTalk(action, rand);
         }
 
+    }
+
+    public override void ActionTalk(ActionType action, float roll)
+    {
+        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
+        {
+            TalkManager sm = g.GetComponent<CombatManager>().talkManager;
+            sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
+            sm.customTalk.NewTalk(CreatureType.Monster, roll);
+        }
     }
 
     public override void PerformActionOnSelf(ActionType action, GroupFighter monsterFighter)
