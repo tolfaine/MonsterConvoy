@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: e03a6744e0ba4a2449accf416f06381b
-timeCreated: 1491411070
+timeCreated: 1493812342
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - spotLight: {fileID: 1191066027114690, guid: c44284024be249246a60ea04d534ea04,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

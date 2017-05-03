@@ -6,9 +6,17 @@ using UnityEngine.SceneManagement;
 public class OnClick : MonoBehaviour {
     
     bool visited = false;
+    public GameObject spotLight;
+    GameObject oneLight;
 
     private void Start()
     {
+        oneLight = spotLight;
+        oneLight.SetActive(false);
+        oneLight.transform.position = transform.position + (Vector3.up * 6);
+
+        oneLight = GameObject.Instantiate(oneLight);
+
         switch (GetComponent<PlaceType>().placeType)
         {
             case (PlaceType.Place.TERRAIN):
@@ -49,9 +57,7 @@ public class OnClick : MonoBehaviour {
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             NodeConnections.activeNode = gameObject;
-
-            //Color visited = new Color(0, 255, 0);
-            //GetComponent<SpriteRenderer>().color = visited;
+            
             /*
             //Change scene on node click
             for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
@@ -71,16 +77,19 @@ public class OnClick : MonoBehaviour {
     }
     void OnMouseOver()
 	{
+
+        //Cleanup 
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
-           //Turn on highlight effect 
-         //  GetComponent<SpriteRenderer> ().sprite = mapNodeHighlighted;
-		}
-	}
+            //Turn on highlight effect
+            oneLight.SetActive(true);
+        }
+    }
 
 	void OnMouseExit()
 	{
         //Turn off highlight effect
-		//GetComponent<SpriteRenderer> ().sprite = mapNode;
-	}
+        //Cleanup
+        oneLight.SetActive(false);
+    }
 }
