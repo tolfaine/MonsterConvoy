@@ -447,14 +447,16 @@ public class CombatManager : MonoBehaviour {
         {
             fighter = null;
 
+            int rand = Random.Range(0, humanCamp.lFighters.Count);
+
             if (humanCamp != null)
-                fighter = humanCamp.lFighters[i];
+                fighter = humanCamp.lFighters[rand];
             else
                 fighter = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetRandomFighter<Human>(creatureType);
 
             GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
-            GameObject mo = Instantiate(humanCamp.lFighters[i].prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            GameObject mo = Instantiate(humanCamp.lFighters[rand].prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
             mo.transform.parent = g.transform;
             mo.transform.localPosition = Vector3.zero;
             mo.transform.localScale = new Vector3(0.3f,0.3f,0.3f);

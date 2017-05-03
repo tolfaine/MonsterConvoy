@@ -48,18 +48,13 @@ public class Human : Fighter{
                 Debug.Log("Fail Convice:" + rand.ToString());
             }
 
-            ActionTalk(action, rand);
-        }
-    }
+            GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+            CombatManager cm = g.GetComponent<CombatManager>();
+            ((GroupHumanFighter)cm.GetGroupFighterOfFighter(this)).bInConversation = true; ;
 
-    public override void ActionTalk(ActionType action, float roll)
-    {
-        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
-        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
-        {
-            TalkManager sm = g.GetComponent<CombatManager>().talkManager;
-            sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
-            sm.customTalk.NewTalk(CreatureType.Human, roll);
+            
+
+            ActionTalk(action, rand);
         }
     }
 

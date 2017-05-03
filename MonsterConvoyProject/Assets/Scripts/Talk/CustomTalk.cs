@@ -125,19 +125,23 @@ public class CustomTalk : MonoBehaviour {
 	[Tooltip("Line to Stop reading the text (Leave -1 if should read until the end)")]
 	public int lineToBreak = -1;
 
-    public int humanFirstNormalLine = 8;
-    public int humanLastNormalLine = 14;
-    public int humanFirstCriticalLine = 2;
-    public int humanLastCriticalLine = 5;
-    public int humanFirstEchecLine = 17;
-    public int humanLastEchecLine = 21;
+    public int humanFirstNormalTalkLine = 2;
+    public int humanLastNormalTalkLine = 7;
+    public int humanFirstNormalAttaqueLine = 10;
+    public int humanLastNormalAttaqueLine = 15;
+    public int humanFirstEchecAttaqueLine = 18;
+    public int humanLastEchecAttaqueLine = 23;
+    public int humanFirstFuiteLine = 26;
+    public int humanLastFuiteLine = 31;
 
-    public int monsterFirstNormalLine = 8;
-    public int monsterLastNormalLine = 14;
-    public int monsterFirstCriticalLine = 2;
-    public int monsterLastCriticalLine = 5;
-    public int monsterFirstEchecLine = 17;
-    public int monsterLastEchecLine = 21;
+    public int monsterFirstNormalTalkLine = 2;
+    public int monsterLastNormalTalkLine = 7;
+    public int monsterFirstNormalFearLine = 10;
+    public int monsterLastNormalFearLine = 15;
+    public int monsterFirstFailFearLine = 18;
+    public int monsterLastFailFearLine = 23;
+    public int monsterFirstNormalAttaqueLine = 26;
+    public int monsterLastNormalAttaqueLine = 31;
 
     private int actualLineToStart;
 	private int actualLineToBreak;
@@ -157,7 +161,7 @@ public class CustomTalk : MonoBehaviour {
 	/// <summary>
 	/// Starts a new Talk.
 	/// </summary>
-	public void NewTalk(CreatureType type, float roll){
+	public void NewTalk(CreatureType type,ActionType action, float roll){
 
         int minLine = 0;
         int maxLine = 0;
@@ -165,40 +169,58 @@ public class CustomTalk : MonoBehaviour {
         if(type == CreatureType.Human)
         {
             txtToParse = humanTalk;
-            if (roll >= 0.9f)
+
+            if (action == ActionType.ATTACK)
             {
-                minLine = humanFirstCriticalLine;
-                maxLine = humanLastCriticalLine;
+                if (roll < 0.1f)
+                {
+                    minLine = humanFirstEchecAttaqueLine;
+                    maxLine = humanLastEchecAttaqueLine;
+                }
+                else
+                {
+                    minLine = humanFirstNormalAttaqueLine;
+                    maxLine = humanLastNormalAttaqueLine;
+                }
             }
-            else if (roll <= 0.1f)
+            else if (action == ActionType.TALK)
             {
-                minLine = humanFirstEchecLine;
-                maxLine = humanLastEchecLine;
+                minLine = humanFirstNormalTalkLine;
+                maxLine = humanLastNormalTalkLine;
             }
             else
-            {
-                minLine = humanFirstNormalLine;
-                maxLine = humanLastNormalLine;
-            }
+                return;
+
         }
         else if (type == CreatureType.Monster)
         {
             txtToParse = monsterTalk;
-            if (roll >= 0.9f)
+
+            if (action == ActionType.ATTACK)
             {
-                minLine = monsterFirstCriticalLine;
-                maxLine = monsterLastCriticalLine;
+                minLine = monsterFirstNormalAttaqueLine;
+                maxLine = monsterLastNormalAttaqueLine;
             }
-            else if (roll <= 0.1f)
+            else if (action == ActionType.TALK)
             {
-                minLine = monsterFirstEchecLine;
-                maxLine = monsterLastEchecLine;
+                minLine = monsterFirstNormalTalkLine;
+                maxLine = monsterLastNormalTalkLine;
+            }
+            else if (action == ActionType.FEAR)
+            {
+                if(roll < 0.2f)
+                {
+                    minLine = monsterFirstFailFearLine;
+                    maxLine = monsterLastFailFearLine;
+                }
+                else
+                {
+                    minLine = monsterFirstNormalFearLine;
+                    maxLine = monsterLastNormalFearLine;
+                }
             }
             else
-            {
-                minLine = monsterFirstNormalLine;
-                maxLine = monsterLastNormalLine;
-            }
+                return;
         }
 
         int rand = Random.Range(minLine, maxLine);
@@ -529,7 +551,7 @@ public class CustomTalk : MonoBehaviour {
 						line.Length - (startChar));
 				} else {
 					//if it not, search for spaces near to the last word and cut it
-					cuttedInSpace = line.IndexOf (" ", startChar+ (maxCharsOnUI)); // SI YA DES MOTS DE DE PLUS DE 8 PLEASE
+					cuttedInSpace = line.IndexOf (" ", startChar+ (maxCharsOnUI) - 7); // SI YA DES MOTS DE DE PLUS DE 8 PLEASE
 					if(cuttedInSpace != -1){
 						newLine = line.Substring (startChar, cuttedInSpace-startChar);
 					}else{

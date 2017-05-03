@@ -30,4 +30,14 @@ public class GroupFighter {
         if (nNbFighterAlive == 0)
             allFightersDead = true;
     }
+
+    public virtual void OneFighterTookDamage()
+    {
+        OneFighterGotTargetted();
+    }
+
+    public virtual void OneFighterGotTargetted()
+    {
+
+    }
 }

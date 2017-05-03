@@ -20,15 +20,15 @@ public class MouseOverCreature : MouseOver
         {
             //Debug.Log("[MouseOverAction] bMouseClicking");
             combatManager.PlayerClickedCreature(fighterUI.fighter);
-            gameObject.GetComponent<Renderer>().material.color = mouseClickedColor;
+            gameObject.GetComponentInChildren<Renderer>().material.color = mouseClickedColor;
         }
         else if (bMouseOver)
         {
-            gameObject.GetComponent<Renderer>().material.color = mouseOverColor;
+            gameObject.GetComponentInChildren<Renderer>().material.color = mouseOverColor;
         }
         else
         {
-            gameObject.GetComponent<Renderer>().material.color = baseColor;
+            gameObject.GetComponentInChildren<Renderer>().material.color = baseColor;
         }
     }
 }

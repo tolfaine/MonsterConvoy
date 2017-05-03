@@ -1,21 +1,33 @@
--------- Critical Talk ---------
-Je suis le Critical Talk numero 1 Human
-Je suis le Critical Talk numero 2 Human
-Je suis le Critical Talk numero 3 Human
-Je suis le Critical Talk numero 4 Human
-
 -------- Normal Talk ---------
-Je suis le Normal Talk numero 1 Human
-Je suis le Normal Talk numero 2 Human
-Je suis le Normal Talk numero 3 Human
-Je suis le Normal Talk numero 4 Human
-Je suis le Normal Talk numero 5 Human
-Je suis le Normal Talk numero 6 Human
-Je suis le Normal Talk numero 7 Human
+Would you dance for a gold coin ?
+My cousin told me monsters sounds funny but that's even better than what I expected
+The weather is rather nice, we could make a huge amount of gold bringing tourist here
+You really are a cute one, I would gladly adopt one of your many children
+Do you have time to talk about our lord and savior ?
+Uuh ? You were talking ? Could you make an effort and speak human ...
 
--------- Echec Talk ---------
-Je suis le Echec Talk numero 1 Human
-Je suis le Echec Talk numero 2 Human
-Je suis le Echec Talk numero 3 Human
-Je suis le Echec Talk numero 4 Human
-Je suis le Echec Talk numero 5 Human
+-------- Reussite Attaque  ---------
+Gnagnagna, gnagnagna...
+I'm gonna crush your skull even though I'm not even sure you have one!
+I don't understand this jibber jabber of yours, doomed creature! You're only spitting your disgusting saliva all over my very expensive outfit, which is actually pretty annoying.
+I wish you were dead already, but it would be a shame because I wouldn't be able to kill you myself. Such a dilemma.
+I hate you monsters! I wish there was not so many of you on the Monster World!
+You're so ugly cutting your head off would be a favor to every creature with eyes!
+
+-------- Echec Attaque  ---------
+I slipt on a shoelace and it wasn't even mine!
+I don't hear you nananananana I stucked my fingers in my ears!
+Your head should be banned, that clearly is a cheat. How could i focus on my attack ?!
+You're so talkative it's distracting me, hideous creature!
+I can fail one attack a million time ... a million attack one time ... wait 
+Nooo, you're lying, I didn't miss, you obviously are supporting the monsters.
+
+--------  Fuite  ---------
+I want to go back to Kansas, Toto!
+It is so hard to run dressed like this!
+RNG is against us!
+Let's farm more experience points then try again, pals!
+The slower runner should sacrifice himself and that is not gonna be me!
+Please guys, let's pretend it was raining and I didn't pee my pants!
+
+

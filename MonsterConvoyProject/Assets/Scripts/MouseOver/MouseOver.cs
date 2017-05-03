@@ -13,7 +13,7 @@ public class MouseOver : MonoBehaviour {
 
     protected virtual void Start()
     {
-        baseColor = gameObject.GetComponent<Renderer>().material.color;
+        baseColor = gameObject.GetComponentInChildren<Renderer>().material.color;
     }
     protected virtual void Update()
     {
@@ -36,15 +36,30 @@ public class MouseOver : MonoBehaviour {
     {
         if (bMouseClicking)
         {
-            gameObject.GetComponent<Renderer>().material.color = mouseClickedColor;
+            Renderer[] allRenders = gameObject.GetComponentsInChildren<Renderer>();
+            foreach(Renderer render in allRenders)
+            {
+                render.material.color = mouseClickedColor;    
+            }
+           // gameObject.GetComponent<Renderer>().material.color = mouseClickedColor;
         }
         else if (bMouseOver)
         {
-            gameObject.GetComponent<Renderer>().material.color = mouseOverColor;
+            Renderer[] allRenders = gameObject.GetComponentsInChildren<Renderer>();
+            foreach (Renderer render in allRenders)
+            {
+                render.material.color = mouseOverColor;
+            }
+         //   gameObject.GetComponent<Renderer>().material.color = mouseOverColor;
         }
         else
         {
-            gameObject.GetComponent<Renderer>().material.color = baseColor;
+            Renderer[] allRenders = gameObject.GetComponentsInChildren<Renderer>();
+            foreach (Renderer render in allRenders)
+            {
+                render.material.color = baseColor;
+            }
+           // gameObject.GetComponent<Renderer>().material.color = baseColor;
         }
     }
 

@@ -10,6 +10,9 @@ public class FighterUI : MonoBehaviour {
     public GameObject dialogueAnchor;
     public GameObject ui;
     public GameObject canvas;
+    public ParticleSystem slash;
+
+    public bool bHasBeenTurned = false;
 
     // Use this for initialization
     void Start () {
@@ -27,6 +30,22 @@ public class FighterUI : MonoBehaviour {
             ui.SetActive(false); 
             canvas.SetActive(false);
         }
+        if (fighter.justTookDamage)
+        {
+            fighter.justTookDamage = false;
+            slash.Play();
+
+
+
+        }
+
+        if (fighter.bTryToescape && !bHasBeenTurned )
+        {
+            bHasBeenTurned = true;
+
+          //  renderer.gameObject.transform.Rotate(new Vector3(0, 180, 0));
+        }
+
     }
     // Update is called once per frame
     void FixedUpdate () {

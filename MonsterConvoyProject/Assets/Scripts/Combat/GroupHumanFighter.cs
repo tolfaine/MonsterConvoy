@@ -27,6 +27,8 @@ public class GroupHumanFighter : GroupFighter {
         {
             int fearDamage = 0;
 
+            bInConversation = false;
+
             foreach (Fighter fighter in lFighters)
             {
                 fearDamage += monster.nFearPower * 1;
@@ -51,6 +53,8 @@ public class GroupHumanFighter : GroupFighter {
         if (bCanBeFeared)
         {
             int fearDamage = 0;
+
+            bInConversation = false;
 
             foreach (Fighter fighter in lFighters)
             {
@@ -123,6 +127,24 @@ public class GroupHumanFighter : GroupFighter {
                 bIsConviced = true;
             }
         }
+    }
+
+    public override void OneFighterTookDamage()
+    {
+        base.OneFighterTookDamage();
+
+        if (bInConversation)
+            bInConversation = false;
+
+    }
+
+    public override void OneFighterGotTargetted()
+    {
+        base.OneFighterGotTargetted();
+
+        if (bInConversation)
+            bInConversation = false;
+
     }
 
 }
