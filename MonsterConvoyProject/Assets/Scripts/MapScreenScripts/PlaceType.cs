@@ -30,6 +30,8 @@ public class PlaceType : MonoBehaviour {
     public Place placeType = Place.TERRAIN;
     public Terrain terrainType = Terrain.NULL;
 
+    public bool invasionStatus = false;
+
 	// Use this for initialization
 	void Start () {
         if (placeType.Equals(Place.DEPART))
@@ -37,4 +39,9 @@ public class PlaceType : MonoBehaviour {
         //else if (placeType.Equals(Place.TERRAIN) && terrainType.Equals(Terrain.NULL))
            // terrainType = (Terrain)Random.Range(1,8);
 	}
+
+    void setInvaded()
+    {
+        invasionStatus = true; 
+    }
 }

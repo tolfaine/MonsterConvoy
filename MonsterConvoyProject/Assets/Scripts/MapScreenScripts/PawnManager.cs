@@ -89,6 +89,12 @@ public class PawnManager : MonoBehaviour {
         print("Failed to find pawn type");
     }
 
+    //Cleanup. Hot fix
+    private void Update()
+    {
+      //  AkSoundEngine.StopAll(); 
+    }
+
     public void CreatePawn(PlaceType.Terrain terrainType, Vector3 position, Quaternion rotation, NodeConnections connections)
     {
         for (int i = 0; i < pawnPrefabs.Count; ++i)
