@@ -42,8 +42,8 @@ public class FighterUI : MonoBehaviour {
         if (fighter.bTryToescape && !bHasBeenTurned )
         {
             bHasBeenTurned = true;
-
-          //  renderer.gameObject.transform.Rotate(new Vector3(0, 180, 0));
+            fighterRenderer.gameObject.transform.Rotate(new Vector3(0, 180, 0));
+            //  renderer.gameObject.transform.Rotate(new Vector3(0, 180, 0));
         }
 
     }

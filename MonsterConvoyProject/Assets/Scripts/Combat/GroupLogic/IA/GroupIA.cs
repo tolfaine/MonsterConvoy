@@ -30,7 +30,7 @@ public class GroupIA : GroupLogic {
 
 
         float random = Random.Range(0.0f, 1.0f);
-        if (random < 0.7)
+        if (random < 0.6)
             return ActionType.ATTACK;
         else
             return ActionType.TALK;

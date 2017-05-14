@@ -46,7 +46,7 @@ public class Monster : Fighter{
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }
 
-            if (rand > 0.99f)
+            if (rand > 0.9f)
             {
                 ((GroupHumanFighter)groupHuman).GetCritFeared(this);
             }
@@ -100,9 +100,9 @@ public class Monster : Fighter{
     {
         if (action == ActionType.ESCAPE)
         {
-            float rand = 0.5f;
+            float rand = Random.Range(0f, 1f);
 
-            if (rand > 0.2f)
+            if (rand > 0.3f)
             {
                 bTryToescape = true;
                 ((GroupMonsterFighter)monsterFighter).MonsterEscaping();
