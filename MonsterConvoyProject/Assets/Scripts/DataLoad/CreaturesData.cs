@@ -106,9 +106,9 @@ public class MonsterData : CreatureData {
         monster.nHealthMax = this.nHealthMax;
         monster.nCurrentHealth = monster.nHealthMax;
         monster.nPower = this.nPower;
-        monster.nInitiative = this.nInitiative;
-        monster.nArmor = this.nArmor;
-        monster.nPrecision = this.nPrecision;
+        //monster.nInitiative = this.nInitiative;
+        //monster.nArmor = this.nArmor;
+        //monster.nPrecision = this.nPrecision;
         monster.nFearPower = this.nFearPower;
         monster.eCreatureType = CreatureType.Monster;
         return monster;
@@ -130,9 +130,9 @@ public class HumanData : CreatureData {
         human.nHealthMax = this.nHealthMax;
         human.nCurrentHealth = human.nHealthMax;
         human.nPower = this.nPower;
-        human.nInitiative = this.nInitiative;
-        human.nArmor = this.nArmor;
-        human.nPrecision = this.nPrecision;
+        //human.nInitiative = this.nInitiative;
+        //human.nArmor = this.nArmor;
+       // human.nPrecision = this.nPrecision;
         human.nFearTolerance = this.nFearTolerance;
         human.eCreatureType = CreatureType.Human;
         return human;

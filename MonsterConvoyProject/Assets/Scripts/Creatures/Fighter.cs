@@ -8,9 +8,9 @@ public class Fighter : Creature{
     public int nHealthMax;
     public int nCurrentHealth;
     public int nPower;
-    public int nInitiative;
-    public int nArmor;
-    public int nPrecision;
+    //public int nInitiative;
+    //public int nArmor;
+    //public int nPrecision;
 
     public bool bHasbeenAttcked;
     
@@ -30,14 +30,14 @@ public class Fighter : Creature{
    
         this.nHealthMax = fighter.nHealthMax;
         this.nPower = fighter.nPower;
-        this.nInitiative = fighter.nInitiative;
-        this.nArmor = fighter.nArmor;
-        this.nPrecision = fighter.nPrecision;
+       // this.nInitiative = fighter.nInitiative;
+       // this.nArmor = fighter.nArmor;
+       // this.nPrecision = fighter.nPrecision;
 
     }
     public int GetRandomInitiative()
     {
-        return (int)Random.Range(1, 20) + this.nInitiative;
+        return (int)Random.Range(1, 20); // + this.nInitiative;
     }
     public virtual void PerformActionOnTarget(ActionType action, Fighter fighter)
     {

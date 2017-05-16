@@ -551,7 +551,7 @@ public class CustomTalk : MonoBehaviour {
 						line.Length - (startChar));
 				} else {
 					//if it not, search for spaces near to the last word and cut it
-					cuttedInSpace = line.IndexOf (" ", startChar+ (maxCharsOnUI) - 7); // SI YA DES MOTS DE DE PLUS DE 8 PLEASE
+					cuttedInSpace = line.IndexOf (" ", startChar+ (maxCharsOnUI) - 3); // SI YA DES MOTS DE DE PLUS DE 8 PLEASE
 					if(cuttedInSpace != -1){
 						newLine = line.Substring (startChar, cuttedInSpace-startChar);
 					}else{

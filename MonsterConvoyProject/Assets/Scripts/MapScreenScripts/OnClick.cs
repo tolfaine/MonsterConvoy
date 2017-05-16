@@ -20,6 +20,7 @@ public class OnClick : MonoBehaviour {
 
         oneLight = GameObject.Instantiate(oneLight);
 
+        /*
         switch (GetComponent<PlaceType>().placeType)
         {
             case (PlaceType.Place.TERRAIN):
@@ -54,57 +55,35 @@ public class OnClick : MonoBehaviour {
             default:
                 break;
         }
-
+        */
 
     }
     void OnMouseDown()
-	{
+    {
+        //If the neighbours of the node we click on contains the current active node. We can travel.
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             NodeConnections.activeNode = gameObject;
 
-            PlaceType.Terrain type = GetComponent<PlaceType>().terrainType;
+            string sceneType;
 
-            string s = "";
-            switch (type)
-            {
-                case (PlaceType.Terrain.DESERT):
-                    s = "DESERT";
-                    break;
-                case (PlaceType.Terrain.FORET):
-                    s = "FORET";
-                    break;
-                case (PlaceType.Terrain.GROTTE):
-                    s = "GROTTE";
-                    break;
-                case (PlaceType.Terrain.MARECAGE):
-                    s = "MARECAGE";
-                    break;
-                case (PlaceType.Terrain.MONTAGNE):
-                    s = "MONTAGNE";
-                    break;
-                case (PlaceType.Terrain.NEIGE):
-                    s = "NEIGE";
-                    break;
-                case (PlaceType.Terrain.PLAGE):
-                    s = "PLAGE";
-                    break;
-                case (PlaceType.Terrain.PLAINE):
-                    s = "PLAINE";
-                    break;
-            }
+            if (GetComponent<PlaceType>().placeType != PlaceType.Place.TERRAIN)
+                sceneType = GetComponent<PlaceType>().placeType.ToString();
+            else
+                sceneType = GetComponent<PlaceType>().terrainType.ToString();
 
             mouseOver = false;
 
             //Change scene on node click
             for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
             {
+                //TODO preserve node types in file and reload from there. 
                 SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
             }
-            SceneManager.LoadSceneAsync(s, LoadSceneMode.Additive);
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(s));
-                    
-            }
+            SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
+
+        }
     }
 
     private void Update()
@@ -125,11 +104,9 @@ public class OnClick : MonoBehaviour {
 
         if (mouseOver)
         {
-            gameObject.transform.Rotate(new Vector3(0, 1f, 0));
         }
         else
         {
-            gameObject.transform.localRotation = Quaternion.EulerAngles(new Vector3(0, 0, 0));
         }
 
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
@@ -141,22 +118,24 @@ public class OnClick : MonoBehaviour {
     void OnMouseOver()
 	{
 
-        //Cleanup 
+        //Cleanup Whitney abstracted this for some reason :/ Ask her why 
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
-            mouseOver = true;
+            gameObject.transform.Rotate(new Vector3(0, 1f, 0));
+
             //Turn on highlight effect
             // oneLight.SetActive(true);
-          //  oneLight.GetComponent<Light>().enabled = true;
+            //  oneLight.GetComponent<Light>().enabled = true;
         }
     }
 
 	void OnMouseExit()
 	{
-        mouseOver = false;
         //Turn off highlight effect
+        gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
         //Cleanup
         //oneLight.SetActive(false);
-       // oneLight.GetComponent<Light>().enabled = false;
+        // oneLight.GetComponent<Light>().enabled = false;
     }
 }

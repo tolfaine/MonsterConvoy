@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class Caravane : MonoBehaviour {
 
-    public List<Monster> lFighters = new List<Monster>();
+    public List<Monster> lFighters = new List<Monster>(1);
     public int nNbCreatureInCaravane = 10;
+
+
+    void AddNew()
+    {
+        lFighters.Add(new Monster());
+    }
+
+    void Remove(int index)
+    {
+        lFighters.RemoveAt(index);
+    }
 
     private void Awake()
     {

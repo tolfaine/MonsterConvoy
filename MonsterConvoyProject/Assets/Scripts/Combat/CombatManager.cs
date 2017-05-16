@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ActionType {
-
-    public enum ActionEnum { Attack = 0, Escape = 1 , Talk = 2, Fear = 3, Negociate = 4};
-    public enum ActionTargetType { OneTarget , AllTarget, NoTarget};
+public class ActionType
+{
+    public enum ActionEnum { Attack = 0, Escape = 1, Talk = 2, Fear = 3, Negociate = 4 };
+    public enum ActionTargetType { OneTarget, AllTarget, NoTarget };
 
     public static readonly ActionType ATTACK = new ActionType(0, CreatureType.None, ActionTargetType.OneTarget, "ATTACK");
     public static readonly ActionType ESCAPE = new ActionType(1, CreatureType.None, ActionTargetType.NoTarget, "ESCAPE");
@@ -28,7 +28,7 @@ public class ActionType {
         this.targetType = targetType;
         this.sName = name;
     }
-   // public bool DoesRequireTarget() { return this.bRequireTarget;}
+    // public bool DoesRequireTarget() { return this.bRequireTarget;}
     public ActionTargetType GetTargetType() { return this.targetType; }
     public static ActionType GetActionTypeWithID(int id)
     {
@@ -53,10 +53,10 @@ public class ActionType {
 [System.Serializable]
 public class Order
 {
-    public Fighter          fighter;
-    public int              nInitiative;
+    public Fighter fighter;
+    public int nInitiative;
 
-    public Order(Fighter fighter , int initiative)
+    public Order(Fighter fighter, int initiative)
     {
         this.fighter = fighter;
         this.nInitiative = initiative;
@@ -64,42 +64,45 @@ public class Order
 }
 
 
-public class CombatManager : MonoBehaviour {
+public class CombatManager : MonoBehaviour
+{
 
     public enum CombatEndType { MonstersDead, HumansDead, HumansConvinced, HumansFeared, MonsterEscape }
 
-   // public List<GameObject> lMonsterPrefab;
-  //  public List<GameObject> lHumanPrefab;
+    private int currentTension = 1; //Used to deny us from going from heavy tension to light tension. I'm assuming this is desired. 
 
-    public GroupFighter     monsterGroupFighter;
-    public GroupFighter     humanGroupFighter;     // En espérant que les GD ne demande pas de monster vs monster <3
-    public List<Order>   combatOrder = new List<Order>();
-    public int           currentFighterIndex = -1;
+    // public List<GameObject> lMonsterPrefab;
+    //  public List<GameObject> lHumanPrefab;
 
-    public bool          bTurnInProgress = false;
-    public Fighter       currentFighter;
-    public GroupLogic    currentGroupLogic;
+    public GroupFighter monsterGroupFighter;
+    public GroupFighter humanGroupFighter;     // En espérant que les GD ne demande pas de monster vs monster <3
+    public List<Order> combatOrder = new List<Order>();
+    public int currentFighterIndex = -1;
 
-    public ActionType    actionChoosed = null;
-    public bool          bActionChoosed = false;
-    public bool          bActionRequireTarget; // ???? Je sais pas trop. Mais faut un truc du genre quelque part pour le fear et fuite;
+    public bool bTurnInProgress = false;
+    public Fighter currentFighter;
+    public GroupLogic currentGroupLogic;
 
-    public Fighter       targetChoosed;
-    public bool          bTargetChoosed = false;
+    public ActionType actionChoosed = null;
+    public bool bActionChoosed = false;
+    public bool bActionRequireTarget; // ???? Je sais pas trop. Mais faut un truc du genre quelque part pour le fear et fuite;
 
-    public bool          bActionInProgress = false; // Quand on lance l'action et que les animations (entre autres) sont en cours. On attend que tout soit finit pour passer au prochain tour
+    public Fighter targetChoosed;
+    public bool bTargetChoosed = false;
 
-    public bool          bCombatStarted = false;
-   // public bool         bMonsterWin = false;
-    public bool         bCombatEnded = false;
+    public bool bActionInProgress = false; // Quand on lance l'action et que les animations (entre autres) sont en cours. On attend que tout soit finit pour passer au prochain tour
+
+    public bool bCombatStarted = false;
+    // public bool         bMonsterWin = false;
+    public bool bCombatEnded = false;
     public CombatEndType combatEndType;
 
-    public GameObject       prefabMonster;
-    public GameObject       prefabHuman;
+    public GameObject prefabMonster;
+    public GameObject prefabHuman;
 
-    public GameObject       logic;
+    public GameObject logic;
 
-    int                     nNbCreaturePerGroup = 4;
+    int nNbCreaturePerGroup = 4;
 
     public MonsterCaravane caravane;
     public HumanCaravane humanCamp;
@@ -122,7 +125,8 @@ public class CombatManager : MonoBehaviour {
 
     public CombatManagerUI combatManagerUI;
 
-    void Start () {
+    void Start()
+    {
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<MonsterCaravane>();
         fighterMouvementManager = GameObject.FindGameObjectWithTag("FighterMouvementManager").GetComponent<FighterMouvementManager>();
 
@@ -137,9 +141,15 @@ public class CombatManager : MonoBehaviour {
         RollInitiative();
 
         bCombatStarted = true;
+
+        //Play Music
+        //AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
+       // AkSoundEngine.PostEvent("Play_FightMusic", gameObject);
+
     }
 
-	void Update () {
+    void Update()
+    {
 
         CheckDialogue();
         CheckCombatEnded();
@@ -164,16 +174,18 @@ public class CombatManager : MonoBehaviour {
 
     void CheckDeadFighters()
     {
-        foreach(Order order in combatOrder) {
+        foreach (Order order in combatOrder)
+        {
             if (order.fighter.IsDead())
                 combatOrder.Remove(order);
         }
-        for(int i =0; i < combatOrder.Count; i++)
+        for (int i = 0; i < combatOrder.Count; i++)
         {
             if (combatOrder[i].fighter == currentFighter)
                 currentFighterIndex = i;
         }
     }
+
     void CheckCombatEnded()
     {
         this.monsterGroupFighter.CheckFightersLife();
@@ -225,17 +237,17 @@ public class CombatManager : MonoBehaviour {
 
             if (!bTurnInProgress)
             {
-                if(scriptManager != null )
+                if (scriptManager != null)
                     scriptManager.NextTurn();
 
                 currentFighter = GetNextFighter();
 
                 actionWheel.SetFighter(currentFighter);
-                
-                if(currentFighter.eCreatureType == CreatureType.Monster)
+
+                if (currentFighter.eCreatureType == CreatureType.Monster)
                 {
-                   // actionWheel.SetAction(ActionType.FEAR, ((GroupHumanFighter)humanGroupFighter).bCanBeFeared);
-                   // actionWheel.SetAction(ActionType.TALK, ((GroupHumanFighter)humanGroupFighter).bCanListen);
+                    // actionWheel.SetAction(ActionType.FEAR, ((GroupHumanFighter)humanGroupFighter).bCanBeFeared);
+                    // actionWheel.SetAction(ActionType.TALK, ((GroupHumanFighter)humanGroupFighter).bCanListen);
                 }
 
                 currentGroupLogic = GetGroupLogicOfFighter(currentFighter);
@@ -298,14 +310,55 @@ public class CombatManager : MonoBehaviour {
     {
         if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
         {
+            if (actionChoosed == ActionType.ATTACK && currentFighter.GetCreatureType() == CreatureType.Human && currentTension < 4)
+            {
+                currentTension = 3;
+               // AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
+            }
+
             currentFighter.PerformActionOnTarget(actionChoosed, targetChoosed);
-        } else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.AllTarget)
+        }
+        else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.AllTarget)
         {
-            if(currentFighter.GetCreatureType() == CreatureType.Human)
+            if (currentFighter.GetCreatureType() == CreatureType.Human)
+            {
                 currentFighter.PerformActionOnTarget(actionChoosed, monsterGroupFighter);
+                if (actionChoosed == ActionType.FEAR && currentTension < 3)
+                {
+                    currentTension = 2;
+                   // AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
+                }
+                else if (actionChoosed == ActionType.TALK && currentTension < 3)
+                {
+                   // AkSoundEngine.PostEvent("Play_HumanTalk", gameObject);
+                }
+            }
             else
+            {
                 currentFighter.PerformActionOnTarget(actionChoosed, humanGroupFighter);
-        }else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
+                if (actionChoosed == ActionType.FEAR)
+                { }
+                if (actionChoosed == ActionType.TALK)
+                {
+                    switch (currentFighter.sName)
+                    {
+                        case "Slime":
+                           // AkSoundEngine.PostEvent("Play_SlimeTalk", gameObject);
+                            break;
+                        case "Quadrapus":
+                           // AkSoundEngine.PostEvent("Play_KappaTalk", gameObject);
+                            break;
+                        case "Decalepus":
+                          //  AkSoundEngine.PostEvent("Play_MummyTalk", gameObject);
+                            break;
+                        case "Gentlacule":
+                           // AkSoundEngine.PostEvent("Play_SirenTalk", gameObject);
+                            break;
+                    }
+                }
+            }
+        }
+        else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
         {
             if (currentFighter.GetCreatureType() == CreatureType.Human)
                 currentFighter.PerformActionOnSelf(actionChoosed, humanGroupFighter);
@@ -331,7 +384,8 @@ public class CombatManager : MonoBehaviour {
         fighterMouvementManager.bMoveToFightPosition = true;
     }
 
-    void RollInitiative() {
+    void RollInitiative()
+    {
 
         if (scriptManager != null)
         {
@@ -401,12 +455,12 @@ public class CombatManager : MonoBehaviour {
         for (int i = 0; i < nNbCreaturePerGroup; i++)
         {
             fighter = caravane.lFighters[i];
-            GameObject g =  Instantiate(prefab , monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            GameObject g = Instantiate(prefab, monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
             GameObject mo;
-            
-            if(i == 0)
-             mo = Instantiate(caravane.lFighters[i].prefab, monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+
+            if (i == 0)
+                mo = Instantiate(caravane.lFighters[i].prefab, monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
             else
                 mo = Instantiate(caravane.lFighters[i].prefab, monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
 
@@ -447,19 +501,17 @@ public class CombatManager : MonoBehaviour {
         {
             fighter = null;
 
-            int rand = Random.Range(0, humanCamp.lFighters.Count);
-
             if (humanCamp != null)
-                fighter = humanCamp.lFighters[rand];
+                fighter = humanCamp.lFighters[i];
             else
                 fighter = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetRandomFighter<Human>(creatureType);
 
             GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
-            GameObject mo = Instantiate(humanCamp.lFighters[rand].prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            GameObject mo = Instantiate(humanCamp.lFighters[i].prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
             mo.transform.parent = g.transform;
             mo.transform.localPosition = Vector3.zero;
-            mo.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
+            mo.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 
             mo.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
 
@@ -478,7 +530,7 @@ public class CombatManager : MonoBehaviour {
 
     void ActionEnded()
     {
-       // Debug.Log("Action End");
+        // Debug.Log("Action End");
         bTurnInProgress = false;
         bActionInProgress = false;
         bActionChoosed = false;
@@ -491,7 +543,7 @@ public class CombatManager : MonoBehaviour {
     }
     public void PlayerClickedCreature(Creature creature)
     {
-      //  Debug.Log("[CombatManager] PlayerClickedCreature()");
+        //  Debug.Log("[CombatManager] PlayerClickedCreature()");
 
         if (creature.GetCreatureType() != currentFighter.GetCreatureType())
         {
@@ -501,7 +553,7 @@ public class CombatManager : MonoBehaviour {
     }
     public void PlayerClickedAction(ActionType actionType)
     {
-     // Debug.Log("[CombatManager] PlayerClickedAction()");
+        // Debug.Log("[CombatManager] PlayerClickedAction()");
 
         actionChoosed = actionType;
         bActionChoosed = true;
@@ -531,7 +583,8 @@ public class CombatManager : MonoBehaviour {
         else
             return null;
     }
-    Fighter GetNextFighter() {
+    Fighter GetNextFighter()
+    {
 
         int counter = 0;
         Fighter fighter = null;
@@ -547,8 +600,12 @@ public class CombatManager : MonoBehaviour {
 
             fighter = combatOrder[currentFighterIndex].fighter;
 
-            if (!fighter.CanAttack())
+            if (!fighter.CanAttack()) //Does this mean they're dead? 
+            {
                 fighter = null;
+               // AkSoundEngine.SetSwitch("Tension", "T4", gameObject);
+                currentTension = 4;
+            }
             counter++;
         }
 
