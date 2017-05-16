@@ -1,14 +1,6 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
-guid: 29ee8e0d4cfdc644da1c52e7469a4197
-folderAsset: yes
-timeCreated: 1493858285
-=======
 guid: dc7136b9b0a67ab47aa731b3bc547fc8
 folderAsset: yes
-timeCreated: 1494772573
->>>>>>> Stashed changes
-licenseType: Free
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
