@@ -7,9 +7,17 @@ public class Monster : Fighter{
 
     public int nFearPower;
 
-     public Monster() : base() {
+
+    public Monster() : base() {
         this.eCreatureType = CreatureType.Monster;
     }
+
+    public Monster(Fighter fighter) : base()
+    {
+        this.eCreatureType = CreatureType.Monster;
+        this.CopyFighter(fighter);
+    }
+
 
     public void CopyMonster(Monster monster)
     {

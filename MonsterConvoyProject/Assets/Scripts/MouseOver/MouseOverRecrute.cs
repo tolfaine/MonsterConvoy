@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseOverCreature : MouseOver
+public class MouseOverRecrute : MouseOver
 {
 
-    private CombatManager combatManager;
+    private RecrutementManager recrutementManager;
+   // public Monster monster;
     public FighterUI fighterUI;
+    public GameObject fightherObj;
 
     protected override void Start()
     {
         base.Start();
-        combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+       // monster = new Monster(fighterUI.fighter);
+
+        recrutementManager = GameObject.FindGameObjectWithTag("RecrutementManager").GetComponent<RecrutementManager>();
     }
 
     protected override void ProcessStates()
@@ -19,8 +23,7 @@ public class MouseOverCreature : MouseOver
         if (bMouseClicking && !bClickProcessed)
         {
             bClickProcessed = true;
-            //Debug.Log("[MouseOverAction] bMouseClicking");
-            combatManager.PlayerClickedCreature(fighterUI.fighter);
+            recrutementManager.MonsterSelected(fightherObj);
             gameObject.GetComponentInChildren<Renderer>().material.color = mouseClickedColor;
         }
         else if (bMouseOver)

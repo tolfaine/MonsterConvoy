@@ -10,6 +10,8 @@ public class MouseOver : MonoBehaviour {
 
     public bool bMouseOver = false;
     public bool bMouseClicking = false;
+    public bool bClickProcessed = false;
+    public bool bLastFrameClicking = false;
 
     protected virtual void Start()
     {
@@ -26,16 +28,32 @@ public class MouseOver : MonoBehaviour {
         if (bMouseOver)
         {
             if (Input.GetMouseButton(0))
+            {
                 bMouseClicking = true;
-            else if (Input.GetMouseButtonUp(0))
+
+                if (!bLastFrameClicking)
+                {
+                    bClickProcessed = false;
+                }
+
+                bLastFrameClicking = true;
+            }
+            else
+            {
                 bMouseClicking = false;
+                if (bLastFrameClicking)
+                {
+                    bLastFrameClicking = false;
+                }
+            }
         }
     }
 
     protected virtual void ProcessStates()
     {
-        if (bMouseClicking)
+        if (bMouseClicking && !bClickProcessed)
         {
+            bClickProcessed = true;
             Renderer[] allRenders = gameObject.GetComponentsInChildren<Renderer>();
             foreach(Renderer render in allRenders)
             {

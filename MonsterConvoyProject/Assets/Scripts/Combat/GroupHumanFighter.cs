@@ -11,6 +11,10 @@ public class GroupHumanFighter : GroupFighter {
     public  bool bCanBeFeared = true;
     public bool bCanListen = true;
 
+    // Modificateur discute
+    // Modificateur peur
+    // Modificateur preci
+
     public bool bIsFeared;
     public bool bIsConviced;
 

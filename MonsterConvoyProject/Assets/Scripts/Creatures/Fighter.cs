@@ -8,6 +8,8 @@ public class Fighter : Creature{
     public int nHealthMax;
     public int nCurrentHealth;
     public int nPower;
+    public bool bIsImportant;
+
     //public int nInitiative;
     //public int nArmor;
     //public int nPrecision;
@@ -30,6 +32,7 @@ public class Fighter : Creature{
    
         this.nHealthMax = fighter.nHealthMax;
         this.nPower = fighter.nPower;
+        this.bIsImportant = fighter.bIsImportant;
        // this.nInitiative = fighter.nInitiative;
        // this.nArmor = fighter.nArmor;
        // this.nPrecision = fighter.nPrecision;
