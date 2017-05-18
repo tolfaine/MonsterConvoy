@@ -31,6 +31,7 @@ public class Fighter : Creature{
         this.CopyCreature(fighter);
    
         this.nHealthMax = fighter.nHealthMax;
+        this.nCurrentHealth = fighter.nCurrentHealth;
         this.nPower = fighter.nPower;
         this.bIsImportant = fighter.bIsImportant;
        // this.nInitiative = fighter.nInitiative;

@@ -49,6 +49,10 @@ public class Monster : Fighter{
             //float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
+            float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action,this, (GroupHumanFighter)groupHuman);
+
+            rand += bonus;
+
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
                 rand = combatManager.scriptManager.currentTurn.fRoll;
@@ -79,6 +83,9 @@ public class Monster : Fighter{
 
            // float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
+
+            float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
+            rand += bonus;
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {

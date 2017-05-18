@@ -46,6 +46,31 @@ public class CreaturesData : MonoBehaviour {
             lHumans.Add(humanData);
         }
     }
+    public T GetFighterOfID<T>(CreatureType type, int id)
+    {
+        if (type == CreatureType.Human)
+        {
+            foreach(HumanData hData in lHumans)
+            {
+                if(hData.nId == id)
+                {
+                    return (T)(object)(hData.GetHuman());
+                }
+            }
+        }
+        else
+        {
+            foreach (MonsterData mData in lMonsters)
+            {
+                if (mData.nId == id)
+                {
+                    return (T)(object)(mData.GetMonster());
+                }
+            }
+        }
+
+        return default(T);
+    }
 
     public T GetRandomFighter<T>(CreatureType type) {
         if(type == CreatureType.Human)
@@ -87,6 +112,8 @@ public class CreatureData
         this.nInitiative = int.Parse(data["initiative"].ToString());
         this.nArmor = int.Parse(data["armor"].ToString());
         this.nPrecision = int.Parse(data["precision"].ToString());
+
+        // IS IMPORTAT
     }
 }
 
@@ -112,6 +139,8 @@ public class MonsterData : CreatureData {
         monster.nFearPower = this.nFearPower;
         monster.eCreatureType = CreatureType.Monster;
         return monster;
+
+        // IS IMPORTAT
     }
 }
 
@@ -136,5 +165,7 @@ public class HumanData : CreatureData {
         human.nFearTolerance = this.nFearTolerance;
         human.eCreatureType = CreatureType.Human;
         return human;
+
+        // IS IMPORTAT
     }
 }

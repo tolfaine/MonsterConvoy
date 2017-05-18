@@ -9,25 +9,32 @@ public class CaractMonster
 {
     protected static List<CaractMonster> allCaractMonster = new List<CaractMonster>(0);
 
-    public static readonly CaractMonster TENTACULES = new CaractMonster(0, "TENTACULES");
-    public static readonly CaractMonster CORNES = new CaractMonster(0, "CORNES");
-    public static readonly CaractMonster AILES = new CaractMonster(0, "AILES");
-    public static readonly CaractMonster MOUSTACHES = new CaractMonster(0, "MOUSTACHES");
-    public static readonly CaractMonster CARAPACE = new CaractMonster(0, "CARAPACE");
-    public static readonly CaractMonster EPINES = new CaractMonster(0, "EPINES");
-    public static readonly CaractMonster SOURCILS = new CaractMonster(0, "SOURCILS");
-    public static readonly CaractMonster CHAPEAU = new CaractMonster(0, "CHAPEAU");
+    public enum _enumCaractMonster { NONE, TENTACULES, CORNES , AILES, MOUSTACHES, CARAPACE, SAC, SOURCILS, CHAPEAU }
 
-    
-    private int nId;
+    public static readonly CaractMonster TENTACULES = new CaractMonster(0, _enumCaractMonster.TENTACULES);
+    public static readonly CaractMonster CORNES = new CaractMonster(0, _enumCaractMonster.CORNES);
+    public static readonly CaractMonster AILES = new CaractMonster(0, _enumCaractMonster.AILES);
+    public static readonly CaractMonster MOUSTACHES = new CaractMonster(0, _enumCaractMonster.MOUSTACHES);
+    public static readonly CaractMonster CARAPACE = new CaractMonster(0, _enumCaractMonster.CARAPACE);
+    public static readonly CaractMonster SAC = new CaractMonster(0, _enumCaractMonster.SAC);
+    public static readonly CaractMonster SOURCILS = new CaractMonster(0, _enumCaractMonster.SOURCILS);
+    public static readonly CaractMonster CHAPEAU = new CaractMonster(0, _enumCaractMonster.CHAPEAU);
+
     [SerializeField]
-    private string sName;
+    protected string sName;
+    protected int nId;
+    public _enumCaractMonster enumCaract;
 
-    private CaractMonster(int id, string name)
+    [SerializeField]
+   // private string sName;
+
+    private CaractMonster(int id, _enumCaractMonster enumCaractNew)
     {
         nId = id;
-        sName = name;
-        if(!allCaractMonster.Contains(this))
+        enumCaract = enumCaractNew;
+        sName = enumCaract.ToString();
+
+        if (!allCaractMonster.Contains(this))
             allCaractMonster.Add(this);
     }
 
@@ -42,6 +49,37 @@ public class CaractMonster
         return allCaractMonster;
     }
 
+    public static CaractMonster GetCaractMonsterOfEnum(_enumCaractMonster IenumCaract)
+    {
+        switch (IenumCaract)
+        {
+            case _enumCaractMonster.AILES:
+                return CaractMonster.AILES;
+                break;
+            case _enumCaractMonster.CARAPACE:
+                return CaractMonster.CARAPACE;
+                break;
+            case _enumCaractMonster.CHAPEAU:
+                return CaractMonster.CHAPEAU;
+                break;
+            case _enumCaractMonster.CORNES:
+                return CaractMonster.CORNES;
+                break;
+            case _enumCaractMonster.MOUSTACHES:
+                return CaractMonster.MOUSTACHES;
+                break;
+            case _enumCaractMonster.SAC:
+                return CaractMonster.SAC;
+                break;
+            case _enumCaractMonster.SOURCILS:
+                return CaractMonster.SOURCILS;
+                break;
+            case _enumCaractMonster.TENTACULES:
+                return CaractMonster.TENTACULES;
+                break;
+        }
+        return null;
+    }
 
 }
 
@@ -81,17 +119,23 @@ public class CaractHumain
 [System.Serializable]
 public class CaractHumainStuff : CaractHumain
 {
-    public static readonly CaractHumainStuff BOUCLIER = new CaractHumainStuff(0, "BOUCLIER");
-    public static readonly CaractHumainStuff HACHE = new CaractHumainStuff(0, "HACHE");
-    public static readonly CaractHumainStuff RICHE = new CaractHumainStuff(0, "RICHE");
-    public static readonly CaractHumainStuff TOURISTE = new CaractHumainStuff(0, "TOURISTE");
-    public static readonly CaractHumainStuff JUPE = new CaractHumainStuff(0, "JUPE");
-    public static readonly CaractHumainStuff CAPE = new CaractHumainStuff(0, "CAPE");
-    public static readonly CaractHumainStuff BATON = new CaractHumainStuff(0, "BATON");
-    public static readonly CaractHumainStuff ARC = new CaractHumainStuff(0, "ARC");
+    public enum _enumCaractHumainStuff { BOUCLIER, HACHE, RICHE, TOURISTE, JUPE, CAPE, BATON, ARC }
 
-    protected CaractHumainStuff(int id, string name) : base(id,name){
+    public static readonly CaractHumainStuff BOUCLIER = new CaractHumainStuff(0, _enumCaractHumainStuff.BOUCLIER);
+    public static readonly CaractHumainStuff HACHE = new CaractHumainStuff(0, _enumCaractHumainStuff.HACHE);
+    public static readonly CaractHumainStuff RICHE = new CaractHumainStuff(0, _enumCaractHumainStuff.RICHE);
+    public static readonly CaractHumainStuff TOURISTE = new CaractHumainStuff(0, _enumCaractHumainStuff.TOURISTE);
+    public static readonly CaractHumainStuff JUPE = new CaractHumainStuff(0, _enumCaractHumainStuff.JUPE);
+    public static readonly CaractHumainStuff CAPE = new CaractHumainStuff(0, _enumCaractHumainStuff.CAPE);
+    public static readonly CaractHumainStuff BATON = new CaractHumainStuff(0, _enumCaractHumainStuff.BATON);
+    public static readonly CaractHumainStuff ARC = new CaractHumainStuff(0, _enumCaractHumainStuff.ARC);
+
+    public _enumCaractHumainStuff enumCaract;
+
+    protected CaractHumainStuff(int id, _enumCaractHumainStuff enumCaractNew) : base(id, enumCaractNew.ToString())
+    {
         this.type = CaracHumainType.Stuff;
+        this.enumCaract = enumCaractNew;
 
         if (!allCaractHumain.Contains(this))
             allCaractHumain.Add(this);
@@ -102,23 +146,60 @@ public class CaractHumainStuff : CaractHumain
         return allCaractHumain;
     }
 
-}
+    public static CaractHumainStuff GetCaractHumainOfEnum(_enumCaractHumainStuff IenumCaract)
+    {
+        switch (IenumCaract)
+        {
+            case _enumCaractHumainStuff.ARC:
+                return CaractHumainStuff.ARC;
+                break;
+            case _enumCaractHumainStuff.BATON:
+                return CaractHumainStuff.BATON;
+                break;
+            case _enumCaractHumainStuff.BOUCLIER:
+                return CaractHumainStuff.BOUCLIER;
+                break;
+            case _enumCaractHumainStuff.CAPE:
+                return CaractHumainStuff.CAPE;
+                break;
+            case _enumCaractHumainStuff.HACHE:
+                return CaractHumainStuff.HACHE;
+                break;
+            case _enumCaractHumainStuff.JUPE:
+                return CaractHumainStuff.JUPE;
+                break;
+            case _enumCaractHumainStuff.RICHE:
+                return CaractHumainStuff.RICHE;
+                break;
+            case _enumCaractHumainStuff.TOURISTE:
+                return CaractHumainStuff.TOURISTE;
+                break;
+        }
+        return null;
+    }
+
+  }
 
 [System.Serializable]
 public class CaractHumainCheveux : CaractHumain
 {
+    public enum _enumCaractHumainCheveux { BLOND, BRUN, ROUX, CHATAIN, BLANC, COLORE, CHAUVE, CASQUE }
 
-    public static readonly CaractHumainCheveux BLOND = new CaractHumainCheveux(0, "BLOND");
-    public static readonly CaractHumainCheveux BRUN = new CaractHumainCheveux(0, "BRUN");
-    public static readonly CaractHumainCheveux ROUX = new CaractHumainCheveux(0, "ROUX");
-    public static readonly CaractHumainCheveux CHATAIN = new CaractHumainCheveux(0, "CHATAIN");
-    public static readonly CaractHumainCheveux BLANC = new CaractHumainCheveux(0, "BLANC");
-    public static readonly CaractHumainCheveux COLORE = new CaractHumainCheveux(0, "COLORE");
-    public static readonly CaractHumainCheveux CHAUVE = new CaractHumainCheveux(0, "CHAUVE");
-    public static readonly CaractHumainCheveux CASQUE = new CaractHumainCheveux(0, "CASQUE");
+    public static readonly CaractHumainCheveux BLOND = new CaractHumainCheveux(0, _enumCaractHumainCheveux.BLOND);
+    public static readonly CaractHumainCheveux BRUN = new CaractHumainCheveux(0, _enumCaractHumainCheveux.BRUN);
+    public static readonly CaractHumainCheveux ROUX = new CaractHumainCheveux(0, _enumCaractHumainCheveux.ROUX);
+    public static readonly CaractHumainCheveux CHATAIN = new CaractHumainCheveux(0, _enumCaractHumainCheveux.CHATAIN);
+    public static readonly CaractHumainCheveux BLANC = new CaractHumainCheveux(0, _enumCaractHumainCheveux.BLANC);
+    public static readonly CaractHumainCheveux COLORE = new CaractHumainCheveux(0, _enumCaractHumainCheveux.COLORE);
+    public static readonly CaractHumainCheveux CHAUVE = new CaractHumainCheveux(0, _enumCaractHumainCheveux.CHAUVE);
+    public static readonly CaractHumainCheveux CASQUE = new CaractHumainCheveux(0, _enumCaractHumainCheveux.CASQUE);
 
-    protected CaractHumainCheveux(int id, string name) : base(id,name){
+    public _enumCaractHumainCheveux enumCaract;
+
+    protected CaractHumainCheveux(int id, _enumCaractHumainCheveux enumCaractNew) : base(id, enumCaractNew.ToString())
+    {
         this.type = CaracHumainType.Cheveux;
+        this.enumCaract = enumCaractNew;
         if (!allCaractHumain.Contains(this))
             allCaractHumain.Add(this);
     }
@@ -128,4 +209,42 @@ public class CaractHumainCheveux : CaractHumain
         return allCaractHumain;
     }
 
+    public static CaractHumainCheveux GetCaractHumainOfEnum(_enumCaractHumainCheveux IenumCaract)
+    {
+        switch (IenumCaract)
+        {
+            case _enumCaractHumainCheveux.BLOND:
+                return CaractHumainCheveux.BLOND;
+                break;
+            case _enumCaractHumainCheveux.BRUN:
+                return CaractHumainCheveux.BRUN;
+                break;
+            case _enumCaractHumainCheveux.ROUX:
+                return CaractHumainCheveux.ROUX;
+                break;
+            case _enumCaractHumainCheveux.CHATAIN:
+                return CaractHumainCheveux.CHATAIN;
+                break;
+            case _enumCaractHumainCheveux.BLANC:
+                return CaractHumainCheveux.BLANC;
+                break;
+            case _enumCaractHumainCheveux.COLORE:
+                return CaractHumainCheveux.COLORE;
+                break;
+            case _enumCaractHumainCheveux.CHAUVE:
+                return CaractHumainCheveux.CHAUVE;
+                break;
+            case _enumCaractHumainCheveux.CASQUE:
+                return CaractHumainCheveux.CASQUE;
+                break;
+        }
+        return null;
+
+    }
+
+    public static CaractHumainCheveux GetRandomCarac()
+    {
+        _enumCaractHumainCheveux randEnum = (_enumCaractHumainCheveux)Random.Range(0, System.Enum.GetValues(typeof(_enumCaractHumainCheveux)).Length);
+        return GetCaractHumainOfEnum(randEnum);
+    }
 }

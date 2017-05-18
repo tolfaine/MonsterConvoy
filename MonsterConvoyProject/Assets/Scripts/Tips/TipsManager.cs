@@ -83,6 +83,9 @@ public class TipsManager : MonoBehaviour {
             allCaracMonster.RemoveAt(randIndexMonster);
             allCaracHumain.RemoveAt(randIndexHumain);
 
+            ModRoll roll = ModRoll.GetRandomMod();
+
+            tip.modroll = roll;
 
             listTips.Add(tip);
         }
@@ -104,6 +107,84 @@ public class TipsManager : MonoBehaviour {
             tipsKnownByPlayer.Add(tip);
             tipsNotKnownByPlayer.Remove(tip);
         }
+    }
+
+    public float GetBonus(ActionType actionType, Monster monster, GroupHumanFighter groupHuman)
+    {
+        float bonus = 0;
+
+        List<Tip> myTips = GetTipsOfAction(actionType);
+        CaractMonster cm = monster.currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>().caractMonster;
+        myTips = GetTipsAboutMonsterCarac(cm, myTips);
+
+        foreach (Fighter fighter in groupHuman.lFighters)
+        {
+            if (fighter.CanAttack())
+            {
+                ModelHumainUI modelH = ((Human)fighter).currentUI.gameObject.GetComponentInChildren<ModelHumainUI>();
+                CaractHumainCheveux cheveux = modelH.caractCheveux;
+                CaractHumainStuff stuff = modelH.caractStuff;
+
+                foreach (Tip tip in myTips)
+                {
+                    if (tip.caracHumain == cheveux)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType);
+                    }
+                    else if (tip.caracHumain == stuff)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType);
+                    }
+
+                    if (bonus > 0)
+                        break;
+                }
+            }
+
+            if (bonus > 0)
+                break;
+        }
+
+
+        myTips = GetTipsOfAction(actionType);
+        cm = monster.currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>().permanentCarMutation;
+        myTips = GetTipsAboutMonsterCarac(cm, myTips);
+
+        foreach (Fighter fighter in groupHuman.lFighters)
+        {
+            if (fighter.CanAttack())
+            {
+                ModelHumainUI modelH = ((Human)fighter).currentUI.gameObject.GetComponentInChildren<ModelHumainUI>();
+                CaractHumainCheveux cheveux = modelH.caractCheveux;
+                CaractHumainStuff stuff = modelH.caractStuff;
+
+                foreach (Tip tip in myTips)
+                {
+                    if (tip.caracHumain == cheveux)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType);
+                    }
+                    else if (tip.caracHumain == stuff)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType);
+                    }
+
+                    if (bonus > 0)
+                        break;
+                }
+            }
+
+            if (bonus > 0)
+                break;
+        }
+        //   CaractMonster mutation;
+
+
+        return bonus;
+    }
+    public int GetBonus(ActionType actionType, Human human, GroupMonsterFighter groupMonster)
+    {
+        return 0;
     }
 
     public List<Tip> GetTipsAboutMonsterCarac(CaractMonster caracMonster)
@@ -129,6 +210,17 @@ public class TipsManager : MonoBehaviour {
         return finalList;
     }
     public List<Tip> GetTipsOfAction(ActionType actionType, List<Tip> aList)
+    {
+        List<Tip> finalList = new List<Tip>();
+
+        foreach (Tip tip in aList)
+        {
+            if (tip.modroll.actionType == actionType)
+                finalList.Add(tip);
+        }
+        return finalList;
+    }
+    public List<Tip> GetTipsOfAction(ActionType actionType)
     {
         List<Tip> finalList = new List<Tip>();
 

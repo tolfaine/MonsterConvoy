@@ -13,6 +13,16 @@ public class CreaturePrefabManager : MonoBehaviour {
         public string name;
         public GameObject prefab;
     }
+
+    [System.Serializable]
+    public class PrefabDataHumain
+    {
+        public int id;
+        public string name;
+        public GameObject prefabM;
+        public GameObject prefabF;
+    }
+
     [System.Serializable]
     public class PrefabDataWithHeads
     {
@@ -23,6 +33,7 @@ public class CreaturePrefabManager : MonoBehaviour {
     }
 
     public List<PrefabData> lMonsters = new List<PrefabData>(1);
+    public List<PrefabDataHumain> lHumains = new List<PrefabDataHumain>(1);
 
     // Use this for initialization
     void Start () {
@@ -40,6 +51,27 @@ public class CreaturePrefabManager : MonoBehaviour {
         // Random la tete en fonction de la class
         // Set les script de l'humain en fonction de la couleur des cheveux / hache ou pas 
 
+        return null;
+    }
+    public int GetRandomHumanID()
+    {
+        int randomIndex = Random.Range(0, lHumains.Count);
+
+        return lHumains[randomIndex].id;
+    }
+    public GameObject GetHuman(int id)
+    {
+        foreach (PrefabDataHumain prefabD in lHumains)
+        {
+            if (prefabD.id == id)
+            {
+                float randomGender = Random.Range(0f, 1f);
+                if (randomGender > 0.5)
+                    return prefabD.prefabF;
+                else
+                    return prefabD.prefabM;
+            }
+        }
         return null;
     }
 
