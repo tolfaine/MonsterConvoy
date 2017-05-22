@@ -109,10 +109,10 @@ public class OnClick : MonoBehaviour {
         {
         }
 
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
+        /*if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             oneLight.GetComponent<Light>().enabled = true;
-        }
+        }*/
 
     }
     void OnMouseOver()
