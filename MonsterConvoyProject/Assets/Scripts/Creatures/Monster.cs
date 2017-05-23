@@ -49,6 +49,7 @@ public class Monster : Fighter{
             //float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
+            // CEST PAS OPTI DE LE CALCULER A CHAQUE FOIS
             float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action,this, (GroupHumanFighter)groupHuman);
 
             rand += bonus;
@@ -84,6 +85,7 @@ public class Monster : Fighter{
            // float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
+            // CEST PAS OPTI DE LE CALCULER A CHAQUE FOIS
             float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
             rand += bonus;
 

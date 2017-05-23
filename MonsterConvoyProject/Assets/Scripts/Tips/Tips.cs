@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class ModRoll
 {
-    public ActionType actionType;
+
+    public ActionType actionType;// Supprimer ce truc
     public float modRollTalk = 0;
     public float modRollFear = 0;
     public float modRollAttack = 0;
@@ -14,7 +15,7 @@ public class ModRoll
 
     public static readonly ModRoll TALK = new ModRoll(0.1f, 0, 0, ActionType.TALK);
     public static readonly ModRoll FEAR = new ModRoll(0, 0.1f, 0, ActionType.FEAR);
-    public static readonly ModRoll ATTACK = new ModRoll(0, 0, 0.1f, ActionType.TALK);
+    public static readonly ModRoll ATTACK = new ModRoll(0, 0, 0.1f, ActionType.ATTACK);
 
     public static  ModRoll GetRandomMod()
     {

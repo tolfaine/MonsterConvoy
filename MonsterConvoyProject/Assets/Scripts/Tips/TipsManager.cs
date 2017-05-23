@@ -114,7 +114,9 @@ public class TipsManager : MonoBehaviour {
         float bonus = 0;
 
         List<Tip> myTips = GetTipsOfAction(actionType);
+
         CaractMonster cm = monster.currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>().caractMonster;
+
         myTips = GetTipsAboutMonsterCarac(cm, myTips);
 
         foreach (Fighter fighter in groupHuman.lFighters)
@@ -122,6 +124,7 @@ public class TipsManager : MonoBehaviour {
             if (fighter.CanAttack())
             {
                 ModelHumainUI modelH = ((Human)fighter).currentUI.gameObject.GetComponentInChildren<ModelHumainUI>();
+
                 CaractHumainCheveux cheveux = modelH.caractCheveux;
                 CaractHumainStuff stuff = modelH.caractStuff;
 
