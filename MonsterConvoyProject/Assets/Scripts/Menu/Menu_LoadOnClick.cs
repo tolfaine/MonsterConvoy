@@ -2,26 +2,42 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public enum MenuAction {
+    NoAction = -1,
+    NewGame = 0,
+    LoadGame = 1,
+    Credits = 2,
+    Quit = 3
+};
+
 public class Menu_LoadOnClick : MonoBehaviour {
-    enum MenuAction {NoAction, NewGame, LoadGame, Credits, Quit};
+    bool enable_loadGame = false;
+
+    public void Update()
+    {
+        GameObject.Find("LoadGame Button").GetComponent<Button>().interactable = enable_loadGame;
+    }
+
     public void loadScene(int action) {
         switch (action) {
             case 0:
-                SceneManager.LoadScene("Recrutement");
+                SceneManager.LoadScene("PLAGE");
                 break;
             case 1:
-                SceneManager.LoadScene("Menu");
+                //Load data before
+                SceneManager.LoadScene("Menu");  //la carte
                 break;
             case 2:
-                //Load data before
-                SceneManager.LoadScene("Credits"); //la carte
+                SceneManager.LoadScene("Credits");
                 break;
             case 3:
                 confirmQuit();
                 break;
             default:
+                SceneManager.LoadScene("Main_Menu");
                 break;
         }
     }
