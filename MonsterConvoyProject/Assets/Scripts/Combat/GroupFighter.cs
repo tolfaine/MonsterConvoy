@@ -17,7 +17,7 @@ public class GroupFighter {
 
     public GroupLogic GetGroupLogic() { return this.groupLogic; }
 
-    public void CheckFightersLife()
+    public virtual void CheckFightersLife()
     {
         int nNbFighterAlive = 0;
 

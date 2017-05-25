@@ -11,6 +11,7 @@ public class CaractMonster
 
     public enum _enumCaractMonster { NONE, TENTACULES, CORNES , AILES, MOUSTACHES, CARAPACE, SAC, SOURCILS, CHAPEAU }
 
+    public static readonly CaractMonster NONE = new CaractMonster(0, _enumCaractMonster.NONE);
     public static readonly CaractMonster TENTACULES = new CaractMonster(0, _enumCaractMonster.TENTACULES);
     public static readonly CaractMonster CORNES = new CaractMonster(0, _enumCaractMonster.CORNES);
     public static readonly CaractMonster AILES = new CaractMonster(0, _enumCaractMonster.AILES);
@@ -19,6 +20,7 @@ public class CaractMonster
     public static readonly CaractMonster SAC = new CaractMonster(0, _enumCaractMonster.SAC);
     public static readonly CaractMonster SOURCILS = new CaractMonster(0, _enumCaractMonster.SOURCILS);
     public static readonly CaractMonster CHAPEAU = new CaractMonster(0, _enumCaractMonster.CHAPEAU);
+
 
     [SerializeField]
     protected string sName;
@@ -40,7 +42,18 @@ public class CaractMonster
 
     public static CaractMonster GetRandomCarac()
     {
-        int randIndex = Random.Range(0, allCaractMonster.Count);
+        int randIndex = Random.Range(1, allCaractMonster.Count+1);
+        return allCaractMonster[randIndex];
+    }
+
+    public static CaractMonster GetRandomCaracExept(_enumCaractMonster enumMut, _enumCaractMonster enumMut2)
+    {
+        int randIndex = Random.Range(1, allCaractMonster.Count + 1);
+
+        while(allCaractMonster[randIndex].enumCaract == enumMut || allCaractMonster[randIndex].enumCaract == enumMut2)
+        {
+            randIndex = Random.Range(1, allCaractMonster.Count + 1);
+        }
         return allCaractMonster[randIndex];
     }
 
@@ -51,6 +64,7 @@ public class CaractMonster
 
     public static CaractMonster GetCaractMonsterOfEnum(_enumCaractMonster IenumCaract)
     {
+        int i = 0;
         switch (IenumCaract)
         {
             case _enumCaractMonster.AILES:
@@ -76,6 +90,9 @@ public class CaractMonster
                 break;
             case _enumCaractMonster.TENTACULES:
                 return CaractMonster.TENTACULES;
+                break;
+            case _enumCaractMonster.NONE:
+                return CaractMonster.NONE;
                 break;
         }
         return null;

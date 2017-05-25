@@ -81,7 +81,7 @@ public class CaravaneEditor : Editor {
             SerializedProperty nHealthMax = MyListRef.FindPropertyRelative("nHealthMax");
             SerializedProperty nCurrentHealth = MyListRef.FindPropertyRelative("nCurrentHealth");
             SerializedProperty nPower = MyListRef.FindPropertyRelative("nPower");
-            SerializedProperty nFearPower = MyListRef.FindPropertyRelative("nFearPower");
+           // SerializedProperty nFearPower = MyListRef.FindPropertyRelative("nFearPower");
             SerializedProperty bIsImportant = MyListRef.FindPropertyRelative("bIsImportant");
 
 
@@ -96,7 +96,7 @@ public class CaravaneEditor : Editor {
                 EditorGUILayout.PropertyField(nHealthMax);
                 EditorGUILayout.PropertyField(nCurrentHealth);
                 EditorGUILayout.PropertyField(nPower);
-                EditorGUILayout.PropertyField(nFearPower);
+               // EditorGUILayout.PropertyField(nFearPower);
                 EditorGUILayout.PropertyField(bIsImportant);
 
                 // Array fields with remove at index
@@ -139,7 +139,7 @@ public class CaravaneEditor : Editor {
                 nHealthMax.intValue = EditorGUILayout.IntField("HealthMax", nHealthMax.intValue);
                 nCurrentHealth.intValue = EditorGUILayout.IntField("CurrentHealth", nCurrentHealth.intValue);
                 nPower.intValue = EditorGUILayout.IntField("Power", nPower.intValue);
-                nFearPower.intValue = EditorGUILayout.IntField("FearPower", nFearPower.intValue);
+                //nFearPower.intValue = EditorGUILayout.IntField("FearPower", nFearPower.intValue);
                 bIsImportant.boolValue = EditorGUILayout.Toggle("Is important", bIsImportant.boolValue);
                 
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Caravane : MonoBehaviour {
 
+    public static bool created = false;
     public List<Monster> lFighters = new List<Monster>(1);
     public int nNbCreatureInCaravane = 10;
 
@@ -20,7 +21,14 @@ public class Caravane : MonoBehaviour {
 
     private void Awake()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        if (!created)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            created = true;
+        }
+        else
+            Destroy(transform.gameObject);
+
     }
     
     void Start () {
@@ -31,4 +39,13 @@ public class Caravane : MonoBehaviour {
         //    lFighters.Add(monster);
         }
 	}
+
+    public void CheckMonsterDead()
+    {
+        foreach(Monster monster in lFighters)
+        {
+            if (monster.IsDead())
+                lFighters.Remove(monster);
+        }
+    }
 }

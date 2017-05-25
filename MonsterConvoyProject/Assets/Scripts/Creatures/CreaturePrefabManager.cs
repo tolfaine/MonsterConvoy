@@ -6,6 +6,8 @@ public enum EnumClass { Paladin, Chevalier, Bard }
 
 public class CreaturePrefabManager : MonoBehaviour {
 
+    public static bool created = false;
+
     [System.Serializable]
     public class PrefabData
     {
@@ -22,7 +24,7 @@ public class CreaturePrefabManager : MonoBehaviour {
         public GameObject prefabM;
         public GameObject prefabF;
     }
-
+    /*
     [System.Serializable]
     public class PrefabDataWithHeads
     {
@@ -30,11 +32,22 @@ public class CreaturePrefabManager : MonoBehaviour {
         public string name;
         public GameObject prefab;
         public List<GameObject> heads = new List<GameObject>(1);
-    }
+    }*/
 
     public List<PrefabData> lMonsters = new List<PrefabData>(1);
+    public List<PrefabData> lBoss = new List<PrefabData>(1);
     public List<PrefabDataHumain> lHumains = new List<PrefabDataHumain>(1);
 
+    private void Awake()
+    {
+        if (!created)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            created = true;
+        }
+        else
+            Destroy(transform.gameObject);
+    }
     // Use this for initialization
     void Start () {
 		

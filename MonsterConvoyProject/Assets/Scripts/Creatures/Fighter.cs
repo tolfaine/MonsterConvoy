@@ -57,6 +57,7 @@ public class Fighter : Creature{
             // float rand = 0.5f;
             float rand = Random.Range(0f, 1f);
 
+
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
                 rand = combatManager.scriptManager.currentTurn.fRoll;

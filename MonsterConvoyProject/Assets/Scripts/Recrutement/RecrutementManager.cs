@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RecrutementManager : MonoBehaviour {
 
+    public int nbRecrute;
+    public bool canFindImportant;
 
     private CreaturePrefabManager creaturePrefabManager;
     public GameObject monsterPrefab;
@@ -39,7 +41,8 @@ public class RecrutementManager : MonoBehaviour {
             Destroy(child.gameObject);
         }
 
-        Initialise();
+        InitialiseRecruts();
+        InitialiseSlots();
         FillSlots();
     }
 	
@@ -79,7 +82,18 @@ public class RecrutementManager : MonoBehaviour {
         // If tout est bon, flip monsters ou faire diparaitre monstre 
 
 	}
+    void InitialiseRecruts()
+    {
+        CreaturesData creatureData = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>();
 
+        for(int i = 0; i< nbRecrute; i++)
+        {
+            Monster monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
+            InstantiateMonsterAtPosition(availablePosition[i].position, monster);
+
+        }
+
+    }
     void InstantiateMonsterAtPosition(Vector3 position, Monster monster)
     {
         GameObject model = creaturePrefabManager.GetMonster(monster.nID);
@@ -103,6 +117,8 @@ public class RecrutementManager : MonoBehaviour {
         scripMouseOver.fighterUI = monsterInstantiated.GetComponent<FighterUI>();
         scripMouseOver.fighterUI.fighter = monster;
 
+
+
         // Get Model monster of type id
         // Set script monster
     }
@@ -119,7 +135,7 @@ public class RecrutementManager : MonoBehaviour {
         slotSelected = slot;
     }
 
-    void Initialise()
+    void InitialiseSlots()
     {
         int i = 0;
         foreach(Monster monster in caravane.lFighters)

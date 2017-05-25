@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class TipsManager : MonoBehaviour {
-
+    public static bool created = false;
     public List<Tip> listTips = new List<Tip>();
 
     public List<Tip> tipsNotKnownByPlayer = new List<Tip>();
@@ -13,7 +13,17 @@ public class TipsManager : MonoBehaviour {
 
     void Awake()
     {
-       Initialise();
+        if (!created)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            created = true;
+        }
+        else
+            Destroy(transform.gameObject);
+
+        Initialise();
+
+
     }
     // Use this for initialization
 
@@ -113,7 +123,7 @@ public class TipsManager : MonoBehaviour {
     {
         float bonus = 0;
 
-        List<Tip> myTips = GetTipsOfAction(actionType);
+        List<Tip> myTips = GetTipsOfAction(actionType, monster.eCreatureType);
 
         CaractMonster cm = monster.currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>().caractMonster;
 
@@ -132,11 +142,11 @@ public class TipsManager : MonoBehaviour {
                 {
                     if (tip.caracHumain == cheveux)
                     {
-                        bonus += tip.modroll.GetValueOfAction(actionType);
+                        bonus += tip.modroll.GetValueOfAction(actionType, monster.eCreatureType);
                     }
                     else if (tip.caracHumain == stuff)
                     {
-                        bonus += tip.modroll.GetValueOfAction(actionType);
+                        bonus += tip.modroll.GetValueOfAction(actionType, monster.eCreatureType);
                     }
 
                     if (bonus > 0)
@@ -149,7 +159,7 @@ public class TipsManager : MonoBehaviour {
         }
 
 
-        myTips = GetTipsOfAction(actionType);
+        myTips = GetTipsOfAction(actionType, monster.eCreatureType);
         cm = monster.currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>().permanentCarMutation;
         myTips = GetTipsAboutMonsterCarac(cm, myTips);
 
@@ -165,11 +175,11 @@ public class TipsManager : MonoBehaviour {
                 {
                     if (tip.caracHumain == cheveux)
                     {
-                        bonus += tip.modroll.GetValueOfAction(actionType);
+                        bonus += tip.modroll.GetValueOfAction(actionType, monster.eCreatureType);
                     }
                     else if (tip.caracHumain == stuff)
                     {
-                        bonus += tip.modroll.GetValueOfAction(actionType);
+                        bonus += tip.modroll.GetValueOfAction(actionType, monster.eCreatureType);
                     }
 
                     if (bonus > 0)
@@ -212,24 +222,24 @@ public class TipsManager : MonoBehaviour {
         }
         return finalList;
     }
-    public List<Tip> GetTipsOfAction(ActionType actionType, List<Tip> aList)
+    public List<Tip> GetTipsOfAction(ActionType actionType, List<Tip> aList,CreatureType creatureType)
     {
         List<Tip> finalList = new List<Tip>();
 
         foreach (Tip tip in aList)
         {
-            if (tip.modroll.actionType == actionType)
+            if (tip.modAction(actionType, creatureType))
                 finalList.Add(tip);
         }
         return finalList;
     }
-    public List<Tip> GetTipsOfAction(ActionType actionType)
+    public List<Tip> GetTipsOfAction(ActionType actionType, CreatureType creatureType)
     {
         List<Tip> finalList = new List<Tip>();
 
         foreach (Tip tip in listTips)
         {
-            if (tip.modroll.actionType == actionType)
+            if (tip.modAction(actionType, creatureType))
                 finalList.Add(tip);
         }
         return finalList;
