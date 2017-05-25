@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+using LitJson;
 
 public enum MenuAction {
     NoAction = -1,
@@ -14,12 +16,36 @@ public enum MenuAction {
 };
 
 public class Menu_LoadOnClick : MonoBehaviour {
-    bool enable_loadGame = false;
+    //bool enable_loadGame = true;
+    private Button target_Loadbtn;
+    private Object background_scene;
+    string sPath;
+    JsonData jsFileSave;
 
-    public void Update()
+    void Awake()
+    {
+        target_Loadbtn = GameObject.Find("LoadGame Button").GetComponent<Button>();
+        string filePath = Application.dataPath + "/Ressources/Save/saveFile.json";
+        if (File.Exists(filePath))
+        {
+            sPath = File.ReadAllText(filePath);
+            jsFileSave = JsonMapper.ToObject(sPath);
+        }
+        else {
+            target_Loadbtn.interactable = false;
+            //enable_loadGame = false;
+            target_Loadbtn.GetComponentInChildren<Text>().color = Color.grey;
+        }
+        
+        background_scene = GameObject.Find("Background_scene").GetComponent<Object>();
+        int index = Random.Range(0, 8);
+        SceneManager.LoadScene(index);
+        //background_scene =  SceneManager.GetSceneAt(index);
+    }
+    /*public void Update()
     {
         GameObject.Find("LoadGame Button").GetComponent<Button>().interactable = enable_loadGame;
-    }
+    }*/
 
     public void loadScene(int action) {
         switch (action) {
