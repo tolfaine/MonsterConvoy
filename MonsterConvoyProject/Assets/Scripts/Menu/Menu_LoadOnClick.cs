@@ -25,7 +25,7 @@ public class Menu_LoadOnClick : MonoBehaviour {
     void Awake()
     {
         target_Loadbtn = GameObject.Find("LoadGame Button").GetComponent<Button>();
-        string filePath = Application.dataPath + "/Ressources/Save/saveFil.json";
+        string filePath = Application.dataPath + "/Ressources/Save/saveFile.json";
         if (File.Exists(filePath))
         {
             sPath = File.ReadAllText(filePath);
