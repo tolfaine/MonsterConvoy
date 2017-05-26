@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Monster : Fighter{
 
-    public int nFearPower;
+    //public int nFearPower;
 
 
     public Monster() : base() {
@@ -22,7 +22,7 @@ public class Monster : Fighter{
     public void CopyMonster(Monster monster)
     {
         this.CopyFighter(monster);
-        this.nFearPower = monster.nFearPower;
+        //this.nFearPower = monster.nFearPower;
         this.eCreatureType = CreatureType.Monster;
     }
     public override void PerformActionOnTarget(ActionType action , Fighter fighter)
@@ -49,9 +49,14 @@ public class Monster : Fighter{
             //float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
+            // CEST PAS OPTI DE LE CALCULER A CHAQUE FOIS
             float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action,this, (GroupHumanFighter)groupHuman);
 
             rand += bonus;
+
+            float terrain = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modRoll.GetValueOfAction(action, CreatureType.Monster);
+
+            rand += terrain;
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
@@ -84,8 +89,13 @@ public class Monster : Fighter{
            // float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
+            // CEST PAS OPTI DE LE CALCULER A CHAQUE FOIS
             float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
             rand += bonus;
+
+            float terrain = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modRoll.GetValueOfAction(action, CreatureType.Monster);
+
+            rand += terrain;
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {

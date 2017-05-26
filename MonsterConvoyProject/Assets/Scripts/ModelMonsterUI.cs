@@ -13,6 +13,13 @@ public class ModelMonsterUI : ModelUI
     {
         if (permanentMutation != CaractMonster._enumCaractMonster.NONE)
             permanentCarMutation = CaractMonster.GetCaractMonsterOfEnum(permanentMutation);
+
+        int id = gameObject.transform.parent.GetComponent<FighterUI>().fighter.nID;
+
+        MutationManager mmm = GameObject.FindGameObjectWithTag("MutationManager").GetComponent<MutationManager>();
+
+        SetCaract(mmm.GetMutationWithId(id));
+
     }
 
     public void SetCaract(CaractMonster caract)

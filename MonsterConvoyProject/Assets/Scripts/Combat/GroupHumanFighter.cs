@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GroupHumanFighter : GroupFighter {
 
-    public int nFear = 50;
+    public int nFear = 6;
     public int nCurrentFear = 0;
-    public int nConvice = 50;
+    public int nConvice = 6;
     public int nCurrentConvice = 0;
     public  bool bCanBeFeared = true;
     public bool bCanListen = true;
@@ -29,14 +29,15 @@ public class GroupHumanFighter : GroupFighter {
     {
         if (bCanBeFeared)
         {
-            int fearDamage = 0;
+            int fearDamage = 1;
 
             bInConversation = false;
-
+            /*
             foreach (Fighter fighter in lFighters)
             {
                 fearDamage += monster.nFearPower * 1;
-            }
+            }*/
+
 
             nCurrentFear += fearDamage;
 
@@ -56,14 +57,15 @@ public class GroupHumanFighter : GroupFighter {
     {
         if (bCanBeFeared)
         {
-            int fearDamage = 0;
+            int fearDamage = 2;
 
             bInConversation = false;
-
+            /*
             foreach (Fighter fighter in lFighters)
             {
                 fearDamage += monster.nFearPower * 20;
             }
+            */
 
             nCurrentFear += fearDamage;
 
@@ -85,13 +87,14 @@ public class GroupHumanFighter : GroupFighter {
         {
             bInConversation = true;
 
-            int convinceDamage = 0;
+            int convinceDamage = 1;
 
+            /*
             foreach (Fighter fighter in lFighters)
             {
                 convinceDamage += monster.nFearPower * 1;
             }
-
+            */
             nCurrentConvice += convinceDamage;
 
             if (nCurrentConvice > nConvice)
@@ -112,12 +115,13 @@ public class GroupHumanFighter : GroupFighter {
         {
             bInConversation = true;
 
-            int convinceDamage = 0;
+            int convinceDamage = 2;
 
+            /*
             foreach (Fighter fighter in lFighters)
             {
                 convinceDamage += monster.nFearPower * 20;
-            }
+            }*/
 
             nCurrentConvice += convinceDamage;
 

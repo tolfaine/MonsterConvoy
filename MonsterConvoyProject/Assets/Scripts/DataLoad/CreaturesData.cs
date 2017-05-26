@@ -6,15 +6,28 @@ using LitJson;
 
 public class CreaturesData : MonoBehaviour {
 
+    public static bool created = false;
     string sPath;
     JsonData jsCreatureData;
+
+    public MonsterData defaultMonster;
+    public HumanData defaultHuman;
 
     public List<MonsterData> lMonsters = new List<MonsterData>();
     public List<HumanData> lHumans = new List<HumanData>();
 
     // Use this for initialization
     void Awake () {
-        DontDestroyOnLoad(transform.parent.gameObject);
+
+        if (!created)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            created = true;
+        }
+        else
+            Destroy(transform.gameObject);
+
+        //DontDestroyOnLoad(transform.parent.gameObject);
         sPath = File.ReadAllText(Application.dataPath + "/Ressources/CreaturesJSON.json");
         jsCreatureData = JsonMapper.ToObject(sPath);
         LoadMonsters();
@@ -30,6 +43,12 @@ public class CreaturesData : MonoBehaviour {
         {
             creature = jsCreatureData[sCreatureType][i];
             MonsterData monsterData = new MonsterData(creature);
+
+            if (monsterData.nPower == -1)
+                monsterData.nPower = defaultMonster.nPower;
+            if (monsterData.nHealthMax == -1)
+                monsterData.nHealthMax = defaultMonster.nHealthMax;
+
             lMonsters.Add(monsterData);
         }
     }
@@ -43,6 +62,12 @@ public class CreaturesData : MonoBehaviour {
         {
             creature = jsCreatureData[sCreatureType][i];
             HumanData humanData = new HumanData(creature);
+
+            if (humanData.nPower == -1)
+                humanData.nPower = defaultHuman.nPower;
+            if (humanData.nHealthMax == -1)
+                humanData.nHealthMax = defaultHuman.nHealthMax;
+
             lHumans.Add(humanData);
         }
     }
@@ -71,6 +96,21 @@ public class CreaturesData : MonoBehaviour {
 
         return default(T);
     }
+    public MonsterData GetRandomMonsterWithImportance(bool importance)
+    {
+        List<MonsterData> finalList = new List<MonsterData>();
+
+        foreach(MonsterData data in lMonsters)
+        {
+            if (data.isImportant == importance)
+                finalList.Add(data);
+        }
+
+        int count = finalList.Count;
+        int rand = (int)Random.Range(0, count - 1);
+
+        return finalList[rand]; 
+    }
 
     public T GetRandomFighter<T>(CreatureType type) {
         if(type == CreatureType.Human)
@@ -98,20 +138,39 @@ public class CreatureData
     public string sName;
     public int nHealthMax;
     public int nPower;
-    public int nInitiative;
-    public int nArmor;
-    public int nPrecision;
+    
+   // public int nInitiative;
+   // public int nArmor;
+    //public int nPrecision;
 
     public CreatureData() {}
     public CreatureData(JsonData data) {
 
         this.nId = int.Parse(data["id"].ToString());
         this.sName = data["name"].ToString();
-        this.nHealthMax = int.Parse(data["healthMax"].ToString());
-        this.nPower = int.Parse(data["power"].ToString());
-        this.nInitiative = int.Parse(data["initiative"].ToString());
-        this.nArmor = int.Parse(data["armor"].ToString());
-        this.nPrecision = int.Parse(data["precision"].ToString());
+        try
+        {
+            this.nHealthMax = int.Parse(data["healthMax"].ToString());
+
+        }
+        catch (KeyNotFoundException)
+        {
+            this.nHealthMax = -1;
+        }
+
+        try
+        {
+            this.nPower = int.Parse(data["power"].ToString());
+
+        }
+        catch (KeyNotFoundException)
+        {
+            this.nPower = -1;
+        }
+
+        // this.nInitiative = int.Parse(data["initiative"].ToString());
+        //this.nArmor = int.Parse(data["armor"].ToString());
+        //this.nPrecision = int.Parse(data["precision"].ToString());
 
         // IS IMPORTAT
     }
@@ -120,10 +179,31 @@ public class CreatureData
 [System.Serializable]
 public class MonsterData : CreatureData {
 
-    public int nFearPower;
-
+    // public int nFearPower;
+    public bool isImportant;
     public MonsterData() : base() { }
-    public MonsterData(JsonData data): base(data) { this.nFearPower = int.Parse(data["fearPower"].ToString()); }
+    public MonsterData(JsonData data): base(data) {
+
+        try
+        {
+            int imp = int.Parse(data["IsImportant"].ToString());
+
+            if (imp > 0)
+                this.isImportant = true;
+            else
+                this.isImportant = false;
+
+        }
+        catch (KeyNotFoundException)
+        {
+            this.isImportant = false;
+        }
+
+        
+
+
+        //this.nFearPower = int.Parse(data["fearPower"].ToString());
+    }
 
     public Monster GetMonster()
     {
@@ -136,8 +216,9 @@ public class MonsterData : CreatureData {
         //monster.nInitiative = this.nInitiative;
         //monster.nArmor = this.nArmor;
         //monster.nPrecision = this.nPrecision;
-        monster.nFearPower = this.nFearPower;
+       // monster.nFearPower = this.nFearPower;
         monster.eCreatureType = CreatureType.Monster;
+        monster.bIsImportant = this.isImportant;
         return monster;
 
         // IS IMPORTAT
@@ -147,10 +228,13 @@ public class MonsterData : CreatureData {
 [System.Serializable]
 public class HumanData : CreatureData {
 
-    public int nFearTolerance;
+   // public int nFearTolerance;
 
     public HumanData() : base() { }
-    public HumanData(JsonData data): base(data){ this.nFearTolerance = int.Parse(data["fearTolerance"].ToString()); }
+    public HumanData(JsonData data): base(data){
+        //this.nFearTolerance = int.Parse(data["fearTolerance"].ToString());
+
+    }
     public Human GetHuman()
     {
         Human human = new Human();
@@ -162,7 +246,7 @@ public class HumanData : CreatureData {
         //human.nInitiative = this.nInitiative;
         //human.nArmor = this.nArmor;
        // human.nPrecision = this.nPrecision;
-        human.nFearTolerance = this.nFearTolerance;
+        //human.nFearTolerance = this.nFearTolerance;
         human.eCreatureType = CreatureType.Human;
         return human;
 
