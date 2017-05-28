@@ -36,6 +36,9 @@ public class Menu_LoadOnClick : MonoBehaviour {
             //enable_loadGame = false;
             target_Loadbtn.GetComponentInChildren<Text>().color = Color.grey;
         }
+        int index_scene = Random.Range(11, 21);
+        SceneManager.LoadScene(index_scene, LoadSceneMode.Additive);
+
     }
     /*public void Update()
     {
