@@ -16,8 +16,9 @@ public class MouseOverCreature : MouseOver
 
     protected override void ProcessStates()
     {
-        if (bMouseClicking)
+        if (bMouseClicking && !bClickProcessed)
         {
+            bClickProcessed = true;
             //Debug.Log("[MouseOverAction] bMouseClicking");
             combatManager.PlayerClickedCreature(fighterUI.fighter);
             gameObject.GetComponentInChildren<Renderer>().material.color = mouseClickedColor;

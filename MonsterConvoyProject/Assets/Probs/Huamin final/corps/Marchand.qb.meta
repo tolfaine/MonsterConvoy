@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 060095f171ff6a34d9c60839b1110d12
 timeCreated: 1494430388
+=======
+guid: 0aa2e84ac69392f42a074f3d19d97558
+timeCreated: 1494945025
+>>>>>>> master
 licenseType: Free
 DefaultImporter:
   userData: 

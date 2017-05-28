@@ -25,4 +25,12 @@ public class GroupMonsterFighter : GroupFighter {
 
     }
 
+    public override void CheckFightersLife()
+    {
+        base.CheckFightersLife();
+
+        GameObject g = GameObject.FindGameObjectWithTag("Caravane");
+        Caravane caravane = g.GetComponent<Caravane>();
+        caravane.CheckMonsterDead();
+    }
 }

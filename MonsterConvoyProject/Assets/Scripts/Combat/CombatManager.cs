@@ -104,7 +104,7 @@ public class CombatManager : MonoBehaviour
 
     int nNbCreaturePerGroup = 4;
 
-    public MonsterCaravane caravane;
+    public Caravane caravane;
     public HumanCaravane humanCamp;
 
     public FighterMouvementManager fighterMouvementManager;
@@ -125,10 +125,15 @@ public class CombatManager : MonoBehaviour
 
     public CombatManagerUI combatManagerUI;
 
+    private CreaturePrefabManager creaturePrefabManager;
+
+    public Human defaultHuman;
+
     void Start()
     {
-        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<MonsterCaravane>();
+        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
         fighterMouvementManager = GameObject.FindGameObjectWithTag("FighterMouvementManager").GetComponent<FighterMouvementManager>();
+        creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
 
         InstantiateMonster();
         InstantiateHuman();
@@ -459,10 +464,9 @@ public class CombatManager : MonoBehaviour
 
             GameObject mo;
 
-            if (i == 0)
-                mo = Instantiate(caravane.lFighters[i].prefab, monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
-            else
-                mo = Instantiate(caravane.lFighters[i].prefab, monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
+            GameObject model = creaturePrefabManager.GetMonster(fighter.nID);
+            mo = Instantiate(model, monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
+                
 
             mo.transform.parent = g.transform;
             mo.transform.localPosition = Vector3.zero;
@@ -499,12 +503,58 @@ public class CombatManager : MonoBehaviour
 
         for (int i = 0; i < nNbCreaturePerGroup; i++)
         {
+            int idModel = creaturePrefabManager.GetRandomHumanID();
+            GameObject model = creaturePrefabManager.GetHuman(idModel);
+            Human humain = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetFighterOfID<Human>(creatureType, idModel);
+
+            ModelHumainUI modelUI = model.GetComponent<ModelHumainUI>();
+            if(modelUI != null)
+            {
+                modelUI.RandomCheveux();
+            }
+
+            if (humain == null)
+            {
+                humain = new Human();
+                humain.CopyHuman(defaultHuman);
+                humain.nID = idModel;
+                //humain.sName = model.name;
+            }
+
+
+
+            GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+
+            GameObject mo = Instantiate(model, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            mo.transform.parent = g.transform;
+            mo.transform.localPosition = Vector3.zero;
+            mo.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+            mo.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+
+            MouseOverCreature mouseOver = mo.transform.GetChild(0).gameObject.AddComponent<MouseOverCreature>();
+            mouseOver.fighterUI = g.GetComponent<FighterUI>();
+
+            g.GetComponent<FighterUI>().fighter = humain;
+            humanGroupFighter.lFighters.Add(humain);
+            g.transform.parent = GameObject.FindGameObjectWithTag("Humans").transform;
+            g.name = humain.sName;
+
+            g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
+        }
+        /*
+         
+        for (int i = 0; i < nNbCreaturePerGroup; i++)
+        {
             fighter = null;
 
             if (humanCamp != null)
                 fighter = humanCamp.lFighters[i];
             else
+            {
                 fighter = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetRandomFighter<Human>(creatureType);
+            }
+                
 
             GameObject g = Instantiate(prefab, humansPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
@@ -525,6 +575,8 @@ public class CombatManager : MonoBehaviour
 
             g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
         }
+
+        */
     }
     void NextFighterTurn() { }
 

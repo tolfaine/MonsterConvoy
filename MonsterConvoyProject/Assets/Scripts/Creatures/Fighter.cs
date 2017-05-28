@@ -8,6 +8,8 @@ public class Fighter : Creature{
     public int nHealthMax;
     public int nCurrentHealth;
     public int nPower;
+    public bool bIsImportant;
+
     //public int nInitiative;
     //public int nArmor;
     //public int nPrecision;
@@ -29,7 +31,9 @@ public class Fighter : Creature{
         this.CopyCreature(fighter);
    
         this.nHealthMax = fighter.nHealthMax;
+        this.nCurrentHealth = fighter.nCurrentHealth;
         this.nPower = fighter.nPower;
+        this.bIsImportant = fighter.bIsImportant;
        // this.nInitiative = fighter.nInitiative;
        // this.nArmor = fighter.nArmor;
        // this.nPrecision = fighter.nPrecision;
@@ -52,6 +56,7 @@ public class Fighter : Creature{
 
             // float rand = 0.5f;
             float rand = Random.Range(0f, 1f);
+
 
             if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
             {
