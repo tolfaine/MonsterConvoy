@@ -7,8 +7,14 @@ public class PawnManager : MonoBehaviour {
     static PawnManager instance;
 
     Dictionary<PlaceType.Terrain, int> numTerrainUsed = new Dictionary<PlaceType.Terrain, int>();
-
+    
     public List<GameObject> pawnPrefabs = new List<GameObject>();
+    private GameObject[] pawns;
+
+    public static PawnManager Instance()
+    {
+        return instance;
+    }
 
     void Start()
     {
@@ -18,7 +24,7 @@ public class PawnManager : MonoBehaviour {
     private void Awake()
     {
         //Assign terrain at runtime
-        GameObject[] pawns = GameObject.FindGameObjectsWithTag("MapNode");
+        pawns = GameObject.FindGameObjectsWithTag("MapNode");
 
         for (int i = 1; i < System.Enum.GetNames(typeof(PlaceType.Terrain)).Length; ++i)
         {
@@ -30,6 +36,7 @@ public class PawnManager : MonoBehaviour {
             if (pawns[i].GetComponent<PlaceType>().placeType == PlaceType.Place.TERRAIN && pawns[i].GetComponent<PlaceType>().terrainType == PlaceType.Terrain.NULL)
             {
                 int randTerrainInt = Random.Range(1, System.Enum.GetNames(typeof(PlaceType.Terrain)).Length + 1);
+                //TODO is this what's causing long compile time? 
                 while (!numTerrainUsed.ContainsKey((PlaceType.Terrain) randTerrainInt) && numTerrainUsed.Count > 0)
                     randTerrainInt = Random.Range(1, System.Enum.GetNames(typeof(PlaceType.Terrain)).Length + 1);
 
@@ -47,6 +54,68 @@ public class PawnManager : MonoBehaviour {
                     {
                         numTerrainUsed.Add((PlaceType.Terrain)j, 0);
                     }
+                    print("Too many terrain pawns. Refilling usable pawns.");
+                }
+
+                for (int j = 0; j < pawnPrefabs.Count; ++j)
+                {
+                    if (pawnPrefabs[j].name == terrainType.ToString() + " PION")
+                    {
+                        List<GameObject> preserveNodeConnections = pawns[i].GetComponent<NodeConnections>().neighbourNodes;
+
+                        var newPawn = Instantiate(pawnPrefabs[j], pawns[i].transform.position, pawns[i].transform.rotation);
+
+                        //Remove Terrain pawn from all it's neighbours. 
+                        for (int k = 0; k < preserveNodeConnections.Count; ++k)
+                        {
+                            preserveNodeConnections[k].GetComponent<NodeConnections>().RemoveNeighbour(pawns[i]);
+                        }
+
+                        Destroy(pawns[i]);
+
+                        pawns[i] = newPawn;
+
+                        //Read all neighbours to the new pawn.
+                        for (int k = 0; k < preserveNodeConnections.Count; ++k)
+                        {
+                            pawns[i].GetComponent<NodeConnections>().AddNeighbour(preserveNodeConnections[k]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public void RegenerateMap()
+    {
+        numTerrainUsed.Clear();
+        for (int i = 1; i < System.Enum.GetNames(typeof(PlaceType.Terrain)).Length; ++i)
+        {
+            numTerrainUsed.Add((PlaceType.Terrain)i, 0);
+        }
+
+        for (int i = 0; i < pawns.Length; ++i)
+        {
+            if (pawns[i].GetComponent<PlaceType>().placeType == PlaceType.Place.TERRAIN)
+            {
+                int randTerrainInt = Random.Range(1, System.Enum.GetNames(typeof(PlaceType.Terrain)).Length + 1);
+                while (!numTerrainUsed.ContainsKey((PlaceType.Terrain)randTerrainInt) && numTerrainUsed.Count > 0)
+                    randTerrainInt = Random.Range(1, System.Enum.GetNames(typeof(PlaceType.Terrain)).Length + 1);
+
+                PlaceType.Terrain terrainType = (PlaceType.Terrain)randTerrainInt;
+
+                if (numTerrainUsed[terrainType] < 3)
+                    numTerrainUsed[terrainType] += 1;
+                else
+                    numTerrainUsed.Remove(terrainType);
+
+                //If we place more than we should allow
+                if (numTerrainUsed.Count == 0)
+                {
+                    for (int j = 1; j <= System.Enum.GetNames(typeof(PlaceType.Terrain)).Length; ++j)
+                    {
+                        numTerrainUsed.Add((PlaceType.Terrain)j, 0);
+                    }
                     print("Too many terrain pawns. Refilling usbale pawns.");
                 }
 
@@ -54,21 +123,34 @@ public class PawnManager : MonoBehaviour {
                 {
                     if (pawnPrefabs[j].name == terrainType.ToString() + " PION")
                     {
-                        NodeConnections preserveConnections = pawns[i].GetComponent<NodeConnections>();
+                        List<GameObject> preserveNodeConnections = pawns[i].GetComponent<NodeConnections>().neighbourNodes;
+
                         var newPawn = Instantiate(pawnPrefabs[j], pawns[i].transform.position, pawns[i].transform.rotation);
+
+                        //Remove Terrain pawn from all it's neighbours. 
+                        for (int k = 0; k < preserveNodeConnections.Count; ++k)
+                        {
+                            preserveNodeConnections[k].GetComponent<NodeConnections>().RemoveNeighbour(pawns[i]);
+                        }
+
                         Destroy(pawns[i]);
+
                         pawns[i] = newPawn;
-                        pawns[i].GetComponent<NodeConnections>().neighbourNodes = preserveConnections.neighbourNodes;
+
+                        //Read all neighbours to the new pawn.
+                        for (int k = 0; k < preserveNodeConnections.Count; ++k)
+                        {
+                            pawns[i].GetComponent<NodeConnections>().AddNeighbour(preserveNodeConnections[k]);
+                        }
                     }
                 }
             }
+            else if (pawns[i].GetComponent<PlaceType>().placeType == PlaceType.Place.DEPART)
+                NodeConnections.activeNode = pawns[i];
         }
     }
 
-    public static PawnManager Instance()
-    {
-        return instance;
-    }
+    
 
     public void CreatePawn (PlaceType.Place placeType, Vector3 position, Quaternion rotation)
     {
@@ -89,12 +171,6 @@ public class PawnManager : MonoBehaviour {
         print("Failed to find pawn type");
     }
 
-    //Cleanup. Hot fix
-    private void Update()
-    {
-      //  AkSoundEngine.StopAll(); 
-    }
-
     public void CreatePawn(PlaceType.Terrain terrainType, Vector3 position, Quaternion rotation, NodeConnections connections)
     {
         for (int i = 0; i < pawnPrefabs.Count; ++i)
@@ -106,30 +182,5 @@ public class PawnManager : MonoBehaviour {
             }
         }
         print("Failed to find pawn terrain type");
-    }
-
-
-    //Cleanup Delete this
-    public GameObject GetPawn(PlaceType.Place placeType)
-    {
-        for (int i = 0; i < pawnPrefabs.Count; ++i)
-        {
-            if (pawnPrefabs[i].name == placeType.ToString() + " PION")
-                return pawnPrefabs[i];
-
-        }
-        return null;
-    }
-
-    //Cleanup Delete this
-    public GameObject GetPawn(PlaceType.Terrain terrainType)
-    {
-        for (int i = 0; i < pawnPrefabs.Count; ++i)
-        {
-            if (pawnPrefabs[i].name == terrainType.ToString() + " PION")
-                return pawnPrefabs[i];
-        }
-
-        return null; 
     }
 }

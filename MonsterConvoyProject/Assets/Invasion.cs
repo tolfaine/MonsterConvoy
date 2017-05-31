@@ -5,10 +5,12 @@ using UnityEngine;
 public class Invasion : MonoBehaviour {
 
     Vector3 invasionOrigin; //The location of the portal 
-    int invasionSize = 0; //Multiplier which increases the invasion radius on every turn
-    int invasionRadius = 50; //The initial radius of the invasion.
-    float lerpSpeed = 0.05f; //The speed which the invasion grows at the start of each turn (Does not impact the size of the invasion).
-
+    int invasionSize = 1; //Multiplier which increases the invasion radius on every turn
+    int invasionRadius = 20; //The initial radius of the invasion.
+    float invasionGrowthRate = 0.0f;
+    float lerpSpeed = 0.2f; //The speed which the invasion grows at the start of each turn (Does not impact the size of the invasion).
+    Vector3 capitalPosition;
+    Vector3 initialScale;
     void Start ()
     {
         //Set the invasion origin to the position of the portal. 
@@ -17,18 +19,62 @@ public class Invasion : MonoBehaviour {
         {
             if (nodes[i].GetComponent<PlaceType>().placeType == PlaceType.Place.PORTAIL)
                 invasionOrigin = nodes[i].transform.position;
+            else if (nodes[i].GetComponent<PlaceType>().placeType == PlaceType.Place.DEPART)
+            {
+                capitalPosition = nodes[i].transform.position;
+            }
             invasionOrigin.y = transform.position.y; //We don't want to change the Y position. I set this manually.
             transform.position = invasionOrigin;
         }
 
-        Vector3 initialScale = new Vector3(invasionRadius, invasionRadius);
-        transform.localScale = initialScale; 
+        initialScale = new Vector3(invasionRadius, invasionRadius);
+        transform.localScale = initialScale;
+        OnNewLoop(); 
     }
     
     private void OnEnable()
     {
         IncreaseInvasionArea();
     }
+
+    //HardCode
+    private int turnNumber = 0;
+    public void OnNewLoop()
+    {
+        invasionSize = 1;
+        float distanceFromPortalToCapital = Vector3.Distance(capitalPosition, invasionOrigin);
+        transform.localScale = initialScale;
+        switch (turnNumber)
+        {
+            case 0:
+                invasionGrowthRate = distanceFromPortalToCapital / 2;
+                break;
+            case 1:
+                invasionGrowthRate = distanceFromPortalToCapital / 4;
+                break;
+            case 2:
+                invasionGrowthRate = distanceFromPortalToCapital / 6;
+                break;
+            case 3:
+                invasionGrowthRate = distanceFromPortalToCapital / 13;
+                break;
+            case 4:
+                invasionGrowthRate = distanceFromPortalToCapital / 16;
+                break;
+            case 5:
+                invasionGrowthRate = distanceFromPortalToCapital / 18;
+                break;
+            case 6:
+                invasionGrowthRate = distanceFromPortalToCapital / 21;
+                break;
+            case 7:
+                invasionGrowthRate = distanceFromPortalToCapital / 25;
+                break;
+        }
+        GameObject.FindGameObjectWithTag("PawnManager").GetComponent<PawnManager>().RegenerateMap();
+        turnNumber++;
+    }
+
     private void Update()
     {
         Vector3 newScale = new Vector3(invasionRadius, invasionRadius) * invasionSize;
@@ -44,19 +90,16 @@ public class Invasion : MonoBehaviour {
         if (other.CompareTag("MapNode"))
         {
             other.GetComponent<PlaceType>().invasionStatus = true;
-        }
-    }
 
-    private void OnCollisionStay(Collision collision) // Does this only get called when there's a physics step. 
-    {
-        if (collision.collider.CompareTag("MapNode"))
-        {
-            collision.collider.GetComponent<PlaceType>().invasionStatus = true;
+            if (other.GetComponent<PlaceType>().placeType.Equals(PlaceType.Place.DEPART))
+            {
+                OnNewLoop();
+            }
         }
     }
 
     public void IncreaseInvasionArea()
     {
-        invasionSize++;
+        invasionSize += (int)invasionGrowthRate;
     }
 }
