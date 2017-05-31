@@ -14,9 +14,9 @@ public class NodeConnections : MonoBehaviour {
 
     private void Start()
     {
-        foreach (GameObject node in neighbourNodes)
+        for (int i = 0; i < neighbourNodes.Count; ++i)
         {
-            node.GetComponent<NodeConnections>().AddNeighbour(gameObject); //Add ourselves to the neighbour. 
+            neighbourNodes[i].GetComponent<NodeConnections>().AddNeighbour(gameObject); //Add ourselves to the neighbour. 
             CreatePath();
         }
     }
@@ -35,23 +35,14 @@ public class NodeConnections : MonoBehaviour {
         --numPaths;
         Destroy(pathList[pathIndex]);
         pathList.RemoveAt(pathIndex);
+        pathList.TrimExcess();
     }
     
-	void Update()
-	{
-        //Cleanup 
-        if (activeNode.Equals(gameObject))
-            for (int i = 0; i < neighbourNodes.Count; i++)
-                ;//pathList[i].GetComponent<LineRenderer>().enabled = true;
-        else
-            for (int i = 0; i < neighbourNodes.Count; i++)
-                ;//pathList[i].GetComponent<LineRenderer>().enabled = false;
-    }
-
     //Adds a new node to our list of neighbour nodes
     public void AddNeighbour(GameObject newNeighbour)
     {
-        if (!neighbourNodes.Contains(newNeighbour)) {
+        if (!neighbourNodes.Contains(newNeighbour))
+        {
             neighbourNodes.Add(newNeighbour);
             newNeighbour.GetComponent<NodeConnections>().AddNeighbour(gameObject); //Add ourselves to the neighbour. 
             CreatePath();
@@ -63,9 +54,10 @@ public class NodeConnections : MonoBehaviour {
     {
         if (neighbourNodes.Contains(removedNeighbour))
         {
+           // DestroyPath(neighbourNodes.LastIndexOf(removedNeighbour));
+           // removedNeighbour.GetComponent<NodeConnections>().RemoveNeighbour(gameObject); //Remove ourselves from the neighbour.
             neighbourNodes.Remove(removedNeighbour);
-            removedNeighbour.GetComponent<NodeConnections>().RemoveNeighbour(gameObject); //Remove ourselves from the neighbour.
-            DestroyPath(neighbourNodes.LastIndexOf(removedNeighbour)); //TODO This will go awry.
+            //neighbourNodes.TrimExcess();
         }
     }
 }

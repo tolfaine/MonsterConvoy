@@ -6,6 +6,8 @@ using UnityEngine;
 public class GroupFighter {
 
     public List<Fighter> lFighters = new List<Fighter>();
+    public List<Fighter> lInitialFighters = new List<Fighter>();
+
     public CreatureType eCreatureType;
     public bool bHasBeenAttacked = false;
     public GroupLogic groupLogic;
@@ -17,6 +19,10 @@ public class GroupFighter {
 
     public GroupLogic GetGroupLogic() { return this.groupLogic; }
 
+    public virtual void SetInitialFighters()
+    {
+
+    }
     public virtual void CheckFightersLife()
     {
         int nNbFighterAlive = 0;

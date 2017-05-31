@@ -9,8 +9,10 @@ public class ScriptTurnInfo
 {
     public int indexLineStart;
     public int indexLineEnd;
+
     public ActionType actionType;
     public float fRoll;
+
 
     public ScriptTurnInfo() { }
 }

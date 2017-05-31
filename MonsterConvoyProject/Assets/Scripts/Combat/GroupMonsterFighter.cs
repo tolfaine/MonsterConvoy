@@ -8,6 +8,16 @@ public class GroupMonsterFighter : GroupFighter {
         this.groupLogic = new PlayerLogic();
     }
 
+    public override void SetInitialFighters()
+    {
+        foreach (Fighter fighter in lFighters) {
+            Monster m = new Monster();
+            m.CopyMonster((Monster)fighter);
+            lInitialFighters.Add(m);
+        }
+
+    }
+
     public void MonsterEscaping()
     {
         bool allGroupEscape = true;
