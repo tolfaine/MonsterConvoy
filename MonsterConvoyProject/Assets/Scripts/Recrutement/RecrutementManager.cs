@@ -27,12 +27,17 @@ public class RecrutementManager : MonoBehaviour {
 
     public List<Transform> availablePosition = new List<Transform>();
     public List<Transform> filledPosition = new List<Transform>();
+
     public List<GameObject> allMonstersToRecrute = new List<GameObject>();
+
+    public bool isAtCapital;
 
     public Transform rootMonsters;
 
     // Use this for initialization
     void Start () {
+
+
         creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
 
@@ -65,17 +70,36 @@ public class RecrutementManager : MonoBehaviour {
                     monsterToRecruteSelected = null;
                 }
 
+                if (isAtCapital)
+                {
+                    AddSlot(monsterSelected, -1);
+                    monsterToRecruteSelected.SetActive(false);
+
+                    availablePosition.Add(monsterToRecruteSelected.transform.parent);
+                    filledPosition.Remove(monsterToRecruteSelected.transform.parent);
+
+
+                    monsterToRecruteSelected = null;
+                }
+
             }else
             {
                 AddSlot(monsterSelected, -1);
                 monsterToRecruteSelected.SetActive(false);
 
+                availablePosition.Add(monsterToRecruteSelected.transform.parent);
+               filledPosition.Remove(monsterToRecruteSelected.transform.parent);
+
+
                 monsterToRecruteSelected = null;
             }
-            
+        }
 
-            
+        if(monsterToTradeSelected != null && isAtCapital)
+        {
+            RemoveMonster(monsterToTradeSelected);
 
+            monsterToTradeSelected = null;
         }
 		//If slot left
         //If monster selected est un impportant one
@@ -89,21 +113,28 @@ public class RecrutementManager : MonoBehaviour {
         for(int i = 0; i< nbRecrute; i++)
         {
             Monster monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
-            InstantiateMonsterAtPosition(availablePosition[i].position, monster);
+            InstantiateMonsterAtPosition(availablePosition[0], monster);
+
+            filledPosition.Add(availablePosition[0]);
+
+            availablePosition.RemoveAt(0);
 
         }
 
     }
-    void InstantiateMonsterAtPosition(Vector3 position, Monster monster)
+    void InstantiateMonsterAtPosition(Transform trans, Monster monster)
     {
         GameObject model = creaturePrefabManager.GetMonster(monster.nID);
 
-        GameObject monsterInstantiated = Instantiate(monsterPrefab, position, monsterPrefab.transform.localRotation) as GameObject;
+        GameObject monsterInstantiated = Instantiate(monsterPrefab, Vector3.zero, monsterPrefab.transform.localRotation) as GameObject;
         GameObject monsterModel = Instantiate(model, Vector3.zero, monsterPrefab.transform.localRotation) as GameObject;
+
+        monsterInstantiated.transform.parent = trans;
+        monsterInstantiated.transform.localPosition = Vector3.zero;
 
         monsterModel.transform.parent = monsterInstantiated.transform;
 
-        monsterInstantiated.transform.parent = rootMonsters;
+       // monsterInstantiated.transform.parent = rootMonsters;
 
         monsterInstantiated.transform.localScale = new Vector3(1f, 1f, 1f);
 
@@ -150,6 +181,23 @@ public class RecrutementManager : MonoBehaviour {
 
     }
 
+    void RemoveMonster(Monster monsterToTrade)
+    {
+        int indexM = caravane.lFighters.IndexOf(monsterToTrade);
+
+        Monster replacedMonster = caravane.lFighters[indexM];
+
+        DeleteSlot(replacedMonster, indexM);
+
+
+        Vector3 position = availablePosition[0].position;  /////
+        InstantiateMonsterAtPosition(availablePosition[0], monsterToTrade);
+
+        filledPosition.Add(availablePosition[0]);
+        availablePosition.RemoveAt(0);
+
+
+    }
     void ReplaceSlot(Monster monsterToAdd, Monster monsterToTrade)
     {
         int indexM = caravane.lFighters.IndexOf(monsterToTrade);
@@ -158,19 +206,10 @@ public class RecrutementManager : MonoBehaviour {
 
         DeleteSlot(replacedMonster, indexM);
 
-        Vector3 position = monsterToRecruteSelected.transform.position;
-        InstantiateMonsterAtPosition(position, replacedMonster);
+        //Vector3 position = monsterToRecruteSelected.transform.position;
+        InstantiateMonsterAtPosition(monsterToRecruteSelected.transform.parent, replacedMonster);
 
         AddSlot(monsterToAdd, indexM);
-
-
-
-
-
-
-
-        // Get position du monster a remplacer 
-
     }
 
     void AddSlot(Monster monster, int index)

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 public class NodeWeight : MonoBehaviour {
     public int weight = 0;
     
@@ -10,6 +10,6 @@ public class NodeWeight : MonoBehaviour {
         gS.normal.textColor = Color.cyan;
         gS.fontSize = 18;
         gS.fontStyle = FontStyle.Bold;
-        Handles.Label(transform.position + Vector3.up, weight.ToString(),gS);
+      //  Handles.Label(transform.position + Vector3.up, weight.ToString(),gS);
     }
 }

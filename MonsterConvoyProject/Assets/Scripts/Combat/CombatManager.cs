@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum RollResultEnum { Fail, Normal, Crit}
+
 [System.Serializable]
 public class ActionType
 {
@@ -129,6 +131,8 @@ public class CombatManager : MonoBehaviour
 
     public Human defaultHuman;
 
+    public float timeBeforeStartFight = 1.0f;
+
     void Start()
     {
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
@@ -145,12 +149,19 @@ public class CombatManager : MonoBehaviour
 
         RollInitiative();
 
-        bCombatStarted = true;
+        bCombatStarted = false;
+
+        Invoke("CanStartCombat", timeBeforeStartFight);
 
         //Play Music
         //AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
        // AkSoundEngine.PostEvent("Play_FightMusic", gameObject);
 
+    }
+
+    public void CanStartCombat()
+    {
+        bCombatStarted = true;
     }
 
     void Update()
@@ -457,9 +468,10 @@ public class CombatManager : MonoBehaviour
             monstersPosition.Add(child);
         }
 
-        for (int i = 0; i < nNbCreaturePerGroup; i++)
+        for (int i = 0; i < nNbCreaturePerGroup && i < caravane.lFighters.Count; i++)
         {
             fighter = caravane.lFighters[i];
+            fighter.bTryToescape = false;
             GameObject g = Instantiate(prefab, monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
             GameObject mo;
@@ -476,6 +488,7 @@ public class CombatManager : MonoBehaviour
 
 
             g.GetComponent<FighterUI>().fighter = fighter;
+        
             monsterGroupFighter.lFighters.Add(fighter);
             g.transform.parent = GameObject.FindGameObjectWithTag("Monsters").transform;
             g.name = fighter.sName;
