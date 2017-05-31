@@ -36,8 +36,6 @@ public class PlaceType : MonoBehaviour {
 	void Start () {
         if (placeType.Equals(Place.DEPART))
             NodeConnections.activeNode = gameObject;
-        //else if (placeType.Equals(Place.TERRAIN) && terrainType.Equals(Terrain.NULL))
-           // terrainType = (Terrain)Random.Range(1,8);
 	}
 
     void setInvaded()

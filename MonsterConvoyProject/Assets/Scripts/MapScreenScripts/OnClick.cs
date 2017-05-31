@@ -7,57 +7,23 @@ public class OnClick : MonoBehaviour {
     
     bool visited = false;
     public GameObject spotLight;
-    GameObject oneLight;
-
-    bool mouseOver = false;
 
     private void Start()
     {
+        /*
         oneLight = spotLight;
         oneLight.SetActive(true);
         oneLight.GetComponent<Light>().enabled = false;
-        oneLight.transform.position = transform.position + (Vector3.up * 6);
+        oneLight.transform.position = transform.position + (Vector3.up * 8);
 
-        oneLight = GameObject.Instantiate(oneLight);
-
-        /*
-        switch (GetComponent<PlaceType>().placeType)
-        {
-            case (PlaceType.Place.TERRAIN):
-                switch (GetComponent<PlaceType>().terrainType)
-                {
-                    case (PlaceType.Terrain.PLAGE):
-                        break;
-                    case (PlaceType.Terrain.GROTTE):
-                        break;
-                    case (PlaceType.Terrain.DESERT):
-                        break;
-                    case (PlaceType.Terrain.MONTAGNE):
-                        break;
-                    case (PlaceType.Terrain.PLAINE):
-                        break;
-                    case (PlaceType.Terrain.NEIGE):
-                        break;
-                    case (PlaceType.Terrain.MARECAGE):
-                        break;
-                }
-                break;
-            case (PlaceType.Place.DEPART):
-                break;
-            case (PlaceType.Place.PORTAIL):
-                break;
-            case (PlaceType.Place.CAMPEMENT):
-                break;
-            case (PlaceType.Place.DONJON):
-                break;
-            case (PlaceType.Place.TAVERNE):
-                break;
-            default:
-                break;
-        }
+        oneLight = GameObject.Instantiate(oneLight, gameObject.transform);
         */
-
+        spotLight.SetActive(true);
+        spotLight.GetComponent<Light>().enabled = false;
+        spotLight.transform.position = transform.position + (Vector3.up * 8);
+        spotLight = GameObject.Instantiate(spotLight, gameObject.transform);
     }
+
     void OnMouseDown()
     {
         //If the neighbours of the node we click on contains the current active node. We can travel.
@@ -71,8 +37,6 @@ public class OnClick : MonoBehaviour {
                 sceneType = GetComponent<PlaceType>().placeType.ToString();
             else
                 sceneType = GetComponent<PlaceType>().terrainType.ToString();
-
-            mouseOver = false;
 
             //Change scene on node click
             for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
@@ -91,41 +55,28 @@ public class OnClick : MonoBehaviour {
         if (gameObject.Equals(NodeConnections.activeNode) && !visited)
             visited = true;
 
+        //TODO Don't put this in update. 
         if (gameObject.Equals(NodeConnections.activeNode))
         {
-            gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-            
+            gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
         }
         else
         {
-            gameObject.transform.localScale = new Vector3(1, 1, 1);
-            
-        }
-
-        if (mouseOver)
-        {
-        }
-        else
-        {
+            if (gameObject.GetComponent<PlaceType>().placeType != PlaceType.Place.PORTAIL)
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
-            oneLight.GetComponent<Light>().enabled = true;
+            spotLight.GetComponent<Light>().enabled = true;
         }
 
     }
     void OnMouseOver()
 	{
-
-        //Cleanup Whitney abstracted this for some reason :/ Ask her why 
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             gameObject.transform.Rotate(new Vector3(0, 1f, 0));
-
-            //Turn on highlight effect
-            // oneLight.SetActive(true);
-            //  oneLight.GetComponent<Light>().enabled = true;
         }
     }
 
@@ -133,9 +84,5 @@ public class OnClick : MonoBehaviour {
 	{
         //Turn off highlight effect
         gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-
-        //Cleanup
-        //oneLight.SetActive(false);
-        // oneLight.GetComponent<Light>().enabled = false;
     }
 }
