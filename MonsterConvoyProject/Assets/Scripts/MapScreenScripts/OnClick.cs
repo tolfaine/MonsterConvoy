@@ -46,7 +46,6 @@ public class OnClick : MonoBehaviour {
             }
             SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
-
         }
     }
 
