@@ -135,9 +135,17 @@ public class CombatManager : MonoBehaviour
 
     public Tip discoveredTip = null;
 
+    public ProtoScript protoScript = null;
     void Start()
     {
         discoveredTip = null;
+
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+
+        if (g != null)
+        {
+            protoScript = g.GetComponent<ProtoScript>();
+        }
 
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
         fighterMouvementManager = GameObject.FindGameObjectWithTag("FighterMouvementManager").GetComponent<FighterMouvementManager>();
@@ -162,7 +170,7 @@ public class CombatManager : MonoBehaviour
 
         //Play Music
         //AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
-       // AkSoundEngine.PostEvent("Play_FightMusic", gameObject);
+        // AkSoundEngine.PostEvent("Play_FightMusic", gameObject);
 
     }
 
@@ -213,6 +221,7 @@ public class CombatManager : MonoBehaviour
     {
         this.monsterGroupFighter.CheckFightersLife();
         this.humanGroupFighter.CheckFightersLife();
+
 
         if (this.monsterGroupFighter.allFightersDead)
         {
@@ -423,36 +432,41 @@ public class CombatManager : MonoBehaviour
     void RollInitiative()
     {
 
-        if (scriptManager != null)
+        if (protoScript != null)
         {
-            int idFghter = 0;
-            int initiative = 0;
+            bool takeM = true;
 
-            foreach (Fighter fighter in monsterGroupFighter.lFighters)
+            if (protoScript.combat.iteration == 2)
+                takeM = false;
+
+
+            int indM = 0;
+            int indH = 0;
+
+            for(int i = 0; i < 8; i++)
             {
-                initiative = fighter.GetRandomInitiative();
-                Order order = new Order(fighter, initiative);
-                combatOrder.Add(order);
-            }
-
-            foreach (Fighter fighter in humanGroupFighter.lFighters)
-            {
-                initiative = fighter.GetRandomInitiative();
-                Order order = new Order(fighter, initiative);
-                combatOrder.Add(order);
-            }
-
-
-            foreach (Order order in combatOrder)
-            {
-                int fighterId = order.fighter.nID;
-
-                foreach (ScriptOrder scriptOrder in scriptManager.lOrder)
+                if (takeM)
                 {
-                    if (scriptOrder.nId == fighterId)
-                        order.nInitiative = scriptOrder.nRoll;
+                    int initiative = monsterGroupFighter.lFighters[indM].GetRandomInitiative();
+                    Order order = new Order(monsterGroupFighter.lFighters[indM], i);
+                    combatOrder.Add(order);
+                    indM++;
                 }
+                else
+                {
+                    int initiative = humanGroupFighter.lFighters[indH].GetRandomInitiative();
+                    Order order = new Order(humanGroupFighter.lFighters[indH], i);
+                    combatOrder.Add(order);
+                    indH++;
+                }
+
+                takeM = !takeM;
+
             }
+
+
+
+
         }
         else
         {

@@ -153,6 +153,8 @@ public class CustomTalk : MonoBehaviour {
 	public int maxCharInWidth = 50;
 	public int maxCharInHeight = 4;
 
+    private bool canReaction = true;
+
     public CustomTalk reactTalk;
     public bool needReaction;
     public CreatureType creatureReaction;
@@ -179,12 +181,146 @@ public class CustomTalk : MonoBehaviour {
            humanFirstNormalFearLine =25;
            humanLastNormalFearLine = 57;
         }
+
+        if (GameObject.FindGameObjectWithTag("ProtoManager"))
+        {
+            canReaction = false;
+        }
 	}
 
-	/// <summary>
-	/// Starts a new Talk.
-	/// </summary>
-	public void NewTalk(CreatureType type,ActionType action, float roll){
+    /// <summary>
+    /// Starts a new Talk.
+    /// </summary>
+    /// 
+
+    public void NewTalkScripted(TextAsset textAss, int lineMin, int lineMax)
+    {
+        txtToParse = textAss;
+
+        lineToStart = lineMin;
+        lineToBreak = lineMax;
+
+        //reduce one for the line to Start and break
+        if (lineToBreak == -1)
+        {
+            actualLineToBreak = lineToBreak;
+        }
+        else
+        {
+            actualLineToBreak = lineToBreak - 1;
+        }
+        actualLineToStart = lineToStart - 1;
+
+        if (textAudio != null)
+        {
+            if (rpgAudioSorce == null)
+            {
+                rpgAudioSorce = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
+        lookForClick = true;
+
+        //Stop any blinking arrows that shouldn't appear
+        CancelInvoke("blink");
+        if (blinkWhenReady)
+        {
+            blinkWhenReady.SetActive(false);
+        }
+
+
+        //reset positions
+        cutscenePosition = 1;
+        currentChar = 0;
+
+
+        //create a new CutsCeneElement
+        rpgtalkElements = new List<RpgtalkElement>();
+
+        if (txtToParse != null)
+        {
+            // read the TXT file into the elements list
+            StringReader reader = new StringReader(txtToParse.text);
+
+            string line = reader.ReadLine();
+            int currentLine = 0;
+
+            while (line != null)
+            {
+
+                if (currentLine >= actualLineToStart)
+                {
+                    if (actualLineToBreak == -1 || currentLine <= actualLineToBreak)
+                    {
+
+                        if (wordWrap)
+                        {
+                            CheckIfTheTextFits(line);
+                        }
+                        else
+                        {
+                            rpgtalkElements.Add(readSceneElement(line));
+                        }
+                    }
+                }
+
+                line = reader.ReadLine();
+                currentLine++;
+            }
+
+
+            if (rpgtalkElements.Count == 0)
+            {
+                Debug.LogError("The Line To Start and the Line To Break are not fit for the given TXT");
+                return;
+            }
+        }
+
+
+
+
+
+        //Set the speaker name and photo
+        if (dialoger)
+        {
+            dialogerUI.text = rpgtalkElements[0].speakerName;
+            if (shouldUsePhotos)
+            {
+                for (int i = 0; i < photos.Length; i++)
+                {
+                    if (photos[i].name == rpgtalkElements[0].originalSpeakerName)
+                    {
+                        UIPhoto.sprite = photos[i].photo;
+                        if (animatorWhenTalking && animatorIntName != "")
+                        {
+                            animatorWhenTalking.SetInteger(animatorIntName, i);
+                        }
+                    }
+                }
+            }
+        }
+
+        //show what need to be shown
+        textUI.enabled = true;
+        if (dialoger)
+        {
+            dialogerUI.enabled = true;
+        }
+        for (int i = 0; i < showWithDialog.Length; i++)
+        {
+            showWithDialog[i].SetActive(true);
+        }
+
+
+        //if we have an animator.. play it
+        if (animatorWhenTalking != null)
+        {
+            animatorWhenTalking.SetBool(animatorBooleanName, true);
+        }
+    }
+
+
+    public void NewTalk(CreatureType type,ActionType action, float roll){
 
         int minLine = 0;
         int maxLine = 0;
@@ -220,7 +356,7 @@ public class CustomTalk : MonoBehaviour {
                 minLine = humanFirstNormalTalkLine;
                 maxLine = humanLastNormalTalkLine;
 
-                if (!isReaction)
+                if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Monster;
@@ -250,7 +386,7 @@ public class CustomTalk : MonoBehaviour {
                 minLine = monsterFirstNormalTalkLine;
                 maxLine = monsterLastNormalTalkLine;
 
-                if (!isReaction)
+                if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Human;
@@ -271,7 +407,7 @@ public class CustomTalk : MonoBehaviour {
                 }
 
 
-                if (!isReaction)
+                if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Human;

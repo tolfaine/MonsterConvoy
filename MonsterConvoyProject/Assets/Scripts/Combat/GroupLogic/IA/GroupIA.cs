@@ -27,6 +27,15 @@ public class GroupIA : GroupLogic {
     
     public ActionType SelectAction(List<Fighter> Enemies , List<Fighter> Allies)
     {
+
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+
+        if (g != null)
+        {
+            ProtoScript protoScript = g.GetComponent<ProtoScript>();
+            return ActionType.TALK;
+        }
+
         if (bIsFirstLogicTurn)
         {
             bIsFirstLogicTurn = false;

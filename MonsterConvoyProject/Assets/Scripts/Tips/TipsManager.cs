@@ -247,6 +247,8 @@ public class TipsManager : MonoBehaviour {
     {
         List<Tip> lFinalTips = GetAllTipConcerningGroups(groupMonster, groupHuman);
 
+        if (lFinalTips.Count == 0)
+            return null;
         int randIndex = Random.Range(0, lFinalTips.Count);
         Tip tip = lFinalTips[randIndex];
 

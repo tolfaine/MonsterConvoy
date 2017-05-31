@@ -123,11 +123,14 @@ public class Fighter : Creature{
 
 
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
-        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
+        if (g != null && g.GetComponent<CombatManager>().talkManager != null && g.GetComponent<CombatManager>().protoScript == null)
         {
             TalkManager sm = g.GetComponent<CombatManager>().talkManager;
             sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
             sm.customTalk.NewTalk(eCreatureType, action, roll);
+        }else if(g != null && g.GetComponent<CombatManager>().talkManager != null && g.GetComponent<CombatManager>().protoScript != null)
+        {
+            g.GetComponent<CombatManager>().protoScript.combat.Talk();
         }
     }
 
