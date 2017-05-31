@@ -27,6 +27,16 @@ public class GroupHumanFighter : GroupFighter {
     public bool bIsFeared;
     public bool bIsConviced;
 
+    public override void SetInitialFighters()
+    {
+        foreach (Fighter fighter in lFighters)
+        {
+            Human m = new Human();
+            m.CopyHuman((Human)fighter);
+            lInitialFighters.Add(m);
+        }
+
+    }
 
 
     public GroupHumanFighter() : base() {
@@ -42,7 +52,7 @@ public class GroupHumanFighter : GroupFighter {
 
             if (rollResult == RollResultEnum.Crit)
             {
-                fearDamage = 2;
+                fearDamage = 1000;
                 bInConversation = false;
                 bWantsToAttack = true;
             }
@@ -72,7 +82,7 @@ public class GroupHumanFighter : GroupFighter {
 
             if (rollResult == RollResultEnum.Crit)
             {
-                convinceDamage = 2;
+                convinceDamage = 1000;
                 bInConversation = true;
                 bWantsToAttack = false;
             }

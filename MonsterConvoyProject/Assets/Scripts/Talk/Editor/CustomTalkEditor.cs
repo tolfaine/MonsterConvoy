@@ -23,6 +23,15 @@ public class CustomTalkEditor : Editor
         EditorGUILayout.LabelField("Monster Talk!");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("monsterTalk"), GUIContent.none);
 
+        EditorGUILayout.LabelField("humanAnchor");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("humanAnchor"), GUIContent.none);
+        EditorGUILayout.LabelField("monsterAnchor");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("monsterAnchor"), GUIContent.none);
+
+        EditorGUILayout.LabelField("ReactionTalk");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("reactTalk"), GUIContent.none);
+        
+
         EditorGUILayout.LabelField("Put below the Text file to be parsed and become the talks!");
 		EditorGUILayout.PropertyField (serializedObject.FindProperty("txtToParse"),GUIContent.none);
 		if(serializedObject.FindProperty("txtToParse").objectReferenceValue == null){
@@ -35,12 +44,15 @@ public class CustomTalkEditor : Editor
 				"Are you sure that is the correct bahaviour?", MessageType.Warning, true);
 		}
 
-		EditorGUILayout.BeginVertical( (GUIStyle) "HelpBox"); 
+        rpgTalk.isReaction = GUILayout.Toggle(rpgTalk.isReaction, "Is Reation?");
+
+        EditorGUILayout.BeginVertical( (GUIStyle) "HelpBox"); 
 
 		EditorGUILayout.LabelField("Regular Options:",EditorStyles.boldLabel);
 		rpgTalk.startOnAwake = GUILayout.Toggle(rpgTalk.startOnAwake, "Start On Awake?");
 		rpgTalk.dialoger = GUILayout.Toggle(rpgTalk.dialoger, "Should show the name of the talker?");
-		rpgTalk.shouldUsePhotos = GUILayout.Toggle(rpgTalk.shouldUsePhotos, "Should there be the photo of the talker?");
+       
+        rpgTalk.shouldUsePhotos = GUILayout.Toggle(rpgTalk.shouldUsePhotos, "Should there be the photo of the talker?");
 		rpgTalk.shouldStayOnScreen = GUILayout.Toggle(rpgTalk.shouldStayOnScreen, "Should the canvas stay on screen after the talk ended?");
 		rpgTalk.shouldFollow = GUILayout.Toggle(rpgTalk.shouldFollow, "Should the canvas follow someone?");
 		if(rpgTalk.shouldFollow){

@@ -133,14 +133,21 @@ public class CombatManager : MonoBehaviour
 
     public float timeBeforeStartFight = 1.0f;
 
+    public Tip discoveredTip = null;
+
     void Start()
     {
+        discoveredTip = null;
+
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
         fighterMouvementManager = GameObject.FindGameObjectWithTag("FighterMouvementManager").GetComponent<FighterMouvementManager>();
         creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
 
         InstantiateMonster();
         InstantiateHuman();
+
+        monsterGroupFighter.SetInitialFighters();
+        humanGroupFighter.SetInitialFighters();
 
         monsterGroupFighter.groupLogic = logic.GetComponent<PlayerLogic>();
         humanGroupFighter.groupLogic = logic.GetComponent<GroupIA>();
@@ -234,6 +241,19 @@ public class CombatManager : MonoBehaviour
             bCombatEnded = true;
             combatEndType = CombatEndType.HumansFeared;
             fighterMouvementManager.bHumanRun = true;
+        }
+
+        if (bCombatEnded)
+        {
+            if (combatEndType != CombatManager.CombatEndType.MonsterEscape && combatEndType != CombatManager.CombatEndType.MonstersDead)
+            {
+                if (discoveredTip == null)
+                {
+                    TipsManager tipManager = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>();
+                    discoveredTip = tipManager.GetRandTipConcerningGroups((GroupMonsterFighter)monsterGroupFighter, (GroupHumanFighter)humanGroupFighter);
+                }
+            }
+
         }
 
     }

@@ -34,6 +34,9 @@ public class Fighter : Creature{
         this.nCurrentHealth = fighter.nCurrentHealth;
         this.nPower = fighter.nPower;
         this.bIsImportant = fighter.bIsImportant;
+        this.currentUI = fighter.currentUI;
+        this.justTookDamage = fighter.justTookDamage;
+        this.bHasbeenAttcked = fighter.bHasbeenAttcked;
        // this.nInitiative = fighter.nInitiative;
        // this.nArmor = fighter.nArmor;
        // this.nPrecision = fighter.nPrecision;

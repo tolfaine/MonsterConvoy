@@ -126,20 +126,22 @@ public class CustomTalk : MonoBehaviour {
 	public int lineToBreak = -1;
 
     public int humanFirstNormalTalkLine = 2;
-    public int humanLastNormalTalkLine = 7;
+    public int humanLastNormalTalkLine = 22;
     public int humanFirstNormalAttaqueLine = 10;
     public int humanLastNormalAttaqueLine = 15;
-    public int humanFirstEchecAttaqueLine = 18;
-    public int humanLastEchecAttaqueLine = 23;
+   // public int humanFirstEchecAttaqueLine = 18;
+   // public int humanLastEchecAttaqueLine = 23;
     public int humanFirstFuiteLine = 26;
     public int humanLastFuiteLine = 31;
+    public int humanFirstNormalFearLine = 10;
+    public int humanLastNormalFearLine = 15;
 
     public int monsterFirstNormalTalkLine = 2;
-    public int monsterLastNormalTalkLine = 7;
-    public int monsterFirstNormalFearLine = 10;
-    public int monsterLastNormalFearLine = 15;
-    public int monsterFirstFailFearLine = 18;
-    public int monsterLastFailFearLine = 23;
+    public int monsterLastNormalTalkLine = 24;
+    public int monsterFirstNormalFearLine = 27;
+    public int monsterLastNormalFearLine = 57;
+   // public int monsterFirstFailFearLine = 18;
+   // public int monsterLastFailFearLine = 23;
     public int monsterFirstNormalAttaqueLine = 26;
     public int monsterLastNormalAttaqueLine = 31;
 
@@ -151,11 +153,32 @@ public class CustomTalk : MonoBehaviour {
 	public int maxCharInWidth = 50;
 	public int maxCharInHeight = 4;
 
+    public CustomTalk reactTalk;
+    public bool needReaction;
+    public CreatureType creatureReaction;
+    public ActionType actionReaction;
 
-	void Awake(){
+    public bool isReaction;
+
+    public GameObject humanAnchor;
+    public GameObject monsterAnchor;
+
+    void Awake(){
 		if (startOnAwake) {
 			//NewTalk ();
 		}
+
+        if (isReaction)
+        {
+           monsterFirstNormalTalkLine = 2;
+           monsterLastNormalTalkLine = 22;
+
+           humanFirstNormalTalkLine = 2;
+           humanLastNormalTalkLine = 22;
+
+           humanFirstNormalFearLine =25;
+           humanLastNormalFearLine = 57;
+        }
 	}
 
 	/// <summary>
@@ -166,6 +189,15 @@ public class CustomTalk : MonoBehaviour {
         int minLine = 0;
         int maxLine = 0;
 
+        if (isReaction)
+        {
+            if (type == CreatureType.Human)
+                follow = humanAnchor;
+            else
+                follow = monsterAnchor;
+        }
+
+
         if(type == CreatureType.Human)
         {
             txtToParse = humanTalk;
@@ -174,8 +206,8 @@ public class CustomTalk : MonoBehaviour {
             {
                 if (roll < 0.1f)
                 {
-                    minLine = humanFirstEchecAttaqueLine;
-                    maxLine = humanLastEchecAttaqueLine;
+                    minLine = humanFirstNormalAttaqueLine;
+                    maxLine = humanLastNormalAttaqueLine;
                 }
                 else
                 {
@@ -187,6 +219,18 @@ public class CustomTalk : MonoBehaviour {
             {
                 minLine = humanFirstNormalTalkLine;
                 maxLine = humanLastNormalTalkLine;
+
+                if (!isReaction)
+                {
+                    needReaction = true;
+                    creatureReaction = CreatureType.Monster;
+                    actionReaction = action;
+                }
+            }
+            else if (action == ActionType.FEAR)
+            {
+                minLine = humanFirstNormalFearLine;
+                maxLine = humanLastNormalFearLine;
             }
             else
                 return;
@@ -205,18 +249,33 @@ public class CustomTalk : MonoBehaviour {
             {
                 minLine = monsterFirstNormalTalkLine;
                 maxLine = monsterLastNormalTalkLine;
+
+                if (!isReaction)
+                {
+                    needReaction = true;
+                    creatureReaction = CreatureType.Human;
+                    actionReaction = action;
+                }
             }
             else if (action == ActionType.FEAR)
             {
                 if(roll < 0.2f)
                 {
-                    minLine = monsterFirstFailFearLine;
-                    maxLine = monsterLastFailFearLine;
+                    minLine = monsterFirstNormalFearLine;
+                    maxLine = monsterLastNormalFearLine;
                 }
                 else
                 {
                     minLine = monsterFirstNormalFearLine;
                     maxLine = monsterLastNormalFearLine;
+                }
+
+
+                if (!isReaction)
+                {
+                    needReaction = true;
+                    creatureReaction = CreatureType.Human;
+                    actionReaction = action;
                 }
             }
             else
@@ -440,7 +499,10 @@ public class CustomTalk : MonoBehaviour {
 					rpgAudioSorce.Play ();
 				}
 				textUI.enabled = false;
-				PlayNext ();
+
+                
+
+                PlayNext();
 
 			}
 			return;
@@ -636,7 +698,14 @@ public class CustomTalk : MonoBehaviour {
 
 
 		} else {
-			if (!shouldStayOnScreen) {
+
+            if (needReaction)
+            {
+                reactTalk.NewTalk(creatureReaction, actionReaction, 1f);
+                needReaction = false;
+            }
+
+            if (!shouldStayOnScreen) {
 				textUI.enabled = false;
 				if (dialoger) {
 					dialogerUI.enabled = false;
