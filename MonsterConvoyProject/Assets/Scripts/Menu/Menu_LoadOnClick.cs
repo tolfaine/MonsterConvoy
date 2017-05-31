@@ -24,21 +24,22 @@ public class Menu_LoadOnClick : MonoBehaviour {
 
     void Awake()
     {
-        target_Loadbtn = GameObject.Find("LoadGame Button").GetComponent<Button>();
-        string filePath = Application.dataPath + "/Ressources/Save/saveFile.json";
-        if (File.Exists(filePath))
-        {
-            sPath = File.ReadAllText(filePath);
-            jsFileSave = JsonMapper.ToObject(sPath);
+        if (GameObject.Find("LoadGame Button")) { 
+            target_Loadbtn = GameObject.Find("LoadGame Button").GetComponent<Button>();
+            string filePath = Application.dataPath + "/Ressources/Save/saveFil.json";
+            if (File.Exists(filePath))
+            {
+                sPath = File.ReadAllText(filePath);
+                jsFileSave = JsonMapper.ToObject(sPath);
+            }
+            else {
+                target_Loadbtn.interactable = false;
+                //enable_loadGame = false;
+                target_Loadbtn.GetComponentInChildren<Image>().color = Color.grey;
+            }
+            int index_scene = Random.Range(11, 21);
+            SceneManager.LoadScene(index_scene, LoadSceneMode.Additive);
         }
-        else {
-            target_Loadbtn.interactable = false;
-            //enable_loadGame = false;
-            target_Loadbtn.GetComponentInChildren<Text>().color = Color.grey;
-        }
-        int index_scene = Random.Range(11, 21);
-        SceneManager.LoadScene(index_scene, LoadSceneMode.Additive);
-
     }
     /*public void Update()
     {
