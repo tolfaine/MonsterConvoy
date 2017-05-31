@@ -132,6 +132,7 @@ public class Monster : Fighter{
             if (rand > 0.3f)
             {
                 bTryToescape = true;
+                AkSoundEngine.PostEvent("Play_flee", GameObject.FindGameObjectWithTag("MainCamera"));
                 ((GroupMonsterFighter)monsterFighter).MonsterEscaping();
             }
             else

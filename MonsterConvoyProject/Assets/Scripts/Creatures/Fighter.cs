@@ -66,17 +66,21 @@ public class Fighter : Creature{
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }
 
-            if(rand >= 0.90)
+            if (rand >= 0.90)
             {
-                fighter.TakeDamage(this.GetDamage()*2);
+                fighter.TakeDamage(this.GetDamage() * 2);
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
+
             }
-            else if(rand > 0.1)
+            else if (rand > 0.1)
             {
                 fighter.TakeDamage(this.GetDamage());
-            }else
+                AkSoundEngine.PostEvent("Play_" + sName + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
+            }
+            else
             {
                 Debug.Log("Fail");
-
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
                 GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
                 CombatManager cm = g.GetComponent<CombatManager>();
                 ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(this)).OneFighterGotTargetted();
