@@ -169,8 +169,8 @@ public class CombatManager : MonoBehaviour
         Invoke("CanStartCombat", timeBeforeStartFight);
 
         //Play Music
-        //AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
-        // AkSoundEngine.PostEvent("Play_FightMusic", gameObject);
+     //   AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
+
 
     }
 

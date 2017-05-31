@@ -37,6 +37,7 @@ public class RecrutementManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+      //  AkSoundEngine.PostEvent("CombatWin", gameObject);
 
         creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 using LitJson;
+using System.IO;
+
 
 [System.Serializable]
 public class ScriptTurnInfo
