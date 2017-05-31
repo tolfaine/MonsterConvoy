@@ -1,0 +1,45 @@
+
+LICENSE SYSTEM [2017531 15:55:16] No start/stop license dates set
+
+LICENSE SYSTEM [2017531 15:55:16] Next license update check is after 2017-04-19T13:20:37
+
+Built from '5.5/release' branch; Version is '5.5.2f1 (3829d7f588f3) revision 3680727'; Using compiler version '160040219'
+OS: 'Windows 10  (10.0.0) 64bit' Language: 'en' Physical Memory: 8061 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Editor/Data/Mono/lib/mono/2.0'
+Mono path[2] = 'C:/Program Files/Unity/Editor/Data/UnityScript'
+Mono config path = 'C:/Program Files/Unity/Editor/Data/Mono/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56404
+
+ BATCHMODE ARGUMENTS:
+
+C:\Program Files\Unity\Editor\Unity.exe
+-batchmode
+-nographics
+-logFile
+logRunSetup.txt
+-projectPath
+C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject
+-executeMethod
+WwiseSetupWizard.RunSetup
+Successfully changed project path to: C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject
+C:/Users/Seamus/Documents/GitHub/MonsterConvoy/MonsterConvoyProject
+It looks like another Unity instance is running with this project open.
+
+Multiple Unity instances cannot open the same project.
+
+Project: C:/Users/Seamus/Documents/GitHub/MonsterConvoy/MonsterConvoyProject
+ 
+(Filename: C:/buildslave/unity/build/Editor/Src/Application.cpp Line: 354)
+
+
+Aborting batchmode due to failure:
+Fatal Error! It looks like another Unity instance is running with this project open.
+
+Multiple Unity instances cannot open the same project.
+
+Project: C:/Users/Seamus/Documents/GitHub/MonsterConvoy/MonsterConvoyProject
+
+
