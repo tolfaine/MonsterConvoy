@@ -148,8 +148,10 @@ public class Fighter : Creature{
         justTookDamage = true;
 
         bHasbeenAttcked = true;
-        if (nCurrentHealth < 0)
-            nCurrentHealth = 0;
+        if (nCurrentHealth <= 0)
+        {       nCurrentHealth = 0;
+            AkSoundEngine.SetSwitch("Tension", "T4", GameObject.FindGameObjectWithTag("MainCamera"));
+        }
         if (nCurrentHealth > nHealthMax)
             nCurrentHealth = nHealthMax;
     }

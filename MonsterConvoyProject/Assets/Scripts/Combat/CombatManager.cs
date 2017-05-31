@@ -136,6 +136,8 @@ public class CombatManager : MonoBehaviour
 
     public Tip discoveredTip = null;
 
+    private int successfulTalkCount = 0;
+
     void Start()
     {
         discoveredTip = null;
@@ -360,10 +362,11 @@ public class CombatManager : MonoBehaviour
     {
         if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
         {
-            if (actionChoosed == ActionType.ATTACK && currentFighter.GetCreatureType() == CreatureType.Human && currentTension < 4)
+            uint state;
+            AkSoundEngine.GetSwitch("Tension", gameObject, out state);
+            if (actionChoosed == ActionType.ATTACK && currentFighter.GetCreatureType() == CreatureType.Human && state != 4 )
             {
-                currentTension = 3;
-               // AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
+                AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
             }
 
             currentFighter.PerformActionOnTarget(actionChoosed, targetChoosed);
@@ -373,13 +376,17 @@ public class CombatManager : MonoBehaviour
             if (currentFighter.GetCreatureType() == CreatureType.Human)
             {
                 currentFighter.PerformActionOnTarget(actionChoosed, monsterGroupFighter);
-                if (actionChoosed == ActionType.FEAR && currentTension < 3)
+                if (actionChoosed == ActionType.FEAR)
                 {
-                    currentTension = 2;
-                   // AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
+                 //   AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
                 }
-                else if (actionChoosed == ActionType.TALK && currentTension < 3)
+                else if (actionChoosed == ActionType.TALK)
                 {
+                    successfulTalkCount++;
+                    if (successfulTalkCount > 1)
+                    {
+                        AkSoundEngine.SetSwitch("Tension", "T1", gameObject);
+                    }
                     AkSoundEngine.PostEvent("Play_HumanTalk", gameObject);
                 }
             }
@@ -688,11 +695,9 @@ public class CombatManager : MonoBehaviour
 
             fighter = combatOrder[currentFighterIndex].fighter;
 
-            if (!fighter.CanAttack()) //Does this mean they're dead? 
+            if (!fighter.CanAttack())
             {
                 fighter = null;
-               // AkSoundEngine.SetSwitch("Tension", "T4", gameObject);
-                currentTension = 4;
             }
             counter++;
         }

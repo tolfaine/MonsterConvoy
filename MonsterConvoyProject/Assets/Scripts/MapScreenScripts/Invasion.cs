@@ -8,7 +8,7 @@ public class Invasion : MonoBehaviour {
     int invasionSize = 1; //Multiplier which increases the invasion radius on every turn
     int invasionRadius = 12; //The initial radius of the invasion.
     float invasionGrowthRate = 0.0f;
-    float lerpSpeed = 0.2f; //The speed which the invasion grows at the start of each turn (Does not impact the size of the invasion).
+    float lerpSpeed = 0.1f; //The speed which the invasion grows at the start of each turn (Does not impact the size of the invasion).
     Vector3 capitalPosition;
     Vector3 initialScale;
     void Start ()
