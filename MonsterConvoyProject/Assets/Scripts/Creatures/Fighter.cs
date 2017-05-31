@@ -61,9 +61,9 @@ public class Fighter : Creature{
             float rand = Random.Range(0f, 1f);
 
 
-            if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
+            if (combatManager.protoScript != null && combatManager. protoScript.combat != null  && combatManager.protoScript.combat.currentTurn != null)
             {
-                rand = combatManager.scriptManager.currentTurn.fRoll;
+                rand = combatManager.protoScript.combat.currentTurn.fRoll;
             }
 
             if (rand >= 0.90)

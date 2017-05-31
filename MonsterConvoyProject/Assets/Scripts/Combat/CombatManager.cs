@@ -282,8 +282,9 @@ public class CombatManager : MonoBehaviour
 
             if (!bTurnInProgress)
             {
-                if (scriptManager != null)
-                    scriptManager.NextTurn();
+                if (protoScript != null)
+                    if(protoScript.combat != null)
+                        protoScript.combat.NextTurn();
 
                 currentFighter = GetNextFighter();
 
@@ -308,8 +309,8 @@ public class CombatManager : MonoBehaviour
                 {
                     if (!bActionChoosed)
                     {
-                        if (scriptManager != null && scriptManager.currentTurn != null)
-                            actionChoosed = scriptManager.currentTurn.actionType;
+                        if (protoScript != null && protoScript.combat != null && protoScript.combat.currentTurn != null)
+                            actionChoosed =  ActionType.GetActionTypeWithID(protoScript.combat.currentTurn.ActionCode);
                         else
                             actionChoosed = ((GroupIA)currentGroupLogic).SelectAction(monsterGroupFighter.lFighters, humanGroupFighter.lFighters);
 

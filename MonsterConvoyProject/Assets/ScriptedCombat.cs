@@ -11,6 +11,34 @@ public class ScriptedCombat : MonoBehaviour {
 
     public int roundIt = 0;
 
+    public List<ScriptTurnInfo> lTurnInfo = new List<ScriptTurnInfo>();
+
+    public List<ScriptTurnInfo> lTurnInfo2 = new List<ScriptTurnInfo>();
+
+    public ScriptTurnInfo currentTurn;
+    public int index = 0;
+
+    public void NextTurn()
+    {
+        List<ScriptTurnInfo> turnList = new List<ScriptTurnInfo>();
+
+        if (iteration == 1)
+            turnList = lTurnInfo;
+        if (iteration == 2)
+            turnList = lTurnInfo2;
+
+        if (index < lTurnInfo.Count + 1)
+        {
+            currentTurn = turnList[index];
+            index++;
+        }
+        else
+        {
+            currentTurn = null;
+        }
+
+    }
+
     // Use this for initialization
     void Start () {
 
@@ -30,6 +58,8 @@ public class ScriptedCombat : MonoBehaviour {
 
     public void EnterCombat()
     {
+        currentTurn = null;
+        index = 0;
         roundIt = 0;
 
         if (iteration == 0)

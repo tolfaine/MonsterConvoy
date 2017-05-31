@@ -11,6 +11,7 @@ public class ScriptTurnInfo
     public int indexLineStart;
     public int indexLineEnd;
 
+    public int ActionCode;
     public ActionType actionType;
     public float fRoll;
 
