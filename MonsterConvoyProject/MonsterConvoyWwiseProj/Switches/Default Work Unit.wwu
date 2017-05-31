@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{4F8DDAAC-AD55-4697-98B4-30B525820F1B}" SchemaVersion="75">
+	<Switches>
+		<WorkUnit Name="Default Work Unit" ID="{4F8DDAAC-AD55-4697-98B4-30B525820F1B}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="Tension" ID="{9403E3BF-FDC9-4DA6-813E-3AF773A26A3D}">
+					<ChildrenList>
+						<Switch Name="T1" ID="{26E97B99-A16F-4656-A704-466D0F9DC2C1}"/>
+						<Switch Name="T2" ID="{309E7343-A73B-47CC-96F4-39B5F144ED79}"/>
+						<Switch Name="T3" ID="{922839EC-B588-45DA-8C2B-AEE88C2398ED}"/>
+						<Switch Name="T4" ID="{16485E72-F444-4BFC-9504-D280E8872D93}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</Switches>
+</WwiseDocument>

@@ -16,15 +16,17 @@ public class ModRoll
     public float modRollFearM = 0;
     public float modRollAttackM = 0;
 
+    public string sName;
+
     private static List<ModRoll> allBonus = new List<ModRoll>();
 
-    public static readonly ModRoll TALKH = new ModRoll(0.1f, 0, 0, 0, 0, 0);
-    public static readonly ModRoll FEARH = new ModRoll(0, 0.1f, 0, 0, 0, 0);
-    public static readonly ModRoll ATTACKH = new ModRoll(0, 0, 0.1f, 0, 0, 0);
+   // public static readonly ModRoll TALKH = new ModRoll(0.1f, 0, 0, 0, 0, 0, "++Talk H");
+   // public static readonly ModRoll FEARH = new ModRoll(0, 0.1f, 0, 0, 0, 0, "++Talk H");
+    public static readonly ModRoll ATTACKH = new ModRoll(0, 0, -0.1f, 0, 0, 0, "Humain miss ++");
 
-    public static readonly ModRoll TALKM = new ModRoll(0, 0, 0, 1.0f, 0, 0);
-    public static readonly ModRoll FEARM = new ModRoll(0, 0, 0, 0, 1.0f, 0);
-    public static readonly ModRoll ATTACKM = new ModRoll(0, 0, 0, 0, 0, 1.0f);
+    public static readonly ModRoll TALKM = new ModRoll(0, 0, 0, 0.1f, 0, 0, "Monster Talk ++");
+    public static readonly ModRoll FEARM = new ModRoll(0, 0, 0, 0, 0.1f, 0, "Monster Fear ++");
+    public static readonly ModRoll ATTACKM = new ModRoll(0, 0, 0, 0, 0, 0.1f, "Monster Attack ++");
 
     public static  ModRoll GetRandomMod()
     {
@@ -32,7 +34,7 @@ public class ModRoll
         return allBonus[randIndex];
     }
 
-    private ModRoll(float talkH, float fearH, float attackH, float talkM, float fearM, float attackM)
+    private ModRoll(float talkH, float fearH, float attackH, float talkM, float fearM, float attackM, string name)
     {
         modRollTalkH = talkH;
         modRollFearH = fearH;
@@ -41,6 +43,8 @@ public class ModRoll
         modRollTalkM = talkM;
         modRollFearM = fearM;
         modRollAttackM = attackM;
+
+        sName = name;
 
         allBonus.Add(this);
     }

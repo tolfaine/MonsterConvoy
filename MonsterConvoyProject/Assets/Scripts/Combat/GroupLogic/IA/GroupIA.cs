@@ -11,8 +11,12 @@ public class GroupIA : GroupLogic {
     protected bool          bTargetLocked;
     public  GroupHumanFighter groupHumanFighter;
 
-	// Use this for initialization
-	void Start () {
+    public ActionType currentAction;
+
+    private bool bIsFirstLogicTurn = true;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -23,7 +27,26 @@ public class GroupIA : GroupLogic {
     
     public ActionType SelectAction(List<Fighter> Enemies , List<Fighter> Allies)
     {
+        if (bIsFirstLogicTurn)
+        {
+            bIsFirstLogicTurn = false;
+
+            float rand = Random.Range(0.0f, 1.0f);
+
+            if (rand < 0.2)
+            {
+                groupHumanFighter.bIsFeared = true;
+                return ActionType.ESCAPE;
+            }
+            else if (rand < 0.7)
+                return ActionType.ATTACK;
+            else
+                return ActionType.TALK;
+        }
+
         if(!groupHumanFighter.bCanBeFeared || !groupHumanFighter.bCanListen)
+            return ActionType.ATTACK;
+        if(groupHumanFighter.bWantsToAttack)
             return ActionType.ATTACK;
         if (groupHumanFighter.bInConversation)
             return ActionType.TALK;

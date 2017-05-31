@@ -1,0 +1,87 @@
+{
+  "Fighters": [
+
+    {
+      "id": 1,
+      "name": "Quadrapus",
+      "initiative": 0
+    },
+    {
+      "id": 1000,
+      "name": "Margery",
+      "initiative": 1
+    },
+    {
+      "id": 0,
+      "name": "Slime",
+      "initiative": 2
+    },
+    {
+      "id": 1002,
+      "name": "Brun",
+      "initiative": 3
+    },
+    {
+      "id": 3,
+      "name": "Decaculepus",
+      "initiative": 4
+    },
+    {
+      "id": 1003,
+      "name": "Blond",
+      "initiative": 5
+    },
+    {
+      "id": 2,
+      "name": "Gentlacule",
+      "initiative": 6
+    },
+    {
+      "id": 1001,
+      "name": "Daenerys",
+      "initiative": 7
+    }
+  ],  
+	"Draft":[
+		{
+			"action": "TALK",
+			"result": 0.6,
+			"indexLineStart": 1
+		},
+		{
+			"action": "TALK",
+      "result": 0.7,
+      "indexLineStart": 2
+		},
+		{
+			"action": "TALK",
+      "result": 0.1,
+      "indexLineStart": 3
+
+		},
+		{
+			"action": "ATTACK",
+      "result": 0.55,
+      "indexLineStart": 4
+		},
+		{
+			"action": "ATTACK",
+      "result": 0.6,
+      "indexLineStart": 5
+		},
+		{
+			"action": "ATTACK",
+      "result": 0.0,
+      "indexLineStart": 6
+		},
+    {
+      "action": "FEAR",
+      "result": 1.0,
+      "indexLineStart": 7
+    }
+	],
+	"End":{
+		"indexLineStart": 8,
+		"reward" : "Blonds are afraid by tentacles"
+	}
+}

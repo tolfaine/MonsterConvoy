@@ -34,6 +34,9 @@ public class Fighter : Creature{
         this.nCurrentHealth = fighter.nCurrentHealth;
         this.nPower = fighter.nPower;
         this.bIsImportant = fighter.bIsImportant;
+        this.currentUI = fighter.currentUI;
+        this.justTookDamage = fighter.justTookDamage;
+        this.bHasbeenAttcked = fighter.bHasbeenAttcked;
        // this.nInitiative = fighter.nInitiative;
        // this.nArmor = fighter.nArmor;
        // this.nPrecision = fighter.nPrecision;
@@ -63,23 +66,28 @@ public class Fighter : Creature{
                 rand = combatManager.scriptManager.currentTurn.fRoll;
             }
 
-            if(rand >= 0.90)
+            if (rand >= 0.90)
             {
-                fighter.TakeDamage(this.GetDamage()*2);
+                fighter.TakeDamage(this.GetDamage() * 2);
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
+
             }
-            else if(rand > 0.1)
+            else if (rand > 0.1)
             {
                 fighter.TakeDamage(this.GetDamage());
-            }else
+                AkSoundEngine.PostEvent("Play_" + sName + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
+            }
+            else
             {
                 Debug.Log("Fail");
-
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
                 GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
                 CombatManager cm = g.GetComponent<CombatManager>();
                 ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(this)).OneFighterGotTargetted();
 
             }
-            ActionTalk(action, rand);
+
+           // ActionTalk(action, rand);
 
         }
 
@@ -117,6 +125,7 @@ public class Fighter : Creature{
         }
         */
 
+
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
         if (g != null && g.GetComponent<CombatManager>().talkManager != null)
         {
@@ -139,8 +148,10 @@ public class Fighter : Creature{
         justTookDamage = true;
 
         bHasbeenAttcked = true;
-        if (nCurrentHealth < 0)
-            nCurrentHealth = 0;
+        if (nCurrentHealth <= 0)
+        {       nCurrentHealth = 0;
+            AkSoundEngine.SetSwitch("Tension", "T4", GameObject.FindGameObjectWithTag("MainCamera"));
+        }
         if (nCurrentHealth > nHealthMax)
             nCurrentHealth = nHealthMax;
     }

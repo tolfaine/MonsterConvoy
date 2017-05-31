@@ -5,7 +5,7 @@ using UnityEngine;
 public class Invasion : MonoBehaviour {
 
     Vector3 invasionOrigin; //The location of the portal 
-    public int invasionSize = 0; //Multiplier which increases the invasion radius on every turn
+    int invasionSize = 0; //Multiplier which increases the invasion radius on every turn
     int invasionRadius = 50; //The initial radius of the invasion.
     float lerpSpeed = 0.05f; //The speed which the invasion grows at the start of each turn (Does not impact the size of the invasion).
 

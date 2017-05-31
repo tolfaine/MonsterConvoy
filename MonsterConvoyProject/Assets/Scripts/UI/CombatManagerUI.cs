@@ -25,6 +25,8 @@ public class CombatManagerUI : MonoBehaviour {
     public GameObject humanAnchor;
 
     Scene currentScene;
+
+    bool combatEnd = false;
     // Action , target, fighter, Type 
 
 
@@ -93,6 +95,7 @@ public class CombatManagerUI : MonoBehaviour {
 
         if (!combatManager.bCombatEnded)
         {
+
             if (combatManager.currentGroupLogic != null)
             {
                 if (combatManager.currentGroupLogic.GetLogicType() == LogicType.IA)
@@ -123,6 +126,8 @@ public class CombatManagerUI : MonoBehaviour {
 
         }else
         {
+            combatEnd = true;
+
             if (combatManager.combatEndType == CombatManager.CombatEndType.HumansConvinced)
                 sDisplayed += "Monsters Won , \n the humans are \n convinced :)";
             else if(combatManager.combatEndType == CombatManager.CombatEndType.HumansDead)
@@ -134,13 +139,35 @@ public class CombatManagerUI : MonoBehaviour {
             else if (combatManager.combatEndType == CombatManager.CombatEndType.MonsterEscape)
                 sDisplayed += "Monsters escape :3";
 
-            Invoke("BackToMenu", 4);
+            if (combatManager.discoveredTip !=null)
+            {
+                Tip t = combatManager.discoveredTip;
+
+                string sHuman = "";
+
+                if(t.caracHumain.type == CaracHumainType.Cheveux)
+                {
+                    sHuman = ((CaractHumainCheveux)t.caracHumain).enumCaract.ToString();
+                }else
+                {
+                    sHuman = ((CaractHumainStuff)t.caracHumain).enumCaract.ToString();
+                }
+
+                string sMonster = t.caracMonster.enumCaract.ToString();
+                string nameMod = t.modroll.sName;
+
+                sDisplayed += "\n" + sHuman + "  " + nameMod + " " + sMonster;
+            }
+
+            if(!DialogueInProgress())
+                Invoke("BackToMenu", 4);
+
         }
     }
 
     void BackToMenu()
     {
-        string s = "Menu" ;
+        string s = "CARTE" ;
 
         SceneManager.UnloadScene(currentScene);
 

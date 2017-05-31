@@ -200,6 +200,61 @@ public class TipsManager : MonoBehaviour {
         return 0;
     }
 
+    public List<Tip> GetAllTipConcerningGroups(GroupMonsterFighter groupMonster, GroupHumanFighter groupHuman)
+    {
+        List<Tip> finalList = new List<Tip>();
+
+        List<Fighter> allHuman = groupHuman.lFighters;
+        List<Fighter> allMonster = groupMonster.lFighters;
+
+
+        foreach (Tip tip in tipsNotKnownByPlayer)
+        {
+            bool bConcernM = false;
+            bool bConcernH = false;
+
+            foreach(Fighter fighter in allHuman)
+            {
+                ModelHumainUI modelH = ((Human)fighter).currentUI.gameObject.GetComponentInChildren<ModelHumainUI>();      
+                CaractHumainCheveux cheveux = modelH.caractCheveux;
+                CaractHumainStuff stuff = modelH.caractStuff;
+                if (tip.caracHumain == cheveux)
+                    bConcernH = true;
+                else if (tip.caracHumain == stuff)
+                    bConcernH = true;
+            }
+            foreach (Fighter fighter in allMonster)
+            {
+                ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
+                CaractMonster firstMutation = modelM.caractMonster;
+                CaractMonster permaMutation = modelM.permanentCarMutation;
+
+                if (tip.caracMonster == firstMutation)
+                    bConcernM = true;
+                else if (tip.caracMonster == permaMutation)
+                    bConcernM = true;
+            }
+
+            if (bConcernH && bConcernM)
+                finalList.Add(tip);
+        }
+
+
+        return finalList;
+    }
+
+    public Tip GetRandTipConcerningGroups(GroupMonsterFighter groupMonster, GroupHumanFighter groupHuman)
+    {
+        List<Tip> lFinalTips = GetAllTipConcerningGroups(groupMonster, groupHuman);
+
+        int randIndex = Random.Range(0, lFinalTips.Count);
+        Tip tip = lFinalTips[randIndex];
+
+        LearnTip(tip);
+
+        return tip;
+    }
+
     public List<Tip> GetTipsAboutMonsterCarac(CaractMonster caracMonster)
     {
         List<Tip> finalList = new List<Tip>();

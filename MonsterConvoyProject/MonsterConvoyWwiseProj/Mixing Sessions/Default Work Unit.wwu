@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{4DD13ECC-A908-4E1E-8E22-E8B6E38B991A}" SchemaVersion="75">
+	<MixingSessions>
+		<WorkUnit Name="Default Work Unit" ID="{4DD13ECC-A908-4E1E-8E22-E8B6E38B991A}" PersistMode="Standalone">
+			<ChildrenList>
+				<MixingSession Name="New Mixing Session" ID="{B8BFD303-0539-445E-B7F9-91EC8F286179}">
+					<ObjectList>
+						<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{4AA8F987-7F3F-43D8-AD74-D161B10B043B}"/>
+						<ObjectRef Name="Amb" ID="{576F8800-A4B1-4631-BF9E-53AE469B3376}" WorkUnitID="{4AA8F987-7F3F-43D8-AD74-D161B10B043B}"/>
+						<ObjectRef Name="HumanSFX" ID="{3771893A-B55B-48C6-B3CC-5AC5C402FB44}" WorkUnitID="{4AA8F987-7F3F-43D8-AD74-D161B10B043B}"/>
+						<ObjectRef Name="MonsterSFX" ID="{AA525740-3F86-49B7-BD0C-F2D89E710120}" WorkUnitID="{4AA8F987-7F3F-43D8-AD74-D161B10B043B}"/>
+						<ObjectRef Name="Music" ID="{36276505-11F0-49ED-B76E-5C5A54FEDA02}" WorkUnitID="{4AA8F987-7F3F-43D8-AD74-D161B10B043B}"/>
+						<ObjectRef Name="FearMix" ID="{3F9B2942-E1EE-4916-9C8C-6D25723D7CF1}" WorkUnitID="{70EC8B38-7F5F-472B-B654-3898255945E4}"/>
+						<ObjectRef Name="TalkMix" ID="{9AFEABE3-9CD2-400D-8661-2D928E081C11}" WorkUnitID="{70EC8B38-7F5F-472B-B654-3898255945E4}"/>
+						<ObjectRef Name="HumanTalk" ID="{072B2D36-9211-4E3D-8F6D-F9281FC04D6C}" WorkUnitID="{70EC8B38-7F5F-472B-B654-3898255945E4}"/>
+						<ObjectRef Name="Hits" ID="{C197DD68-E7F0-4933-ACF7-E87F60B3AFBB}" WorkUnitID="{70EC8B38-7F5F-472B-B654-3898255945E4}"/>
+					</ObjectList>
+				</MixingSession>
+			</ChildrenList>
+		</WorkUnit>
+	</MixingSessions>
+</WwiseDocument>

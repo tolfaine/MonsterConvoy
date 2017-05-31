@@ -23,7 +23,7 @@ public class CaractMonster
 
 
     [SerializeField]
-    protected string sName;
+    public string sName;
     protected int nId;
     public _enumCaractMonster enumCaract;
 
@@ -108,7 +108,7 @@ public class CaractHumain
     protected int nId;
     [SerializeField]
     protected string sName;
-    protected CaracHumainType type;
+    public CaracHumainType type;
 
    
 
