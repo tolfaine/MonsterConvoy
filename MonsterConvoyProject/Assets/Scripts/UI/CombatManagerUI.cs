@@ -140,7 +140,7 @@ public class CombatManagerUI : MonoBehaviour {
 
     void BackToMenu()
     {
-        string s = "Menu" ;
+        string s = "CARTE" ;
 
         SceneManager.UnloadScene(currentScene);
 

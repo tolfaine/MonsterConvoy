@@ -8,8 +8,15 @@ public class MutationSelectionManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+
+        foreach (Transform child in gameObject.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        Initialise();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -18,7 +25,25 @@ public class MutationSelectionManager : MonoBehaviour {
 
     public void Initialise()
     {
+        CaractMonster t = CaractMonster.CHAPEAU;
+
         MutationManager mutationManager = GameObject.FindGameObjectWithTag("MutationManager").GetComponent<MutationManager>();
+
+        List<MutationManager.MutationData> lData = mutationManager.GetRandomMutation(3);
+
+        foreach(MutationManager.MutationData data in lData)
+        { 
+            GameObject g = Instantiate(prefabUIMutation, Vector3.zero, prefabUIMutation.transform.localRotation) as GameObject;
+
+            MutationSelection ms = g.GetComponent<MutationSelection>();
+
+            ms.idMonster = data.nIdMonster;
+            ms.mutation = CaractMonster.GetCaractMonsterOfEnum(data.mutation);
+            ms.text.text = "" + ms.idMonster + ms.mutation.sName;
+
+            g.transform.parent = gameObject.transform;
+
+        }
 
 
     }

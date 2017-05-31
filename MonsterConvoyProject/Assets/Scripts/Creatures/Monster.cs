@@ -65,15 +65,16 @@ public class Monster : Fighter{
 
             if (rand > 0.9f)
             {
-                ((GroupHumanFighter)groupHuman).GetCritFeared(this);
+                ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Crit, this);
             }
             else if (rand > 0.2f)
             {
-                ((GroupHumanFighter)groupHuman).GetFeared(this);
+                ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Normal, this);
             }
             else
             {
-                ((GroupHumanFighter)groupHuman).bCanBeFeared = false;
+                ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Fail, this);
+               // ((GroupHumanFighter)groupHuman).bCanBeFeared = false;
                 Debug.Log("Fail Fear:" + rand.ToString());
             }
 
@@ -104,16 +105,17 @@ public class Monster : Fighter{
 
             if (rand > 0.9f)
             {
-                ((GroupHumanFighter)groupHuman).GetCritConvinced(this);
+                ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Crit, this);
             }
             else if (rand > 0.2f)
             {
-                ((GroupHumanFighter)groupHuman).GetConvinced(this);
+                ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Normal, this);
             }
             else
             {
+                ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Fail, this);
                 Debug.Log("Fail Convice:" + rand.ToString());
-                ((GroupHumanFighter)groupHuman).bCanListen = false;
+                //((GroupHumanFighter)groupHuman).bCanListen = false;
             }
 
             ActionTalk(action, rand);

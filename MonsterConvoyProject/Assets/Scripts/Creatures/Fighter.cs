@@ -79,7 +79,8 @@ public class Fighter : Creature{
                 ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(this)).OneFighterGotTargetted();
 
             }
-            ActionTalk(action, rand);
+
+           // ActionTalk(action, rand);
 
         }
 
@@ -116,6 +117,7 @@ public class Fighter : Creature{
             }
         }
         */
+
 
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
         if (g != null && g.GetComponent<CombatManager>().talkManager != null)
