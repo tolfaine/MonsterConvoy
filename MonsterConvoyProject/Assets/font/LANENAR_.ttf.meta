@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 51ae8d4c6fffe2642a386a369ff969dc
+timeCreated: 1496240101
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Lane - Narrow
+  fontNames:
+  - Lane - Narrow
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
