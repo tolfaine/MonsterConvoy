@@ -19,6 +19,8 @@ public class ProtoScript : MonoBehaviour {
     public CustomTalk customTalk;
 
 
+   public  int nbFoisSelection = 0;
+    public bool ended = false;
  
     void OnEnable()
     {
@@ -37,25 +39,29 @@ public class ProtoScript : MonoBehaviour {
         Debug.Log(scene.name);
         Debug.Log(mode);
 
-        ScriptedType type = orderScript[currentIndex];
+        if (currentIndex < orderScript.Count)
+        {
+            ScriptedType type = orderScript[currentIndex];
 
-        if (type == ScriptedType.Selection)
-        {
-            selectin.EnterSelection();
-        }
-        else if (type == ScriptedType.Combat)
-        {
-            combat.EnterCombat();
-        }
-        else if (type == ScriptedType.Map)
-        {
-            map.EnterMap();
-        }
-        else if (type == ScriptedType.Mutations)
-        {
-            mutation.EnterMutation();
-        }
+            if (type == ScriptedType.Selection)
+            {
+                selectin.EnterSelection();
+                nbFoisSelection++;
 
+            }
+            else if (type == ScriptedType.Combat)
+            {
+                combat.EnterCombat();
+            }
+            else if (type == ScriptedType.Map)
+            {
+                map.EnterMap();
+            }
+            else if (type == ScriptedType.Mutations)
+            {
+                mutation.EnterMutation();
+            }
+        }
         currentIndex++;
     }
 

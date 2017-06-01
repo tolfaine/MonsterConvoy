@@ -187,7 +187,7 @@ public class CombatManagerUI : MonoBehaviour {
                 if (!DialogueInProgress())
                 {
                     if(isScripted)
-                        Invoke("BackToMenu",2);
+                        Invoke("BackToMenu",1);
                     else
                         Invoke("BackToMenu", 4);
                 }

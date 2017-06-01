@@ -31,36 +31,50 @@ public class BackToCarte : MonoBehaviour {
 
         string s = "CARTE";
 
-       // SceneManager.UnloadScene(currentScene);
-      //  SceneManager.UnloadSceneAsync(currentScene);
+        // SceneManager.UnloadScene(currentScene);
+        //  SceneManager.UnloadSceneAsync(currentScene);
 
-        
-        if(GameObject.FindGameObjectWithTag("RecrutementManager").GetComponent<RecrutementManager>().isAtCapital)
-            SceneManager.LoadScene(s);
-        else
+        Caravane caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+
+        if (caravane.lFighters.Count == 4)
         {
-            SceneManager.UnloadScene(currentScene);
+            GameObject g =  GameObject.FindGameObjectWithTag("ProtoManager");
+            if(g!= null)
+            {
+                ProtoScript ps = g.GetComponent<ProtoScript>();
 
+                if (ps.nbFoisSelection == 2)
+                {
+                     Destroy(g);
+                }
+            }
+
+            if (GameObject.FindGameObjectWithTag("RecrutementManager").GetComponent<RecrutementManager>().isAtCapital)
+                SceneManager.LoadScene(s);
+            else
+            {
+                SceneManager.UnloadScene(currentScene);
+
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(s));
+                for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
+                {
+                    GameObject go = SceneManager.GetActiveScene().GetRootGameObjects()[i];
+                    if (go.tag != "Spotligth")
+                        SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(true);
+                }
+
+            }
+
+            /*
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(s));
+
             for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
             {
                 GameObject go = SceneManager.GetActiveScene().GetRootGameObjects()[i];
                 if (go.tag != "Spotligth")
                     SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(true);
             }
-
+            */
         }
-
-        /*
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(s));
-
-        for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
-        {
-            GameObject go = SceneManager.GetActiveScene().GetRootGameObjects()[i];
-            if (go.tag != "Spotligth")
-                SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(true);
-        }
-        */
-        
     }
 }

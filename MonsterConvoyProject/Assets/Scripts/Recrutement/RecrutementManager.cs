@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RecrutementManager : MonoBehaviour {
 
@@ -33,7 +34,22 @@ public class RecrutementManager : MonoBehaviour {
     public bool isAtCapital;
 
     public Transform rootMonsters;
+    Scene currentScene;
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        currentScene = scene;
+        if(currentScene.name == "CAPITAL")
+        {
+            caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+            caravane.lFighters = new List<Monster>();
+
+        }
+    }
     // Use this for initialization
     void Start () {
 
