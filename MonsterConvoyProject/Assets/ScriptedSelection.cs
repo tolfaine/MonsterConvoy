@@ -21,7 +21,14 @@ public class ScriptedSelection : MonoBehaviour {
 
     public void EnterSelection()
     {
-        customTalk.NewTalkScripted(ScriptText,2, 2);
+        if (iteration == 0)
+        {
+            customTalk.NewTalkScripted(ScriptText, 2, 2);
+        }
+        if (iteration == 1)
+        {
+            customTalk.NewTalkScripted(ScriptText, 2, 2);
+        }
         iteration++;
     }
 }

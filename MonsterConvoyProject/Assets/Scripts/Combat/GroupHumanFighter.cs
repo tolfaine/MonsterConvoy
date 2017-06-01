@@ -66,6 +66,8 @@ public class GroupHumanFighter : GroupFighter {
             else
             {
                 bCanBeFeared = false;
+                bInConversation = false;
+                bWantsToAttack = true;
             }
 
 

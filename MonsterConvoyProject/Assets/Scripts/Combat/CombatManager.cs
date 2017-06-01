@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public enum RollResultEnum { Fail, Normal, Crit}
@@ -133,12 +134,15 @@ public class CombatManager : MonoBehaviour
 
     public float timeBeforeStartFight = 1.0f;
 
-    public Tip discoveredTip = null;
-
     public ProtoScript protoScript = null;
+
+    private int successfulTalkCount = 0;
+
+    public Tip discoveredTip;
+
     void Start()
     {
-        discoveredTip = null;
+        discoveredTip = null ;
 
         GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
 
@@ -168,10 +172,15 @@ public class CombatManager : MonoBehaviour
 
         Invoke("CanStartCombat", timeBeforeStartFight);
 
-        //Play Music
-     //   AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
+        //Play Music 
+        AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
+        AkSoundEngine.PostEvent("Play_FightMusic", gameObject);
 
-
+        for (int i = 0; i <  SceneManager.sceneCount; ++i)
+        {
+            if (SceneManager.GetSceneAt(i).name != "Menu" && SceneManager.GetSceneAt(i).name != "CARTE")
+                AkSoundEngine.PostEvent(SceneManager.GetSceneAt(i).name,gameObject);
+        }
     }
 
     public void CanStartCombat()
@@ -219,52 +228,59 @@ public class CombatManager : MonoBehaviour
 
     void CheckCombatEnded()
     {
-        this.monsterGroupFighter.CheckFightersLife();
-        this.humanGroupFighter.CheckFightersLife();
+        if (!bCombatEnded)
+        {
+            this.monsterGroupFighter.CheckFightersLife();
+            this.humanGroupFighter.CheckFightersLife();
 
-
-        if (this.monsterGroupFighter.allFightersDead)
-        {
-            bCombatEnded = true;
-            combatEndType = CombatEndType.MonstersDead;
-        }
-        else if (this.monsterGroupFighter.bEscaping)
-        {
-            bCombatEnded = true;
-            combatEndType = CombatEndType.MonsterEscape;
-            fighterMouvementManager.bMonsterRun = true;
-        }
-        else if (this.humanGroupFighter.allFightersDead)
-        {
-            bCombatEnded = true;
-            combatEndType = CombatEndType.HumansDead;
-        }
-
-        if (((GroupHumanFighter)humanGroupFighter).bIsConviced)
-        {
-            bCombatEnded = true;
-            combatEndType = CombatEndType.HumansConvinced;
-        }
-        if (((GroupHumanFighter)humanGroupFighter).bIsFeared)
-        {
-            bCombatEnded = true;
-            combatEndType = CombatEndType.HumansFeared;
-            fighterMouvementManager.bHumanRun = true;
-        }
-
-        if (bCombatEnded)
-        {
-            if (combatEndType != CombatManager.CombatEndType.MonsterEscape && combatEndType != CombatManager.CombatEndType.MonstersDead)
+            if (this.monsterGroupFighter.allFightersDead)
             {
-                if (discoveredTip == null)
-                {
-                    TipsManager tipManager = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>();
-                    discoveredTip = tipManager.GetRandTipConcerningGroups((GroupMonsterFighter)monsterGroupFighter, (GroupHumanFighter)humanGroupFighter);
-                }
+                bCombatEnded = true;
+                combatEndType = CombatEndType.MonstersDead;
+                AkSoundEngine.PostEvent("CombatLose", gameObject);
+            }
+            else if (this.monsterGroupFighter.bEscaping)
+            {
+                bCombatEnded = true;
+                combatEndType = CombatEndType.MonsterEscape;
+                fighterMouvementManager.bMonsterRun = true;
+                AkSoundEngine.PostEvent("CombatLose", gameObject);
+            }
+            else if (this.humanGroupFighter.allFightersDead)
+            {
+                bCombatEnded = true;
+                combatEndType = CombatEndType.HumansDead;
+                AkSoundEngine.PostEvent("CombatWin", gameObject);
             }
 
-        }
+            if (((GroupHumanFighter)humanGroupFighter).bIsConviced)
+            {
+                bCombatEnded = true;
+                combatEndType = CombatEndType.HumansConvinced;
+                AkSoundEngine.PostEvent("CombatWin", gameObject);
+            }
+            if (((GroupHumanFighter)humanGroupFighter).bIsFeared)
+            {
+                bCombatEnded = true;
+                combatEndType = CombatEndType.HumansFeared;
+                fighterMouvementManager.bHumanRun = true;
+                AkSoundEngine.PostEvent("CombatWin", gameObject);
+                AkSoundEngine.PostEvent("Play_flee", gameObject);
+            }
 
+            if (bCombatEnded)
+            {
+                if (combatEndType != CombatManager.CombatEndType.MonsterEscape && combatEndType != CombatManager.CombatEndType.MonstersDead)
+                {
+                    if (discoveredTip == null)
+                    {
+                        TipsManager tipManager = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>();
+                        discoveredTip = tipManager.GetRandTipConcerningGroups((GroupMonsterFighter)monsterGroupFighter, (GroupHumanFighter)humanGroupFighter);
+                    }
+                }
+
+            }
+        }
     }
 
     void ProcessCombat()
@@ -356,10 +372,11 @@ public class CombatManager : MonoBehaviour
     {
         if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
         {
-            if (actionChoosed == ActionType.ATTACK && currentFighter.GetCreatureType() == CreatureType.Human && currentTension < 4)
+            uint state;
+            AkSoundEngine.GetSwitch("Tension", gameObject, out state);
+            if (actionChoosed == ActionType.ATTACK && currentFighter.GetCreatureType() == CreatureType.Human && state != 4 )
             {
-                currentTension = 3;
-               // AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
+                AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
             }
 
             currentFighter.PerformActionOnTarget(actionChoosed, targetChoosed);
@@ -369,39 +386,33 @@ public class CombatManager : MonoBehaviour
             if (currentFighter.GetCreatureType() == CreatureType.Human)
             {
                 currentFighter.PerformActionOnTarget(actionChoosed, monsterGroupFighter);
-                if (actionChoosed == ActionType.FEAR && currentTension < 3)
+                if (actionChoosed == ActionType.FEAR)
                 {
-                    currentTension = 2;
-                   // AkSoundEngine.SetSwitch("Tension", "T2", gameObject);
+                 //   AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
                 }
-                else if (actionChoosed == ActionType.TALK && currentTension < 3)
+                else if (actionChoosed == ActionType.TALK)
                 {
-                   // AkSoundEngine.PostEvent("Play_HumanTalk", gameObject);
+
+                    successfulTalkCount++;
+                    if (successfulTalkCount > 1)
+                    {
+                        AkSoundEngine.SetSwitch("Tension", "T1", gameObject);
+                    }
+                    AkSoundEngine.PostEvent("Play_HumanTalk", gameObject);
                 }
             }
             else
             {
                 currentFighter.PerformActionOnTarget(actionChoosed, humanGroupFighter);
                 if (actionChoosed == ActionType.FEAR)
-                { }
+                {
+                    AkSoundEngine.PostEvent("Play_" + currentFighter.sName + "Fear", gameObject);
+                }
                 if (actionChoosed == ActionType.TALK)
                 {
-                    switch (currentFighter.sName)
-                    {
-                        case "Slime":
-                           // AkSoundEngine.PostEvent("Play_SlimeTalk", gameObject);
-                            break;
-                        case "Quadrapus":
-                           // AkSoundEngine.PostEvent("Play_KappaTalk", gameObject);
-                            break;
-                        case "Decalepus":
-                          //  AkSoundEngine.PostEvent("Play_MummyTalk", gameObject);
-                            break;
-                        case "Gentlacule":
-                           // AkSoundEngine.PostEvent("Play_SirenTalk", gameObject);
-                            break;
-                    }
+                    AkSoundEngine.PostEvent("Play_" + currentFighter.sName + "Talk", gameObject);
                 }
+                
             }
         }
         else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
@@ -700,11 +711,9 @@ public class CombatManager : MonoBehaviour
 
             fighter = combatOrder[currentFighterIndex].fighter;
 
-            if (!fighter.CanAttack()) //Does this mean they're dead? 
+            if (!fighter.CanAttack())
             {
                 fighter = null;
-               // AkSoundEngine.SetSwitch("Tension", "T4", gameObject);
-                currentTension = 4;
             }
             counter++;
         }

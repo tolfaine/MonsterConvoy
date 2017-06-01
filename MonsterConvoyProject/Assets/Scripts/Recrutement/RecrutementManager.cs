@@ -42,6 +42,7 @@ public class RecrutementManager : MonoBehaviour {
         creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
 
+
         foreach (Transform child in slots.transform)
         {
             Destroy(child.gameObject);
@@ -111,9 +112,14 @@ public class RecrutementManager : MonoBehaviour {
     {
         CreaturesData creatureData = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>();
 
-        for(int i = 0; i< nbRecrute; i++)
+        List<MonsterData> lData = creatureData.GetAllMonsterImportance(canFindImportant);
+
+        for (int i = 0; i< nbRecrute; i++)
         {
-            Monster monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
+            //Monster monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
+
+            Monster monster = lData[i].GetMonster();
+
             InstantiateMonsterAtPosition(availablePosition[0], monster);
 
             filledPosition.Add(availablePosition[0]);
@@ -242,6 +248,7 @@ public class RecrutementManager : MonoBehaviour {
     {
         slotSelected.Delete();
         caravane.lFighters[index] = null;
+        caravane.lFighters.RemoveAt(index);
     }
 
 }

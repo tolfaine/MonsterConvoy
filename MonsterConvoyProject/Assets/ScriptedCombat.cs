@@ -18,6 +18,8 @@ public class ScriptedCombat : MonoBehaviour {
     public ScriptTurnInfo currentTurn;
     public int index = 0;
 
+    public int nbAttack = 0;
+
     public void NextTurn()
     {
         List<ScriptTurnInfo> turnList = new List<ScriptTurnInfo>();
@@ -27,7 +29,7 @@ public class ScriptedCombat : MonoBehaviour {
         if (iteration == 2)
             turnList = lTurnInfo2;
 
-        if (index < lTurnInfo.Count + 1)
+        if (index < turnList.Count)
         {
             currentTurn = turnList[index];
             index++;
@@ -66,9 +68,20 @@ public class ScriptedCombat : MonoBehaviour {
             customTalk.NewTalkScripted(ScriptText, 2, 2);
         if (iteration == 1)
             customTalk.NewTalkScripted(ScriptText, 15, 15);
+        else
+        {
+
+        }
 
         iteration++;
-     }
+
+        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
+        {
+            TalkManager sm = g.GetComponent<CombatManager>().talkManager;
+            monsters = sm.customTalk;
+        }
+    }
 
     public void EndCombat()
     {
@@ -81,12 +94,7 @@ public class ScriptedCombat : MonoBehaviour {
     public void Talk()
     {
 
-        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
-        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
-        {
-            TalkManager sm = g.GetComponent<CombatManager>().talkManager;
-            monsters = sm.customTalk;
-        }
+
 
         if (iteration == 1)
         {
@@ -118,17 +126,13 @@ public class ScriptedCombat : MonoBehaviour {
         {
             if (roundIt == 0)
             {
-                monsters.NewTalkScripted(ScriptText, 17, 17);
+                monsters.NewTalkScripted(ScriptText, 18, 18);
             }
             else if (roundIt == 1)
             {
-                monsters.NewTalkScripted(ScriptText, 18, 18);
-            }
-            else if (roundIt == 2)
-            {
                 monsters.NewTalkScripted(ScriptText, 19, 19);
             }
-            else if (roundIt == 3)
+            else if (roundIt == 2)
             {
                 monsters.NewTalkScripted(ScriptText, 21, 21);
             }
@@ -139,11 +143,27 @@ public class ScriptedCombat : MonoBehaviour {
 
     public void HumanAttack()
     {
+        if (iteration == 2)
+        {
+            if (nbAttack == 0)
+            {
+                customTalk.NewTalkScripted(ScriptText, 17, 17);
+            }
+            else if (nbAttack == 2)
+            {
+                customTalk.NewTalkScripted(ScriptText, 23, 23);
+            }
+            else if (nbAttack == 3)
+            {
+                customTalk.NewTalkScripted(ScriptText, 24, 24);
+            }
 
+            nbAttack++;
+        }
     }
 
     public void MonsterFailFear()
     {
-
+        monsters.NewTalkScripted(ScriptText, 22,22);
     }
 }

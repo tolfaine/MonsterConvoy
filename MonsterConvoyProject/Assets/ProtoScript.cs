@@ -18,6 +18,8 @@ public class ProtoScript : MonoBehaviour {
 
     public CustomTalk customTalk;
 
+
+ 
     void OnEnable()
     {
         //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.

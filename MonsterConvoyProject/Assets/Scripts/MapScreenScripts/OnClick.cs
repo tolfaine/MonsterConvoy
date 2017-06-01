@@ -10,14 +10,6 @@ public class OnClick : MonoBehaviour {
 
     private void Start()
     {
-        /*
-        oneLight = spotLight;
-        oneLight.SetActive(true);
-        oneLight.GetComponent<Light>().enabled = false;
-        oneLight.transform.position = transform.position + (Vector3.up * 8);
-
-        oneLight = GameObject.Instantiate(oneLight, gameObject.transform);
-        */
         spotLight.SetActive(true);
         spotLight.GetComponent<Light>().enabled = false;
         spotLight.transform.position = transform.position + (Vector3.up * 8);

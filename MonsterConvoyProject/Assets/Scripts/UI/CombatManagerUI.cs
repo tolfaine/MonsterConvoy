@@ -160,7 +160,9 @@ public class CombatManagerUI : MonoBehaviour {
                 string sMonster = t.caracMonster.enumCaract.ToString();
                 string nameMod = t.modroll.sName;
 
-                sDisplayed += "\n" + sHuman + "  " + nameMod + " " + sMonster;
+                // sDisplayed += "\n" + sHuman + "  " + nameMod + " " + sMonster;
+
+                sDisplayed += "\n You've learn a new Tip";
             }
 
 

@@ -96,6 +96,18 @@ public class CreaturesData : MonoBehaviour {
 
         return default(T);
     }
+    public List<MonsterData> GetAllMonsterImportance(bool importance)
+    {
+        List<MonsterData> finalList = new List<MonsterData>();
+
+        foreach (MonsterData data in lMonsters)
+        {
+            if (data.isImportant == importance)
+                finalList.Add(data);
+        }
+
+        return finalList;
+    }
     public MonsterData GetRandomMonsterWithImportance(bool importance)
     {
         List<MonsterData> finalList = new List<MonsterData>();
