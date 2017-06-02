@@ -11,6 +11,8 @@ public class Invasion : MonoBehaviour {
     float lerpSpeed = 0.1f; //The speed which the invasion grows at the start of each turn (Does not impact the size of the invasion).
     Vector3 capitalPosition;
     Vector3 initialScale;
+    public GameObject flag;
+     
     void Start ()
     {
         //Set the invasion origin to the position of the portal. 
@@ -70,6 +72,9 @@ public class Invasion : MonoBehaviour {
             case 7:
                 invasionGrowthRate = distanceFromPortalToCapital / 25;
                 break;
+            default:
+                invasionGrowthRate = distanceFromPortalToCapital / 25;
+                break;
         }
         GameObject.FindGameObjectWithTag("PawnManager").GetComponent<PawnManager>().RegenerateMap();
         turnNumber++;
@@ -91,6 +96,9 @@ public class Invasion : MonoBehaviour {
         {
             other.GetComponent<PlaceType>().invasionStatus = true;
 
+            flag.transform.position = other.transform.position + (Vector3.left * 3) + (Vector3.back * 2);
+            GameObject.Instantiate(flag, other.transform);
+
             if (other.GetComponent<PlaceType>().placeType.Equals(PlaceType.Place.DEPART))
             {
 
@@ -102,8 +110,8 @@ public class Invasion : MonoBehaviour {
                     ps = g.GetComponent<ProtoScript>();
                     
                 }
-                ps.map.ToMutation();
-                //OnNewLoop();
+              //  ps.map.ToMutation();
+                OnNewLoop();
             }
         }
     }

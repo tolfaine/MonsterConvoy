@@ -41,6 +41,11 @@ public class OnClick : MonoBehaviour {
         }
     }
 
+    bool strobeUp;
+    int minLightIntensity = 3;
+    int maxLightIntensity = 8;
+    float strobeSpeed = 0.5f;
+
     private void Update()
     {
         if (gameObject.Equals(NodeConnections.activeNode) && !visited)
@@ -60,9 +65,23 @@ public class OnClick : MonoBehaviour {
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             spotLight.GetComponent<Light>().enabled = true;
+            if (strobeUp)
+            {
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, maxLightIntensity, strobeSpeed);
+                if (spotLight.GetComponent<Light>().intensity >= maxLightIntensity - 0.1f)
+                    strobeUp = false;
+            }
+            else
+            {
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, minLightIntensity, strobeSpeed);
+                if (spotLight.GetComponent<Light>().intensity <= minLightIntensity + 0.1f)
+                    strobeUp = true;
+            }
+
         }
 
     }
+
     void OnMouseOver()
 	{
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
