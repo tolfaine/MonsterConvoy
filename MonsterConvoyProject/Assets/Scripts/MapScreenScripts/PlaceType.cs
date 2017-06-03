@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlaceType : MonoBehaviour {
 
+    public GameObject flag;
+    private GameObject myFlag; 
+
     public enum Place {
         TERRAIN,
         DEPART,
@@ -38,8 +41,11 @@ public class PlaceType : MonoBehaviour {
             NodeConnections.activeNode = gameObject;
 	}
 
-    void setInvaded()
+    public void SetInvaded()
     {
-        invasionStatus = true; 
+        invasionStatus = true;
+
+        flag.transform.position = transform.position + (Vector3.left * 3) + (Vector3.back);
+        GameObject.Instantiate(flag, transform);
     }
 }
