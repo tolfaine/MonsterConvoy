@@ -62,6 +62,7 @@ public class PawnManager : MonoBehaviour {
                     if (pawnPrefabs[j].name == terrainType.ToString() + " PION")
                     {
                         List<GameObject> preserveNodeConnections = pawns[i].GetComponent<NodeConnections>().neighbourNodes;
+                        int preserveId = pawns[i].GetComponent<Id>().id;
 
                         var newPawn = Instantiate(pawnPrefabs[j], pawns[i].transform.position, pawns[i].transform.rotation);
 
@@ -74,6 +75,7 @@ public class PawnManager : MonoBehaviour {
                         Destroy(pawns[i]);
 
                         pawns[i] = newPawn;
+                        pawns[i].GetComponent<Id>().id = preserveId;
 
                         //Read all neighbours to the new pawn.
                         for (int k = 0; k < preserveNodeConnections.Count; ++k)
@@ -124,6 +126,7 @@ public class PawnManager : MonoBehaviour {
                     if (pawnPrefabs[j].name == terrainType.ToString() + " PION")
                     {
                         List<GameObject> preserveNodeConnections = pawns[i].GetComponent<NodeConnections>().neighbourNodes;
+                        int preserveId = pawns[i].GetComponent<Id>().id;
 
                         var newPawn = Instantiate(pawnPrefabs[j], pawns[i].transform.position, pawns[i].transform.rotation);
 
@@ -136,6 +139,7 @@ public class PawnManager : MonoBehaviour {
                         Destroy(pawns[i]);
 
                         pawns[i] = newPawn;
+                        pawns[i].GetComponent<Id>().id = preserveId;
 
                         //Read all neighbours to the new pawn.
                         for (int k = 0; k < preserveNodeConnections.Count; ++k)
@@ -145,7 +149,8 @@ public class PawnManager : MonoBehaviour {
                     }
                 }
             }
-            else if (pawns[i].GetComponent<PlaceType>().placeType == PlaceType.Place.DEPART)
+
+            if (pawns[i].GetComponent<PlaceType>().placeType == PlaceType.Place.DEPART)
                 NodeConnections.activeNode = pawns[i];
         }
     }

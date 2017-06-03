@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OnClick : MonoBehaviour {
-    
+public class OnClick : MonoBehaviour
+{
+
     bool visited = false;
+    bool highlighted = false;
+    bool altered = false;
+
     public GameObject spotLight;
 
     private void Start()
@@ -41,39 +45,92 @@ public class OnClick : MonoBehaviour {
         }
     }
 
+    bool strobeUp;
+    int minLightIntensity = 3;
+    int maxLightIntensity = 8;
+    float strobeSpeed = 0.5f;
+    
+    bool grown = false;
+
     private void Update()
     {
         if (gameObject.Equals(NodeConnections.activeNode) && !visited)
             visited = true;
 
-        //TODO Don't put this in update. 
         if (gameObject.Equals(NodeConnections.activeNode))
         {
-            gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
+            if (!grown)
+                Grow();
         }
         else
         {
-            if (gameObject.GetComponent<PlaceType>().placeType != PlaceType.Place.PORTAIL)
+            if (grown && gameObject.GetComponent<PlaceType>().placeType != PlaceType.Place.PORTAIL)
+            {
                 gameObject.transform.localScale = new Vector3(1, 1, 1);
+                grown = false;
+            }
+        }
+
+        if (!highlighted && altered)
+        {
+            ReturnToNormal();
         }
 
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             spotLight.GetComponent<Light>().enabled = true;
+            if (strobeUp)
+            {
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, maxLightIntensity, strobeSpeed);
+                if (spotLight.GetComponent<Light>().intensity >= maxLightIntensity - 0.1f)
+                    strobeUp = false;
+            }
+            else
+            {
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, minLightIntensity, strobeSpeed);
+                if (spotLight.GetComponent<Light>().intensity <= minLightIntensity + 0.1f)
+                    strobeUp = true;
+            }
         }
-
     }
+
     void OnMouseOver()
-	{
+    {
+        highlighted = true;
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
         {
             gameObject.transform.Rotate(new Vector3(0, 1f, 0));
+            altered = true;
         }
     }
 
-	void OnMouseExit()
-	{
-        //Turn off highlight effect
-        gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+    void OnMouseExit()
+    {
+        highlighted = false; 
+    }
+
+    void ReturnToNormal()
+    {
+        float returnToNormalSpeed = 0.5f;
+        gameObject.transform.localRotation = Quaternion.Euler(0, Mathf.Lerp(gameObject.transform.localRotation.eulerAngles.y, 0, returnToNormalSpeed), 0);
+        if (gameObject.transform.localRotation.y == 0)
+        {
+            altered = false;
+        }
+    }
+
+    void Grow()
+    {
+        float grownSize = 1.5f;
+        float growthSpeed = 0.2f;
+
+        gameObject.transform.localScale = new Vector3(
+            Mathf.Lerp(gameObject.transform.localScale.x, grownSize, growthSpeed),
+            Mathf.Lerp(gameObject.transform.localScale.y, grownSize, growthSpeed),
+            Mathf.Lerp(gameObject.transform.localScale.z, grownSize, growthSpeed));
+        if (gameObject.transform.localScale.x >= grownSize - 0.1f)
+        {
+            grown = true;
+        }
     }
 }
