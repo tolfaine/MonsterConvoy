@@ -23,6 +23,11 @@ public class ImageFighterManager : MonoBehaviour {
         {
             if (cm.currentFighter != null)
                 UpdateImage(cm.currentFighter.nID);
+            if(cm.currentFighter.eCreatureType == CreatureType.Human)
+                GetComponent<SpriteRenderer>().enabled = false;
+            else
+                GetComponent<SpriteRenderer>().enabled = true;
+
         }
 	}
 

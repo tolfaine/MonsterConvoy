@@ -150,6 +150,7 @@ public class CustomTalk : MonoBehaviour {
 
 	[Tooltip("Tries to break long lines into several talks")]
 	public bool wordWrap = true;
+
 	public int maxCharInWidth = 50;
 	public int maxCharInHeight = 4;
 
@@ -721,8 +722,9 @@ public class CustomTalk : MonoBehaviour {
 		int heightBase = Mathf.FloorToInt(textUI.fontSize/3);
         //int maxCharInWidth = Mathf.FloorToInt ((widthBase * textUI.rectTransform.rect.width) / 438);
         //int maxCharInHeight = Mathf.FloorToInt ((heightBase * textUI.rectTransform.rect.height) / 71);
-        int maxCharInWidth = 25;
-        int maxCharInHeight = 2;
+
+        //int maxCharInWidth = 25;
+      //  int maxCharInHeight = 2;
 
 
         int maxCharsOnUI = maxCharInWidth * maxCharInHeight;

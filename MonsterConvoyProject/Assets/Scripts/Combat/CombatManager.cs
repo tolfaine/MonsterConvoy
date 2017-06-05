@@ -115,6 +115,7 @@ public class CombatManager : MonoBehaviour
 
     public bool bFighterInFightPosition = false;
     public bool bFighterInInitialPosition = true;
+    public bool waitedOneFrame = false;
 
 
     public ScriptManager scriptManager;
@@ -295,7 +296,13 @@ public class CombatManager : MonoBehaviour
         {
             if (bActionInProgress && bFighterInInitialPosition)
             {
-                ActionEnded();
+                if (!waitedOneFrame)
+                    waitedOneFrame = true;
+                else
+                {
+                    ActionEnded();
+                    waitedOneFrame = false;
+                }
             }
 
             if (!bTurnInProgress)

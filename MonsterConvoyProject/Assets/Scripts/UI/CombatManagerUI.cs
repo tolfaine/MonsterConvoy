@@ -34,8 +34,8 @@ public class CombatManagerUI : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //text = GetComponent<Text>();
-        mageTalk = null;
-        mageTalk = GameObject.FindGameObjectWithTag("MageTalk");
+       // mageTalk = null;
+     //   mageTalk = GameObject.FindGameObjectWithTag("MageTalk");
     }
 
 
@@ -46,15 +46,19 @@ public class CombatManagerUI : MonoBehaviour {
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currentScene = scene;
+      //  mageTalk = GameObject.FindGameObjectWithTag("MageTalk");
     }
 
     // Update is called once per frame
     void Update () {
+        if(mageTalk == null)
+            mageTalk = GameObject.FindGameObjectWithTag("MageTalk");
         CheckHumanFear();
         CheckCombatManager();
         text.text = sDisplayed;
 
-        if(combatManager.fighterMouvementManager.bIsAtFightPosition && !combatManager.bActionInProgress && combatManager.currentGroupLogic.GetLogicType() == LogicType.Player)
+        if(combatManager.fighterMouvementManager.bIsAtFightPosition && !combatManager.bActionInProgress && combatManager.currentGroupLogic.GetLogicType() == LogicType.Player 
+            && (!combatManager.bActionChoosed || (combatManager.bActionChoosed && combatManager.bActionRequireTarget && !combatManager.bTargetChoosed)))
         {
             actionWheel.SetActive(true);
         }else
@@ -77,7 +81,18 @@ public class CombatManagerUI : MonoBehaviour {
     {
         if ((dialogueHumanObj != null && dialogueHumanObj.activeSelf) || (dialogueObj!= null && dialogueObj.activeSelf) || (mageTalk != null && mageTalk.activeSelf))
             return true;
-        return false;
+
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+
+        /*
+        if (g != null)
+        {
+            ProtoScript ps = g.GetComponent<ProtoScript>();
+            if(ps.combat.needToTalk)
+                return true;
+        }
+        */
+            return false;
     }
 
     void CheckHumanFear()
@@ -182,15 +197,18 @@ public class CombatManagerUI : MonoBehaviour {
                         isScripted = true;
                     }
                     combatEnd = true;
+                }else
+                {
+                    if (!DialogueInProgress())
+                    {
+                        if (isScripted)
+                            Invoke("BackToMenu", 1);
+                        else
+                            Invoke("BackToMenu", 4);
+                    }
                 }
 
-                if (!DialogueInProgress())
-                {
-                    if(isScripted)
-                        Invoke("BackToMenu",1);
-                    else
-                        Invoke("BackToMenu", 4);
-                }
+
             }
 
 

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScriptedCombat : MonoBehaviour {
+
+    public enum CombatTalk { EnterCombat, EndCombat, Talk, HumanAttack, MonsterFailFear }
+
+
     public CustomTalk customTalk;
     public CustomTalk monsters;
 
@@ -19,6 +23,12 @@ public class ScriptedCombat : MonoBehaviour {
     public int index = 0;
 
     public int nbAttack = 0;
+
+    public CombatManager combatManager;
+
+    public bool needToTalk;
+    public CombatTalk typeTalk;
+
 
     public void NextTurn()
     {
@@ -47,6 +57,7 @@ public class ScriptedCombat : MonoBehaviour {
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
         if (g != null && g.GetComponent<CombatManager>().talkManager != null)
         {
+            combatManager = g.GetComponent<CombatManager>();
             TalkManager sm = g.GetComponent<CombatManager>().talkManager;
             monsters = sm.customTalk;
         }
@@ -55,11 +66,109 @@ public class ScriptedCombat : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (needToTalk)
+        {
+            switch (typeTalk) {
+                case CombatTalk.EndCombat:
+                    needToTalk = false;
+                    if (iteration == 1)
+                            customTalk.NewTalkScripted(ScriptText, 12, 12);
+                        if (iteration == 2)
+                            customTalk.NewTalkScripted(ScriptText, 26, 26);
+                    
+
+                    break;
+                case CombatTalk.EnterCombat:
+                    needToTalk = false;
+                    break;
+                case CombatTalk.HumanAttack:
+                    if (combatManager.bFighterInInitialPosition)
+                    {
+                        needToTalk = false;
+                        if (iteration == 2)
+                        {
+                            if (nbAttack == 0)
+                            {
+                                customTalk.NewTalkScripted(ScriptText, 17, 17);
+                            }
+                            else if (nbAttack == 2)
+                            {
+                                customTalk.NewTalkScripted(ScriptText, 23, 23);
+                            }
+                            else if (nbAttack == 3)
+                            {
+                                customTalk.NewTalkScripted(ScriptText, 24, 24);
+                            }
+
+                            nbAttack++;
+                        }
+                    }
+
+                    break;
+                case CombatTalk.MonsterFailFear:
+                    needToTalk = false;
+                    monsters.NewTalkScripted(ScriptText, 22, 22);
+                    break;
+                case CombatTalk.Talk:
+                    needToTalk = false;
+                    if (iteration == 1)
+                        {
+
+                            if (roundIt == 0)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 4, 4);
+                            }
+                            else if (roundIt == 1)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 5, 5);
+                            }
+                            else if (roundIt == 2)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 6, 6);
+                            }
+                            else if (roundIt == 3)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 7, 7);
+                            }
+                            else if (roundIt == 4)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 8, 8);
+                            }
+
+                            roundIt++;
+                        }
+                        if (iteration == 2)
+                        {
+                            if (roundIt == 0)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 18, 18);
+                            }
+                            else if (roundIt == 1)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 19, 19);
+                            }
+                            else if (roundIt == 2)
+                            {
+                                monsters.NewTalkScripted(ScriptText, 21, 21);
+                            }
+
+                            roundIt++;
+                        }
+                   
+                    break;
+
+            }
+            
+
+        }
 	}
+
 
     public void EnterCombat()
     {
+           needToTalk = true;
+        typeTalk = CombatTalk.EnterCombat;
+        
         currentTurn = null;
         index = 0;
         roundIt = 0;
@@ -80,22 +189,30 @@ public class ScriptedCombat : MonoBehaviour {
         {
             TalkManager sm = g.GetComponent<CombatManager>().talkManager;
             monsters = sm.customTalk;
+            combatManager = g.GetComponent<CombatManager>();
         }
+        
     }
 
     public void EndCombat()
     {
+        needToTalk = true;
+        typeTalk = CombatTalk.EndCombat;
+
+        /*
         if (iteration == 1)
             customTalk.NewTalkScripted(ScriptText, 12, 12);
         if (iteration == 2)
             customTalk.NewTalkScripted(ScriptText, 26, 26);
+            */
     }
 
     public void Talk()
     {
+        needToTalk = true;
+        typeTalk = CombatTalk.Talk;
 
-
-
+        /*
         if (iteration == 1)
         {
 
@@ -139,10 +256,14 @@ public class ScriptedCombat : MonoBehaviour {
 
             roundIt++;
         }
+        */
     }
 
     public void HumanAttack()
     {
+        needToTalk = true;
+        typeTalk = CombatTalk.HumanAttack;
+        /*
         if (iteration == 2)
         {
             if (nbAttack == 0)
@@ -160,10 +281,16 @@ public class ScriptedCombat : MonoBehaviour {
 
             nbAttack++;
         }
+        */
     }
 
     public void MonsterFailFear()
     {
+        needToTalk = true;
+        typeTalk = CombatTalk.MonsterFailFear;
+
+        /*
         monsters.NewTalkScripted(ScriptText, 22,22);
+        */
     }
 }

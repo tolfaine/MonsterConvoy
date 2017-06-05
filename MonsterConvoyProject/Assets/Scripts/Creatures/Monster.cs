@@ -84,6 +84,7 @@ public class Monster : Fighter{
                 ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Fail, this);
                // ((GroupHumanFighter)groupHuman).bCanBeFeared = false;
                 Debug.Log("Fail Fear:" + rand.ToString());
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
             }
 
             ActionTalk(action, rand);
@@ -131,6 +132,8 @@ public class Monster : Fighter{
                 lastActionResult = RollResultEnum.Fail;
                 ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Fail, this);
                 Debug.Log("Fail Convice:" + rand.ToString());
+
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
                 //((GroupHumanFighter)groupHuman).bCanListen = false;
             }
 
