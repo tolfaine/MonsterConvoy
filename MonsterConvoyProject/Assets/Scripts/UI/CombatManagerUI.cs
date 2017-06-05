@@ -15,6 +15,7 @@ public class CombatManagerUI : MonoBehaviour {
 
     public GameObject dialogueHumanObj;
     public GameObject dialogueObj;
+    public GameObject mageTalk;
 
     public RPGTalk rpgTalk;
 
@@ -33,6 +34,8 @@ public class CombatManagerUI : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //text = GetComponent<Text>();
+        mageTalk = null;
+        mageTalk = GameObject.FindGameObjectWithTag("MageTalk");
     }
 
 
@@ -72,7 +75,7 @@ public class CombatManagerUI : MonoBehaviour {
 
     public bool DialogueInProgress()
     {
-        if ((dialogueHumanObj != null && dialogueHumanObj.activeSelf) || (dialogueObj!= null && dialogueObj.activeSelf))
+        if ((dialogueHumanObj != null && dialogueHumanObj.activeSelf) || (dialogueObj!= null && dialogueObj.activeSelf) || (mageTalk != null && mageTalk.activeSelf))
             return true;
         return false;
     }
@@ -82,11 +85,12 @@ public class CombatManagerUI : MonoBehaviour {
         if(combatManager.combatEndType== CombatManager.CombatEndType.HumansFeared && !bHumanFearTriggred
             && !combatManager.fighterMouvementManager.bIsAtFightPosition)
         {
+            /*
             bHumanFearTriggred = true;
             rpgTalk.lineToStart = 9;
             rpgTalk.lineToBreak = 9;
             rpgTalk.follow = humanAnchor;
-            rpgTalk.NewTalk();
+            rpgTalk.NewTalk();*/
         }
     }
     void CheckCombatManager()
@@ -126,7 +130,7 @@ public class CombatManagerUI : MonoBehaviour {
 
         }else
         {
-            combatEnd = true;
+
 
             if (combatManager.combatEndType == CombatManager.CombatEndType.HumansConvinced)
                 sDisplayed += "Monsters Won , \n the humans are \n convinced :)";
@@ -139,7 +143,7 @@ public class CombatManagerUI : MonoBehaviour {
             else if (combatManager.combatEndType == CombatManager.CombatEndType.MonsterEscape)
                 sDisplayed += "Monsters escape :3";
 
-            if (combatManager.discoveredTip !=null)
+            if (combatManager.discoveredTip !=null && combatManager.discoveredTip.caracMonster.enumCaract != CaractMonster._enumCaractMonster.NONE)
             {
                 Tip t = combatManager.discoveredTip;
 
@@ -156,11 +160,39 @@ public class CombatManagerUI : MonoBehaviour {
                 string sMonster = t.caracMonster.enumCaract.ToString();
                 string nameMod = t.modroll.sName;
 
-                sDisplayed += "\n" + sHuman + "  " + nameMod + " " + sMonster;
+                // sDisplayed += "\n" + sHuman + "  " + nameMod + " " + sMonster;
+
+                sDisplayed += "\n You've learn a new Tip";
             }
 
-            if(!DialogueInProgress())
-                Invoke("BackToMenu", 4);
+
+            if (!DialogueInProgress())
+            {
+                bool isScripted = false;
+
+                if (!combatEnd)
+                {
+                    GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+                    ProtoScript ps = null;
+
+                    if (g != null)
+                    {
+                        ps = g.GetComponent<ProtoScript>();
+                        ps.combat.EndCombat();
+                        isScripted = true;
+                    }
+                    combatEnd = true;
+                }
+
+                if (!DialogueInProgress())
+                {
+                    if(isScripted)
+                        Invoke("BackToMenu",1);
+                    else
+                        Invoke("BackToMenu", 4);
+                }
+            }
+
 
         }
     }
@@ -177,6 +209,17 @@ public class CombatManagerUI : MonoBehaviour {
             GameObject go = SceneManager.GetActiveScene().GetRootGameObjects()[i];
             if(go.tag != "Spotligth")
                 SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(true);
+        }
+
+
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+        ProtoScript ps = null;
+
+        if (g != null)
+        {
+            ps = g.GetComponent<ProtoScript>();
+            ps.map.EnterMap();
+            ps.currentIndex++;
         }
     }
 

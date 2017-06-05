@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 using LitJson;
+using System.IO;
+
 
 [System.Serializable]
 public class ScriptTurnInfo
@@ -10,6 +11,7 @@ public class ScriptTurnInfo
     public int indexLineStart;
     public int indexLineEnd;
 
+    public int ActionCode;
     public ActionType actionType;
     public float fRoll;
 

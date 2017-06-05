@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RecrutementManager : MonoBehaviour {
 
@@ -33,13 +34,30 @@ public class RecrutementManager : MonoBehaviour {
     public bool isAtCapital;
 
     public Transform rootMonsters;
+    Scene currentScene;
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        currentScene = scene;
+        if(currentScene.name == "CAPITAL")
+        {
+            caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+            caravane.lFighters = new List<Monster>();
+
+        }
+    }
     // Use this for initialization
     void Start () {
 
+      //  AkSoundEngine.PostEvent("CombatWin", gameObject);
 
         creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+
 
         foreach (Transform child in slots.transform)
         {
@@ -110,9 +128,14 @@ public class RecrutementManager : MonoBehaviour {
     {
         CreaturesData creatureData = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>();
 
-        for(int i = 0; i< nbRecrute; i++)
+        List<MonsterData> lData = creatureData.GetAllMonsterImportance(canFindImportant);
+
+        for (int i = 0; i< nbRecrute; i++)
         {
-            Monster monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
+            //Monster monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
+
+            Monster monster = lData[i].GetMonster();
+
             InstantiateMonsterAtPosition(availablePosition[0], monster);
 
             filledPosition.Add(availablePosition[0]);
@@ -241,6 +264,7 @@ public class RecrutementManager : MonoBehaviour {
     {
         slotSelected.Delete();
         caravane.lFighters[index] = null;
+        caravane.lFighters.RemoveAt(index);
     }
 
 }

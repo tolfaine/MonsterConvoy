@@ -10,6 +10,8 @@ public class TipsManager : MonoBehaviour {
     public List<Tip> tipsNotKnownByPlayer = new List<Tip>();
     public List<Tip> tipsKnownByPlayer = new List<Tip>();
 
+    public Tip lastRevealedTip = null;
+
 
     void Awake()
     {
@@ -28,7 +30,7 @@ public class TipsManager : MonoBehaviour {
     // Use this for initialization
 
     void Start () {
-        LearnTip(tipsNotKnownByPlayer[0]);
+       // LearnTip(tipsNotKnownByPlayer[0]);
     }
 	
 	// Update is called once per frame
@@ -112,6 +114,8 @@ public class TipsManager : MonoBehaviour {
 
     public void LearnTip(Tip tip)
     {
+        lastRevealedTip = tip;
+
         if (tipsNotKnownByPlayer.Contains(tip))
         {
             tipsKnownByPlayer.Add(tip);
@@ -247,6 +251,8 @@ public class TipsManager : MonoBehaviour {
     {
         List<Tip> lFinalTips = GetAllTipConcerningGroups(groupMonster, groupHuman);
 
+        if (lFinalTips.Count == 0)
+            return null;
         int randIndex = Random.Range(0, lFinalTips.Count);
         Tip tip = lFinalTips[randIndex];
 

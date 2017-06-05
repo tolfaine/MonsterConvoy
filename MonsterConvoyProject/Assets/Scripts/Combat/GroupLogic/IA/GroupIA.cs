@@ -27,6 +27,18 @@ public class GroupIA : GroupLogic {
     
     public ActionType SelectAction(List<Fighter> Enemies , List<Fighter> Allies)
     {
+
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+
+        if (g != null)
+        {
+            ProtoScript protoScript = g.GetComponent<ProtoScript>();
+            if(protoScript.combat.iteration == 1)
+                return ActionType.TALK;
+            else
+                return ActionType.ATTACK;
+        }
+
         if (bIsFirstLogicTurn)
         {
             bIsFirstLogicTurn = false;
@@ -45,7 +57,10 @@ public class GroupIA : GroupLogic {
         }
 
         if(!groupHumanFighter.bCanBeFeared || !groupHumanFighter.bCanListen)
+        {
             return ActionType.ATTACK;
+        }
+   
         if(groupHumanFighter.bWantsToAttack)
             return ActionType.ATTACK;
         if (groupHumanFighter.bInConversation)
@@ -54,13 +69,33 @@ public class GroupIA : GroupLogic {
 
         float random = Random.Range(0.0f, 1.0f);
         if (random < 0.6)
+        {
             return ActionType.ATTACK;
+        }
+
         else
+        {
             return ActionType.TALK;
+        }
     }
     
     public Fighter SelectTarget(List<Fighter> Enemies, List<Fighter> Allies)
     {
+
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+
+        if (g != null)
+        {
+            ProtoScript protoScript = g.GetComponent<ProtoScript>();
+
+            if(protoScript.combat.iteration == 2)
+            {
+                if (Enemies[2].CanAttack())
+                    return Enemies[2];
+            }
+
+        }
+
         List<Fighter> possibleTarget = new List<Fighter>();
 
         foreach(Fighter fighter in Enemies)

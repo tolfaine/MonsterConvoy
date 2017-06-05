@@ -48,11 +48,11 @@ public class CaractMonster
 
     public static CaractMonster GetRandomCaracExept(_enumCaractMonster enumMut, _enumCaractMonster enumMut2)
     {
-        int randIndex = Random.Range(1, allCaractMonster.Count + 1);
+        int randIndex = Random.Range(1, allCaractMonster.Count );
 
         while(allCaractMonster[randIndex].enumCaract == enumMut || allCaractMonster[randIndex].enumCaract == enumMut2)
         {
-            randIndex = Random.Range(1, allCaractMonster.Count + 1);
+            randIndex = Random.Range(1, allCaractMonster.Count );
         }
         return allCaractMonster[randIndex];
     }

@@ -58,9 +58,9 @@ public class Monster : Fighter{
 
             rand += terrain;
 
-            if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
+            if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
             {
-                rand = combatManager.scriptManager.currentTurn.fRoll;
+                rand = combatManager.protoScript.combat.currentTurn.fRoll;
             }
 
             if (rand > 0.9f)
@@ -98,9 +98,9 @@ public class Monster : Fighter{
 
             rand += terrain;
 
-            if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
+            if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
             {
-                rand = combatManager.scriptManager.currentTurn.fRoll;
+                rand = combatManager.protoScript.combat.currentTurn.fRoll;
             }
 
             if (rand > 0.9f)

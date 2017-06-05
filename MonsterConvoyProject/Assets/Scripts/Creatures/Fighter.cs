@@ -61,9 +61,11 @@ public class Fighter : Creature{
             float rand = Random.Range(0f, 1f);
 
 
-            if (combatManager.scriptManager != null && combatManager.scriptManager.currentTurn != null)
+            if (combatManager.protoScript != null && combatManager. protoScript.combat != null  && combatManager.protoScript.combat.currentTurn != null)
             {
-                rand = combatManager.scriptManager.currentTurn.fRoll;
+                float l =  combatManager.protoScript.combat.currentTurn.fRoll;
+                if (l != 0)
+                    rand = l;
             }
 
             if (rand >= 0.90)
@@ -83,11 +85,26 @@ public class Fighter : Creature{
                 AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
                 GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
                 CombatManager cm = g.GetComponent<CombatManager>();
-                ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(this)).OneFighterGotTargetted();
 
+                if (fighter.eCreatureType == CreatureType.Monster)
+                    ((GroupMonsterFighter)cm.GetGroupFighterOfFighter(fighter)).OneFighterGotTargetted();
+                else
+                {
+                    ((GroupHumanFighter)cm.GetGroupFighterOfFighter(fighter)).OneFighterGotTargetted();
+ 
+                }
+                ActionTalk(action, rand);
             }
 
-           // ActionTalk(action, rand);
+            if (fighter.eCreatureType == CreatureType.Monster)
+            {
+                if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
+                {
+                    combatManager.protoScript.combat.HumanAttack();
+                }
+            }
+
+            // ActionTalk(action, rand);
 
         }
 
@@ -127,11 +144,16 @@ public class Fighter : Creature{
 
 
         GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
-        if (g != null && g.GetComponent<CombatManager>().talkManager != null)
+        if (g != null && g.GetComponent<CombatManager>().talkManager != null && g.GetComponent<CombatManager>().protoScript == null)
         {
             TalkManager sm = g.GetComponent<CombatManager>().talkManager;
             sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
             sm.customTalk.NewTalk(eCreatureType, action, roll);
+        }else if(g != null && g.GetComponent<CombatManager>().talkManager != null && g.GetComponent<CombatManager>().protoScript != null)
+        {
+            g.GetComponent<CombatManager>().protoScript.combat.monsters.follow = currentUI.dialogueAnchor.gameObject;
+
+            g.GetComponent<CombatManager>().protoScript.combat.Talk();
         }
     }
 

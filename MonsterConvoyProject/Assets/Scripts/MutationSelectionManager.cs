@@ -28,7 +28,9 @@ public class MutationSelectionManager : MonoBehaviour {
         CaractMonster t = CaractMonster.CHAPEAU;
 
         MutationManager mutationManager = GameObject.FindGameObjectWithTag("MutationManager").GetComponent<MutationManager>();
+        CreaturesData creatureData = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>();
 
+ 
         List<MutationManager.MutationData> lData = mutationManager.GetRandomMutation(3);
 
         foreach(MutationManager.MutationData data in lData)
@@ -39,7 +41,7 @@ public class MutationSelectionManager : MonoBehaviour {
 
             ms.idMonster = data.nIdMonster;
             ms.mutation = CaractMonster.GetCaractMonsterOfEnum(data.mutation);
-            ms.text.text = "" + ms.idMonster + ms.mutation.sName;
+            ms.text.text = "" + creatureData.GetFighterOfID<Monster>(CreatureType.Monster, ms.idMonster).sName + ms.mutation.sName;
 
             g.transform.parent = gameObject.transform;
 
