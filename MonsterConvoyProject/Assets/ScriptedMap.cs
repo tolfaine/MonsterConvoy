@@ -42,6 +42,13 @@ public class ScriptedMap : MonoBehaviour {
         }
     }
 
+    public bool talkInProgress()
+    {
+        if (customTalk.textUI.IsActive())
+            return true;
+        return false;
+    }
+
     public void EnterMap()
     {
         if(iteration == 0)

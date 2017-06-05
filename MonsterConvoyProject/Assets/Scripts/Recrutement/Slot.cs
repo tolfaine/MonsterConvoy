@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,10 +16,14 @@ public class Slot : MonoBehaviour
     public bool bMouseClicking = false;
     public bool bClickProcessed = false;
 
+    public ImageFighterManager imageManager;
+
+
     // Use this for initialization
     void Start () {
         slotUI = gameObject;
         recrutementManager = GameObject.FindGameObjectWithTag("RecrutementManager").GetComponent<RecrutementManager>();
+        imageManager.UpdateImage(monster.nID);
     }
 
     private void Update()

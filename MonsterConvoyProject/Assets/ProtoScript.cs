@@ -39,6 +39,13 @@ public class ProtoScript : MonoBehaviour {
         Debug.Log(scene.name);
         Debug.Log(mode);
 
+        if (scene.name == "CAPITAL")
+        {
+            selectin.EnterSelection();
+            nbFoisSelection++;
+
+        }
+
         if (currentIndex < orderScript.Count)
         {
             ScriptedType type = orderScript[currentIndex];
@@ -46,7 +53,7 @@ public class ProtoScript : MonoBehaviour {
             if (type == ScriptedType.Selection)
             {
                 selectin.EnterSelection();
-                nbFoisSelection++;
+               // nbFoisSelection++;
 
             }
             else if (type == ScriptedType.Combat)

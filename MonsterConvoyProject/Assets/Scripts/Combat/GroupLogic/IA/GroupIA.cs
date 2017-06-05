@@ -39,6 +39,17 @@ public class GroupIA : GroupLogic {
                 return ActionType.ATTACK;
         }
 
+        if (groupHumanFighter.bWantsToAttack)
+            return ActionType.ATTACK;
+        if (groupHumanFighter.bInConversation)
+            return ActionType.TALK;
+
+        if (!groupHumanFighter.bCanBeFeared || !groupHumanFighter.bCanListen)
+        {
+            groupHumanFighter.bWantsToAttack = true;
+            return ActionType.ATTACK;
+        }
+
         if (bIsFirstLogicTurn)
         {
             bIsFirstLogicTurn = false;
@@ -51,30 +62,32 @@ public class GroupIA : GroupLogic {
                 return ActionType.ESCAPE;
             }
             else if (rand < 0.7)
+            {
+                groupHumanFighter.bWantsToAttack = true;
+                groupHumanFighter.bInConversation = false;
                 return ActionType.ATTACK;
+            }
             else
+            {
+                groupHumanFighter.bInConversation = true;
+                groupHumanFighter.bWantsToAttack = false;
                 return ActionType.TALK;
+            }
         }
-
-        if(!groupHumanFighter.bCanBeFeared || !groupHumanFighter.bCanListen)
-        {
-            return ActionType.ATTACK;
-        }
-   
-        if(groupHumanFighter.bWantsToAttack)
-            return ActionType.ATTACK;
-        if (groupHumanFighter.bInConversation)
-            return ActionType.TALK;
 
 
         float random = Random.Range(0.0f, 1.0f);
         if (random < 0.6)
         {
+            groupHumanFighter.bWantsToAttack = true;
+            groupHumanFighter.bInConversation = false;
             return ActionType.ATTACK;
         }
 
         else
         {
+            groupHumanFighter.bInConversation = true;
+            groupHumanFighter.bWantsToAttack = false;
             return ActionType.TALK;
         }
     }
