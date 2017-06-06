@@ -1,0 +1,172 @@
+{
+	"Effects":[
+		{"Speak": [
+			{
+			"Class": "Chevalier",
+			"Characteristic_monster": " des ailes",
+			"Characteristic_human": "Les boucliers"
+			},
+			{
+			"Class": "Paladin",
+			"Characteristic_monster": " des ailes",
+			"Characteristic_human": "Les boucliers"
+			},
+			{
+			"Class": "Pompier",
+			"Characteristic_monster": " des défenses",
+			"Characteristic_human": "Les haches"
+			},
+			{
+			"Class": "Chasseur",
+			"Characteristic_monster": " des défenses",
+			"Characteristic_human": "Les haches"
+			},
+			{
+			"Class": "All",
+			"Characteristic_monster": " des membres supplémentaires",
+			"Characteristic_human": "Les roux"
+			},
+			{
+			"Class": "All",
+			"Characteristic_monster": " des sourcils touffus",
+			"Characteristic_human": "Les chauves"
+			}
+		],
+		"Info":" sont plus enclins à discuter si le monstre a",
+		"Stats": {
+			"Positive": "Discussion",
+			"Negative": "Peur"
+			}
+		},
+		{"Fear": [
+			{
+			"Class": "Marchand",
+			"Characteristic_monster": " des poils très longs",
+			"Characteristic_human": "Les friqués"
+			},
+			{
+			"Class": "Voleur",
+			"Characteristic_monster": " des poils très longs",
+			"Characteristic_human": "Les friqués"
+			},
+			{
+			"Class": "Plagiste",
+			"Characteristic_monster": " un groin",
+			"Characteristic_human": "Les touristes"
+			},
+			{
+			"Class": "Randonneur",
+			"Characteristic_monster": " un groin",
+			"Characteristic_human": "Les touristes"
+			},
+			{
+			"Class": "All",
+			"Characteristic_monster": " des tentacules",
+			"Characteristic_human": "Les blonds"
+			},
+			{
+			"Class": "All",
+			"Characteristic_monster": " des cornes",
+			"Characteristic_human": "Les bruns"
+			}
+		],
+		"Info":" ont peur",
+		"Stats": {
+			"Positive": "Peur",
+			"Negative": "Discussion"
+			}
+		},
+		{"Fail": [
+			{
+			"Class": "Prêtre",
+			"Characteristic_monster": " des écailles",
+			"Characteristic_human": "Les gens en jupe",
+			"Stats":{
+				"Positive":"",
+				"Negative":"Precision"
+				}
+			},
+			{
+			"Class": "Danseuse",
+			"Characteristic_monster": " des écailles",
+			"Characteristic_human": "Les gens en jupe",
+			"Stats":{
+				"Positive":"",
+				"Negative":"Precision"
+				}
+			},
+			{
+			"Class": "Assassin",
+			"Characteristic_monster": " un seul oeil",
+			"Characteristic_human": "Les capes"
+			},
+			{
+			"Class": "Druide",
+			"Characteristic_monster": " un seul oeil",
+			"Characteristic_human": "Les capes"
+			},
+			{
+			"Class": "All",
+			"Characteristic_monster": " une carapace",
+			"Characteristic_human": "Les cheveux blancs"
+			},
+			{
+			"Class": "All",
+			"Characteristic_monster": " des épines",
+			"Characteristic_human": "Les cheveux colorés"
+			}
+		],
+		"Info":" miss plus souvent leur cible après trigger si elle a",
+		"Stats": {
+			"Positive": "",
+			"Negative": ""
+			}
+		},
+		{"Damage": [
+			{
+			"Class": "Paysan",
+			"Characteristic_monster": " une tête supplémentaire",
+			"Characteristic_human": "Les batons"
+			},
+			{
+			"Class": "Mage",
+			"Characteristic_monster": " une tête supplémentaire",
+			"Characteristic_human": "Les batons"
+			},
+			{
+			"Class": "Ninja",
+			"Characteristic_monster": " une salopette",
+			"Characteristic_human": "Les kimonos"
+			},
+			{
+			"Class": "Moines",
+			"Characteristic_monster": " une salopette",
+			"Characteristic_human": "Les kimonos"
+			},
+			{
+			"Class": "All",
+			"Characteristic_monster": " un chapeau haut-de-forme",
+			"Characteristic_human": "Les chatains"
+			}
+		],
+		"Info":" font moins de dégâts si le monstre a",
+		"Stats": {
+			"Positive": "",
+			"Negative": ""
+			}
+		},
+		{"Run_away": [
+			{
+			"Class": "All",
+			"Characteristic_monster": " un siamois",
+			"Characteristic_human": "Les gens casqués"
+			}
+		],
+		"Info":" essayent de fuir à chaque tour devant des monstres avec",
+		"Stats": {
+			"Positive": "",
+			"Negative": ""
+			}
+		}
+	]
+}

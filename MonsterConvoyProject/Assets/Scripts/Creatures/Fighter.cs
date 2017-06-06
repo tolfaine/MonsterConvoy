@@ -83,7 +83,7 @@ public class Fighter : Creature{
             if (rand >= 0.90)
             {
                 fighter.TakeDamage(this.GetDamage() * 2);
-                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
+                AkSoundEngine.PostEvent("Play_" + sName + "_crit", GameObject.FindGameObjectWithTag("MainCamera"));
 
                 lastActionResult = RollResultEnum.Crit;
             }

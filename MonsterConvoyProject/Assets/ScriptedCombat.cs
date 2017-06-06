@@ -72,13 +72,20 @@ public class ScriptedCombat : MonoBehaviour {
                 case CombatTalk.EndCombat:
                     needToTalk = false;
                     if (iteration == 1)
-                            customTalk.NewTalkScripted(ScriptText, 12, 12);
-                        if (iteration == 2)
-                            customTalk.NewTalkScripted(ScriptText, 26, 26);
+                    {
+                        customTalk.NewTalkScripted(ScriptText, 12, 12);
+                       // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+                    }
+                    if (iteration == 2)
+                    {
+                        customTalk.NewTalkScripted(ScriptText, 26, 26);
+                       // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+                    }
                     
 
                     break;
                 case CombatTalk.EnterCombat:
+                  //  AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
                     needToTalk = false;
                     break;
                 case CombatTalk.HumanAttack:
@@ -87,6 +94,7 @@ public class ScriptedCombat : MonoBehaviour {
                         needToTalk = false;
                         if (iteration == 2)
                         {
+                         //   AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
                             if (nbAttack == 0)
                             {
                                 customTalk.NewTalkScripted(ScriptText, 17, 17);

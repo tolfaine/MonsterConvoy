@@ -220,7 +220,10 @@ public class CombatManager : MonoBehaviour
         foreach (Order order in combatOrder)
         {
             if (order.fighter.IsDead())
+            {
+                AkSoundEngine.SetSwitch("Tension", "T4", gameObject);
                 combatOrder.Remove(order);
+            }
         }
         for (int i = 0; i < combatOrder.Count; i++)
         {
@@ -526,25 +529,43 @@ public class CombatManager : MonoBehaviour
             int indM = 0;
             int indH = 0;
 
-            for (int i = 0; i < 8; i++)
+
+            bool blocked = false;
+
+            int nbFighters = 0;
+            nbFighters += monsterGroupFighter.lFighters.Count;
+            nbFighters += humanGroupFighter.lFighters.Count;
+
+            for (int i = 0; i < nbFighters; i++)
             {
                 if (takeM)
                 {
-                    //int initiative = monsterGroupFighter.lFighters[indM].GetRandomInitiative();
+                    // int initiative = monsterGroupFighter.lFighters[indM].GetRandomInitiative();
                     Order order = new Order(monsterGroupFighter.lFighters[indM], i);
                     combatOrder.Add(order);
                     indM++;
+
+                    if (!blocked)
+                        takeM = !takeM;
+
+                    if (indM >= monsterGroupFighter.lFighters.Count)
+                        blocked = true;
+
+
                 }
                 else
                 {
-                   // int initiative = humanGroupFighter.lFighters[indH].GetRandomInitiative();
+                    // int initiative = humanGroupFighter.lFighters[indH].GetRandomInitiative();
                     Order order = new Order(humanGroupFighter.lFighters[indH], i);
                     combatOrder.Add(order);
                     indH++;
+
+                    if (!blocked)
+                        takeM = !takeM;
+
+                    if (indH >= humanGroupFighter.lFighters.Count)
+                        blocked = true;
                 }
-
-                takeM = !takeM;
-
             }
 
         }

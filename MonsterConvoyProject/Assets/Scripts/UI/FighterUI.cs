@@ -160,7 +160,16 @@ public class FighterUI : MonoBehaviour {
                 }
 
                 GameObject go = Instantiate(pm.GetParticuleOfAction(fighter.lastAction, result)) as GameObject;
-                go.transform.position = ui.transform.position;
+                GameObject meshHolder = GameObject.FindGameObjectWithTag("DialogueMesh");
+
+                if (meshHolder == null)
+                    go.transform.position = ui.transform.position;
+                else
+                {
+                //    meshHolder.GetComponent<MeshMonsterBuble>().UpdateMeshHoldePosition();
+                    go.transform.position = meshHolder.transform.position;
+
+                }
 
                 talkParticules = go.GetComponent<ParticleSystem>();
 
@@ -173,7 +182,18 @@ public class FighterUI : MonoBehaviour {
             {
 
                 GameObject go = Instantiate(pm.GetParticuleOfAction(fighter.lastAction, fighter.lastActionResult)) as GameObject;
-                go.transform.position = ui.transform.position;
+
+                GameObject meshHolder = GameObject.FindGameObjectWithTag("DialogueMesh");
+
+                if (meshHolder == null)
+                    go.transform.position = ui.transform.position;
+                else
+                {
+                  //  meshHolder.GetComponent<MeshMonsterBuble>().UpdateMeshHoldePosition();
+                    go.transform.position = meshHolder.transform.position;
+
+                }
+
 
                 fearParticules = go.GetComponent<ParticleSystem>();
 

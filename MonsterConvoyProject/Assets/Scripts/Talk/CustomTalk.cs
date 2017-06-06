@@ -166,6 +166,9 @@ public class CustomTalk : MonoBehaviour {
     public GameObject humanAnchor;
     public GameObject monsterAnchor;
 
+    public bool isMageTalk = false;
+    
+
     void Awake(){
 		if (startOnAwake) {
 			//NewTalk ();
@@ -196,6 +199,12 @@ public class CustomTalk : MonoBehaviour {
 
     public void NewTalkScripted(TextAsset textAss, int lineMin, int lineMax)
     {
+
+        if (isMageTalk)
+        {
+            AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+        }
+
         txtToParse = textAss;
 
         lineToStart = lineMin;
@@ -265,6 +274,7 @@ public class CustomTalk : MonoBehaviour {
                     }
                 }
 
+
                 line = reader.ReadLine();
                 currentLine++;
             }
@@ -323,15 +333,23 @@ public class CustomTalk : MonoBehaviour {
 
     public void NewTalk(CreatureType type,ActionType action, float roll){
 
+
+        if (isMageTalk)
+        {
+            AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+        }
+
         int minLine = 0;
         int maxLine = 0;
 
         if (isReaction)
         {
+            /*
             if (type == CreatureType.Human)
                 follow = humanAnchor;
             else
                 follow = monsterAnchor;
+                */
         }
 
 
@@ -603,8 +621,10 @@ public class CustomTalk : MonoBehaviour {
 					(passWithMouse && Input.GetMouseButtonDown (0)) ||
 					(passWithInputButton != "" && Input.GetButtonDown(passWithInputButton))
 				)){
-					//if have an audio... playit
-					if (passAudio != null && !rpgAudioSorce.isPlaying) {
+
+                
+                    //if have an audio... playit
+                    if (passAudio != null && !rpgAudioSorce.isPlaying) {
 						rpgAudioSorce.clip = passAudio;
 						rpgAudioSorce.Play ();
 					}
@@ -632,10 +652,12 @@ public class CustomTalk : MonoBehaviour {
 				(passWithInputButton != "" && Input.GetButtonDown(passWithInputButton))
 			) {//if have an audio... playit
 				if (passAudio != null) {
-					rpgAudioSorce.clip = passAudio;
+
+                    rpgAudioSorce.clip = passAudio;
 					rpgAudioSorce.Play ();
 				}
-				textUI.enabled = false;
+
+                textUI.enabled = false;
 
                 
 
@@ -804,7 +826,13 @@ public class CustomTalk : MonoBehaviour {
 		
 		if(cutscenePosition <= rpgtalkElements.Count) {
 
-			textUI.enabled = true;
+
+            if (isMageTalk)
+            {
+                AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+            }
+
+            textUI.enabled = true;
 			
 			RpgtalkElement currentRpgtalkElement = rpgtalkElements[cutscenePosition - 1];
 

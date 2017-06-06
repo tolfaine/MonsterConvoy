@@ -35,6 +35,8 @@ public class ProtoScript : MonoBehaviour {
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        customTalk.isMageTalk = true;
+
         Debug.Log("Level Loaded");
         Debug.Log(scene.name);
         Debug.Log(mode);
@@ -52,7 +54,7 @@ public class ProtoScript : MonoBehaviour {
 
             if (type == ScriptedType.Selection)
             {
-                selectin.EnterSelection();
+               // selectin.EnterSelection();
                // nbFoisSelection++;
 
             }
