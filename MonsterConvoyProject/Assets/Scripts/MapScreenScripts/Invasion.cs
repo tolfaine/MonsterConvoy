@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Invasion : MonoBehaviour {
 
@@ -108,9 +109,21 @@ public class Invasion : MonoBehaviour {
                 if (g != null)
                 {
                     ps = g.GetComponent<ProtoScript>();
-                    
+                    ps.map.ToMutation();
+                }else
+                {
+                    string sceneType = "mutations";
+
+                    //Change scene on node click
+                    for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
+                    {
+                        //TODO preserve node types in file and reload from there. 
+                        SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
+                    }
+                    SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
                 }
-              //  ps.map.ToMutation();
+                //  ps.map.ToMutation();
                 OnNewLoop();
             }
         }

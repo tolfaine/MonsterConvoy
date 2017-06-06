@@ -63,19 +63,28 @@ public class Monster : Fighter{
                 rand = combatManager.protoScript.combat.currentTurn.fRoll;
             }
 
+            if (!((GroupHumanFighter)groupHuman).bCanBeFeared)
+            {
+                rand = 0;
+            }
+
             if (rand > 0.9f)
             {
+                lastActionResult = RollResultEnum.Crit;
                 ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Crit, this);
             }
             else if (rand > 0.2f)
             {
+                lastActionResult = RollResultEnum.Normal;
                 ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Normal, this);
             }
             else
             {
+                lastActionResult = RollResultEnum.Fail;
                 ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Fail, this);
                // ((GroupHumanFighter)groupHuman).bCanBeFeared = false;
                 Debug.Log("Fail Fear:" + rand.ToString());
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
             }
 
             ActionTalk(action, rand);
@@ -103,18 +112,28 @@ public class Monster : Fighter{
                 rand = combatManager.protoScript.combat.currentTurn.fRoll;
             }
 
+            if (!((GroupHumanFighter)groupHuman).bCanListen)
+            {
+                rand = 0;
+            }
+
             if (rand > 0.9f)
             {
+                lastActionResult = RollResultEnum.Crit;
                 ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Crit, this);
             }
             else if (rand > 0.2f)
             {
+                lastActionResult = RollResultEnum.Normal;
                 ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Normal, this);
             }
             else
             {
+                lastActionResult = RollResultEnum.Fail;
                 ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Fail, this);
                 Debug.Log("Fail Convice:" + rand.ToString());
+
+                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
                 //((GroupHumanFighter)groupHuman).bCanListen = false;
             }
 

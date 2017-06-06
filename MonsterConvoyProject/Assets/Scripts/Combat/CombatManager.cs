@@ -115,6 +115,7 @@ public class CombatManager : MonoBehaviour
 
     public bool bFighterInFightPosition = false;
     public bool bFighterInInitialPosition = true;
+    public bool waitedOneFrame = false;
 
 
     public ScriptManager scriptManager;
@@ -139,6 +140,8 @@ public class CombatManager : MonoBehaviour
     private int successfulTalkCount = 0;
 
     public Tip discoveredTip;
+
+    public bool actionLaunched = false;
 
     void Start()
     {
@@ -293,7 +296,13 @@ public class CombatManager : MonoBehaviour
         {
             if (bActionInProgress && bFighterInInitialPosition)
             {
-                ActionEnded();
+                if (!waitedOneFrame)
+                    waitedOneFrame = true;
+                else
+                {
+                    ActionEnded();
+                    waitedOneFrame = false;
+                }
             }
 
             if (!bTurnInProgress)
@@ -304,6 +313,7 @@ public class CombatManager : MonoBehaviour
 
                 currentFighter = GetNextFighter();
 
+                actionLaunched = false;
                 actionWheel.SetFighter(currentFighter);
 
                 if (currentFighter.eCreatureType == CreatureType.Monster)
@@ -370,60 +380,68 @@ public class CombatManager : MonoBehaviour
     }
     void PerformAction()
     {
-        if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
+        if (!actionLaunched)
         {
-            uint state;
-            AkSoundEngine.GetSwitch("Tension", gameObject, out state);
-            if (actionChoosed == ActionType.ATTACK && currentFighter.GetCreatureType() == CreatureType.Human && state != 4 )
-            {
-                AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
-            }
+            actionLaunched = true;
 
-            currentFighter.PerformActionOnTarget(actionChoosed, targetChoosed);
-        }
-        else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.AllTarget)
-        {
-            if (currentFighter.GetCreatureType() == CreatureType.Human)
+            if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.OneTarget)
             {
-                currentFighter.PerformActionOnTarget(actionChoosed, monsterGroupFighter);
-                if (actionChoosed == ActionType.FEAR)
+                uint state;
+                AkSoundEngine.GetSwitch("Tension", gameObject, out state);
+                if (actionChoosed == ActionType.ATTACK && currentFighter.GetCreatureType() == CreatureType.Human && state != 4)
                 {
-                 //   AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
+                    AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
                 }
-                else if (actionChoosed == ActionType.TALK)
-                {
 
-                    successfulTalkCount++;
-                    if (successfulTalkCount > 1)
+                currentFighter.PerformActionOnTarget(actionChoosed, targetChoosed);
+            }
+            else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.AllTarget)
+            {
+                if (currentFighter.GetCreatureType() == CreatureType.Human)
+                {
+                    currentFighter.PerformActionOnTarget(actionChoosed, monsterGroupFighter);
+                    if (actionChoosed == ActionType.FEAR)
                     {
-                        AkSoundEngine.SetSwitch("Tension", "T1", gameObject);
+                        //   AkSoundEngine.SetSwitch("Tension", "T3", gameObject);
                     }
-                    AkSoundEngine.PostEvent("Play_HumanTalk", gameObject);
+                    else if (actionChoosed == ActionType.TALK)
+                    {
+
+                        successfulTalkCount++;
+                        if (successfulTalkCount > 1)
+                        {
+                            AkSoundEngine.SetSwitch("Tension", "T1", gameObject);
+                        }
+                        AkSoundEngine.PostEvent("Play_HumanTalk", gameObject);
+                    }
+                }
+                else
+                {
+                    currentFighter.PerformActionOnTarget(actionChoosed, humanGroupFighter);
+                    if (actionChoosed == ActionType.FEAR)
+                    {
+                        AkSoundEngine.PostEvent("Play_" + currentFighter.sName + "Fear", gameObject);
+                    }
+                    if (actionChoosed == ActionType.TALK)
+                    {
+                        AkSoundEngine.PostEvent("Play_" + currentFighter.sName + "Talk", gameObject);
+                    }
+
                 }
             }
-            else
+            else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
             {
-                currentFighter.PerformActionOnTarget(actionChoosed, humanGroupFighter);
-                if (actionChoosed == ActionType.FEAR)
-                {
-                    AkSoundEngine.PostEvent("Play_" + currentFighter.sName + "Fear", gameObject);
-                }
-                if (actionChoosed == ActionType.TALK)
-                {
-                    AkSoundEngine.PostEvent("Play_" + currentFighter.sName + "Talk", gameObject);
-                }
-                
+                if (currentFighter.GetCreatureType() == CreatureType.Human)
+                    currentFighter.PerformActionOnSelf(actionChoosed, humanGroupFighter);
+                else
+                    currentFighter.PerformActionOnSelf(actionChoosed, monsterGroupFighter);
             }
-        }
-        else if (actionChoosed.GetTargetType() == ActionType.ActionTargetType.NoTarget)
+        }else if (!currentFighter.performingAction)
         {
-            if (currentFighter.GetCreatureType() == CreatureType.Human)
-                currentFighter.PerformActionOnSelf(actionChoosed, humanGroupFighter);
-            else
-                currentFighter.PerformActionOnSelf(actionChoosed, monsterGroupFighter);
+            PutFighterInInitialPosition();
         }
 
-        PutFighterInInitialPosition();
+
         // Invoke("ActionEnded", 2);
     }
     void PutFighterInInitialPosition()
@@ -482,6 +500,7 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
+            /*
             foreach (Fighter fighter in monsterGroupFighter.lFighters)
             {
                 int initiative = fighter.GetRandomInitiative();
@@ -495,6 +514,39 @@ public class CombatManager : MonoBehaviour
                 Order order = new Order(fighter, initiative);
                 combatOrder.Add(order);
             }
+            */
+
+            bool takeM = true;
+
+            float rand = Random.Range(0, 1);
+            if (rand > 0.5)
+                takeM = false;
+
+
+            int indM = 0;
+            int indH = 0;
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (takeM)
+                {
+                    //int initiative = monsterGroupFighter.lFighters[indM].GetRandomInitiative();
+                    Order order = new Order(monsterGroupFighter.lFighters[indM], i);
+                    combatOrder.Add(order);
+                    indM++;
+                }
+                else
+                {
+                   // int initiative = humanGroupFighter.lFighters[indH].GetRandomInitiative();
+                    Order order = new Order(humanGroupFighter.lFighters[indH], i);
+                    combatOrder.Add(order);
+                    indH++;
+                }
+
+                takeM = !takeM;
+
+            }
+
         }
 
         combatOrder.Sort(SortByInitiative);
