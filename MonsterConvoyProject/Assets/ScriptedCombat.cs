@@ -91,11 +91,11 @@ public class ScriptedCombat : MonoBehaviour {
                             {
                                 customTalk.NewTalkScripted(ScriptText, 17, 17);
                             }
-                            else if (nbAttack == 2)
+                            else if (nbAttack == 1)
                             {
                                 customTalk.NewTalkScripted(ScriptText, 23, 23);
                             }
-                            else if (nbAttack == 3)
+                            else if (nbAttack == 2)
                             {
                                 customTalk.NewTalkScripted(ScriptText, 24, 24);
                             }

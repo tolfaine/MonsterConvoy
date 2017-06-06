@@ -82,6 +82,7 @@ public class FighterUI : MonoBehaviour {
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
             ui.SetActive(false); 
             canvas.SetActive(false);
+            // mutation 
         }
         if (fighter.justTookDamage)
         {

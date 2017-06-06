@@ -118,7 +118,12 @@ public class Fighter : Creature{
             {
                 if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
                 {
-                    combatManager.protoScript.combat.HumanAttack();
+                    if (combatManager.protoScript.combat.nbAttack == 0 || (combatManager.protoScript.combat.nbAttack == 1 && combatManager.protoScript.combat.roundIt == 3) 
+                        || combatManager.protoScript.combat.nbAttack == 2 || combatManager.protoScript.combat.nbAttack == 3)
+                    {
+                        combatManager.protoScript.combat.HumanAttack();
+                    }
+                    
                 }
             }
 
