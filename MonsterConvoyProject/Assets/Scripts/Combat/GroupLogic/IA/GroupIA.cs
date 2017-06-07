@@ -39,42 +39,64 @@ public class GroupIA : GroupLogic {
                 return ActionType.ATTACK;
         }
 
+        if (groupHumanFighter.bWantsToAttack)
+            return ActionType.ATTACK;
+        if (groupHumanFighter.bInConversation)
+            return ActionType.TALK;
+
+        if (!groupHumanFighter.bCanBeFeared || !groupHumanFighter.bCanListen)
+        {
+            groupHumanFighter.bWantsToAttack = true;
+            return ActionType.ATTACK;
+        }
+
         if (bIsFirstLogicTurn)
         {
             bIsFirstLogicTurn = false;
 
             float rand = Random.Range(0.0f, 1.0f);
 
-            if (rand < 0.2)
+            ActionType.ActionEnum enumAction = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modComportement.action;
+            ActionType acType = ActionType.GetActionTypeWithID((int)enumAction);
+
+            if (rand > 0.7 || (acType == ActionType.TALK && (rand + 0.1) > 0.7))
+            {
+                groupHumanFighter.bInConversation = true;
+                groupHumanFighter.bWantsToAttack = false;
+                return ActionType.TALK;
+            }
+            if (rand < 0.2 || (acType == ActionType.ESCAPE && (rand- 0.1) < 0.2))
             {
                 groupHumanFighter.bIsFeared = true;
                 return ActionType.ESCAPE;
             }
-            else if (rand < 0.7)
+            else if (rand < 0.7 || (acType == ActionType.ATTACK && (rand - 0.1) < 0.7))
+            {
+                groupHumanFighter.bWantsToAttack = true;
+                groupHumanFighter.bInConversation = false;
                 return ActionType.ATTACK;
+            }
             else
+            {
+                groupHumanFighter.bInConversation = true;
+                groupHumanFighter.bWantsToAttack = false;
                 return ActionType.TALK;
+            }
         }
-
-        if(!groupHumanFighter.bCanBeFeared || !groupHumanFighter.bCanListen)
-        {
-            return ActionType.ATTACK;
-        }
-   
-        if(groupHumanFighter.bWantsToAttack)
-            return ActionType.ATTACK;
-        if (groupHumanFighter.bInConversation)
-            return ActionType.TALK;
 
 
         float random = Random.Range(0.0f, 1.0f);
         if (random < 0.6)
         {
+            groupHumanFighter.bWantsToAttack = true;
+            groupHumanFighter.bInConversation = false;
             return ActionType.ATTACK;
         }
 
         else
         {
+            groupHumanFighter.bInConversation = true;
+            groupHumanFighter.bWantsToAttack = false;
             return ActionType.TALK;
         }
     }

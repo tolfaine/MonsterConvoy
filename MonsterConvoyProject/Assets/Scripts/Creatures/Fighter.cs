@@ -18,10 +18,16 @@ public class Fighter : Creature{
     
 
     public FighterUI currentUI;
+    public FighterUI lastAttackedUI;
 
     public bool bTryToescape = false;
 
     public bool justTookDamage = false;
+
+    public bool justdidAction = false;
+    public RollResultEnum lastActionResult;
+    public ActionType lastAction = null;
+    public bool performingAction = false;
 
     public Fighter() : base() {}
 
@@ -48,7 +54,13 @@ public class Fighter : Creature{
     }
     public virtual void PerformActionOnTarget(ActionType action, Fighter fighter)
     {
-        if(fighter == null || fighter.sName == null)
+        performingAction = true;
+        justdidAction = true;
+        lastAction = action;
+
+        lastAttackedUI = fighter.currentUI;
+
+        if (fighter == null || fighter.sName == null)
             Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName);
         else
             Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName + "on target " + fighter.sName);
@@ -59,6 +71,16 @@ public class Fighter : Creature{
 
             // float rand = 0.5f;
             float rand = Random.Range(0f, 1f);
+
+            float terrain = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modRoll.GetValueOfAction(action, this.eCreatureType);
+            rand += terrain;
+
+            if (this.eCreatureType == CreatureType.Human)
+            {
+                float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, (Human)this, (GroupMonsterFighter)combatManager.monsterGroupFighter);
+
+                rand += bonus;
+            }
 
 
             if (combatManager.protoScript != null && combatManager. protoScript.combat != null  && combatManager.protoScript.combat.currentTurn != null)
@@ -71,16 +93,22 @@ public class Fighter : Creature{
             if (rand >= 0.90)
             {
                 fighter.TakeDamage(this.GetDamage() * 2);
-                AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
+                AkSoundEngine.PostEvent("Play_" + sName + "_crit", GameObject.FindGameObjectWithTag("MainCamera"));
 
+                lastActionResult = RollResultEnum.Crit;
             }
             else if (rand > 0.1)
             {
                 fighter.TakeDamage(this.GetDamage());
                 AkSoundEngine.PostEvent("Play_" + sName + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
+
+                lastActionResult = RollResultEnum.Normal;
             }
             else
             {
+
+                lastActionResult = RollResultEnum.Fail;
+
                 Debug.Log("Fail");
                 AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
                 GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
@@ -100,7 +128,12 @@ public class Fighter : Creature{
             {
                 if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
                 {
-                    combatManager.protoScript.combat.HumanAttack();
+                    if (combatManager.protoScript.combat.nbAttack == 0 || (combatManager.protoScript.combat.nbAttack == 1 && combatManager.protoScript.combat.roundIt == 3) 
+                        || combatManager.protoScript.combat.nbAttack == 2 || combatManager.protoScript.combat.nbAttack == 3)
+                    {
+                        combatManager.protoScript.combat.HumanAttack();
+                    }
+                    
                 }
             }
 
@@ -113,6 +146,12 @@ public class Fighter : Creature{
 
     public virtual void PerformActionOnTarget(ActionType action, GroupFighter groupHuman)
     {
+        performingAction = true;
+        performingAction = true;
+        justdidAction = true;
+        lastAction = action;
+
+
         Debug.Log("Fighter :" + this.sName + "  Perform action :" + action.sName + "on all enemy Group " );
        // ActionTalk();
     }
@@ -147,11 +186,11 @@ public class Fighter : Creature{
         if (g != null && g.GetComponent<CombatManager>().talkManager != null && g.GetComponent<CombatManager>().protoScript == null)
         {
             TalkManager sm = g.GetComponent<CombatManager>().talkManager;
-            sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
+           // sm.customTalk.follow = currentUI.dialogueAnchor.gameObject;
             sm.customTalk.NewTalk(eCreatureType, action, roll);
         }else if(g != null && g.GetComponent<CombatManager>().talkManager != null && g.GetComponent<CombatManager>().protoScript != null)
         {
-            g.GetComponent<CombatManager>().protoScript.combat.monsters.follow = currentUI.dialogueAnchor.gameObject;
+            //g.GetComponent<CombatManager>().protoScript.combat.monsters.follow = currentUI.dialogueAnchor.gameObject;
 
             g.GetComponent<CombatManager>().protoScript.combat.Talk();
         }

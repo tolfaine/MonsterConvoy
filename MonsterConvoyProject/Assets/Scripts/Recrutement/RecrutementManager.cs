@@ -50,13 +50,19 @@ public class RecrutementManager : MonoBehaviour {
 
         }
     }
+
+    private void Awake()
+    {
+        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+
+        caravane.lFighters = new List<Monster>();
+    }
     // Use this for initialization
     void Start () {
 
-      //  AkSoundEngine.PostEvent("CombatWin", gameObject);
+        AkSoundEngine.PostEvent("DEPART", gameObject);
 
         creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
-        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
 
 
         foreach (Transform child in slots.transform)

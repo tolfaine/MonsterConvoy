@@ -65,6 +65,7 @@ public class BackToCarte : MonoBehaviour {
 
             }
 
+            AkSoundEngine.PostEvent("Play_Map", gameObject);
             /*
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(s));
 

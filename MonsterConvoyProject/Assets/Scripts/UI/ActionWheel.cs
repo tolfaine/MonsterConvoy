@@ -23,6 +23,11 @@ public class ActionWheel : MonoBehaviour {
 		
 	}
 
+    public void OnlyAction(ActionType action)
+    {
+
+    }
+
     public void SetFighter(Fighter fighter)
     {
         currentFighter = fighter;

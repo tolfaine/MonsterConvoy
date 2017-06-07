@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // hard code garbage.
 
@@ -578,6 +579,28 @@ public class InvasionManager : MonoBehaviour
         }
         if (pawns[0].GetComponent<PlaceType>().invasionStatus)
         {
+            GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+            ProtoScript ps = null;
+
+            if (g != null)
+            {
+                ps = g.GetComponent<ProtoScript>();
+                ps.map.ToMutation();
+            }
+            else
+            {
+                string sceneType = "mutations";
+
+                //Change scene on node click
+                for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
+                {
+                    //TODO preserve node types in file and reload from there. 
+                    SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
+                }
+                SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
+            }
+
             newLoop();
         }
         turn++;

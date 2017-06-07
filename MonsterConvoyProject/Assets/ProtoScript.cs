@@ -35,9 +35,18 @@ public class ProtoScript : MonoBehaviour {
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        customTalk.isMageTalk = true;
+
         Debug.Log("Level Loaded");
         Debug.Log(scene.name);
         Debug.Log(mode);
+
+        if (scene.name == "CAPITAL")
+        {
+            selectin.EnterSelection();
+            nbFoisSelection++;
+
+        }
 
         if (currentIndex < orderScript.Count)
         {
@@ -45,8 +54,8 @@ public class ProtoScript : MonoBehaviour {
 
             if (type == ScriptedType.Selection)
             {
-                selectin.EnterSelection();
-                nbFoisSelection++;
+               // selectin.EnterSelection();
+               // nbFoisSelection++;
 
             }
             else if (type == ScriptedType.Combat)

@@ -96,6 +96,27 @@ public class CreaturesData : MonoBehaviour {
 
         return default(T);
     }
+
+    public Fighter GetClassFighterOfID(int id)
+    {
+        foreach (HumanData hData in lHumans)
+        {
+            if (hData.nId == id)
+            {
+                return (Human)(object)(hData.GetHuman());
+            }
+        }
+        foreach (MonsterData mData in lMonsters)
+        {
+            if (mData.nId == id)
+            {
+                return (Monster)(object)(mData.GetMonster());
+            }
+        }
+
+        return null;
+    }
+
     public List<MonsterData> GetAllMonsterImportance(bool importance)
     {
         List<MonsterData> finalList = new List<MonsterData>();

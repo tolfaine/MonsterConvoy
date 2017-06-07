@@ -151,12 +151,12 @@ public class TipsManager : MonoBehaviour {
                         bonus += tip.modroll.GetValueOfAction(actionType, monster.eCreatureType);
                     }
 
-                    if (bonus > 0)
+                    if (bonus != 0)
                         break;
                 }
             }
 
-            if (bonus > 0)
+            if (bonus != 0)
                 break;
         }
 
@@ -184,12 +184,12 @@ public class TipsManager : MonoBehaviour {
                         bonus += tip.modroll.GetValueOfAction(actionType, monster.eCreatureType);
                     }
 
-                    if (bonus > 0)
+                    if (bonus != 0)
                         break;
                 }
             }
 
-            if (bonus > 0)
+            if (bonus != 0)
                 break;
         }
         //   CaractMonster mutation;
@@ -197,17 +197,99 @@ public class TipsManager : MonoBehaviour {
 
         return bonus;
     }
-    public int GetBonus(ActionType actionType, Human human, GroupMonsterFighter groupMonster)
+    public float GetBonus(ActionType actionType, Human human, GroupMonsterFighter groupMonster)
     {
-        return 0;
+        float bonus = 0;
+
+        List<Tip> myTips = GetTipsOfAction(actionType, human.eCreatureType);
+
+        CaractHumainCheveux chm = human.currentUI.gameObject.GetComponentInChildren<ModelHumainUI>().caractCheveux;
+
+        myTips = GetTipsAboutHumainCarac(chm, myTips);
+
+        foreach (Fighter fighter in groupMonster.lFighters)
+        {
+            if (fighter.CanAttack())
+            {
+                ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
+
+                CaractMonster tempCarac = modelM.caractMonster;
+                CaractMonster permaCarac = modelM.permanentCarMutation;
+
+                foreach (Tip tip in myTips)
+                {
+                    if (tip.caracMonster == tempCarac)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                    }
+                    else if (tip.caracMonster == permaCarac)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                    }
+
+                    if (bonus  != 0)
+                        break;
+                }
+            }
+
+            if (bonus != 0)
+                break;
+        }
+
+
+         myTips = GetTipsOfAction(actionType, human.eCreatureType);
+
+        CaractHumainStuff chs = human.currentUI.gameObject.GetComponentInChildren<ModelHumainUI>().caractStuff;
+
+        myTips = GetTipsAboutHumainCarac(chs, myTips);
+
+        foreach (Fighter fighter in groupMonster.lFighters)
+        {
+            if (fighter.CanAttack())
+            {
+                ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
+
+                CaractMonster tempCarac = modelM.caractMonster;
+                CaractMonster permaCarac = modelM.permanentCarMutation;
+
+                foreach (Tip tip in myTips)
+                {
+                    if (tip.caracMonster == tempCarac)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                    }
+                    else if (tip.caracMonster == permaCarac)
+                    {
+                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                    }
+
+                    if (bonus != 0)
+                        break;
+                }
+            }
+
+            if (bonus != 0)
+                break;
+        }
+        //   CaractMonster mutation;
+
+
+        return bonus;
     }
 
-    public List<Tip> GetAllTipConcerningGroups(GroupMonsterFighter groupMonster, GroupHumanFighter groupHuman)
+    public List<Tip> GetAllTipConcerningGroups(GroupMonsterFighter groupMonster, GroupHumanFighter groupHuman, bool inInitialGroup)
     {
         List<Tip> finalList = new List<Tip>();
 
         List<Fighter> allHuman = groupHuman.lFighters;
         List<Fighter> allMonster = groupMonster.lFighters;
+
+        if (inInitialGroup)
+        {
+            allHuman = groupHuman.lInitialFighters;
+            allMonster = groupMonster.lInitialFighters;
+
+        }
 
 
         foreach (Tip tip in tipsNotKnownByPlayer)
@@ -247,7 +329,7 @@ public class TipsManager : MonoBehaviour {
 
     public Tip GetRandTipConcerningGroups(GroupMonsterFighter groupMonster, GroupHumanFighter groupHuman)
     {
-        List<Tip> lFinalTips = GetAllTipConcerningGroups(groupMonster, groupHuman);
+        List<Tip> lFinalTips = GetAllTipConcerningGroups(groupMonster, groupHuman, true);
 
         if (lFinalTips.Count == 0)
             return null;
