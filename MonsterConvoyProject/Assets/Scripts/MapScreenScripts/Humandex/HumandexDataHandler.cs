@@ -62,14 +62,18 @@ public class HumandexDataHandler : MonoBehaviour
 
 
         int emptyBoxes = numEntriesPerPage; 
-        for (int i = pageNumber*numEntriesPerPage; i < TipsManager.Instance().tipsKnownByPlayer.Count; ++i)
+
+        for (int i = 0; i < numEntriesPerPage; ++i)
         {
-            humandexMutationIcon[i].sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + TipsManager.Instance().tipsKnownByPlayer[i].caracMonster.enumCaract.ToString());
-            humandexMutationName[i].text = TipsManager.Instance().tipsKnownByPlayer[i].caracMonster.sName;
-            humandexMutationDescription[i].text = CorrectTip(TipsManager.Instance().tipsKnownByPlayer[i]);
-            emptyBoxes--;
+            if (TipsManager.Instance().tipsKnownByPlayer.Count > pageNumber * numEntriesPerPage + i)
+            {
+                humandexMutationIcon[i].sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + TipsManager.Instance().tipsKnownByPlayer[pageNumber * numEntriesPerPage + i].caracMonster.enumCaract.ToString());
+                humandexMutationName[i].text = TipsManager.Instance().tipsKnownByPlayer[pageNumber * numEntriesPerPage + i].caracMonster.sName;
+                humandexMutationDescription[i].text = CorrectTip(TipsManager.Instance().tipsKnownByPlayer[pageNumber * numEntriesPerPage + i]);
+                emptyBoxes--;
+            }
         }
-        for (int i = numEntriesPerPage - 1; i >= 0; i--)
+        for (int i = emptyBoxes - 1; i >= 0; i--)
         {
             humandexEntry[i].SetActive(false);
         }
@@ -106,6 +110,12 @@ public class HumandexDataHandler : MonoBehaviour
             case CaractMonster._enumCaractMonster.TENTACULES:
                 text = "A handful of tentacles";
                 break;
+            case CaractMonster._enumCaractMonster.NONE:
+                text = "Having nothing";
+                break;
+            default:
+                text = "ERROR: " + tip.caracMonster.enumCaract.ToString();
+                break;
         }
 
         if (tip.modroll == ModRoll.ATTACKH)
@@ -118,11 +128,11 @@ public class HumandexDataHandler : MonoBehaviour
         }
         else if (tip.modroll == ModRoll.FEARM)
         {
-            text = " will terrify any human with	";
+            text += " will terrify any human with	";
         }
         else if (tip.modroll == ModRoll.TALKM)
         {
-            text = " grants you crazy eloquence in the eyes of humanoids with	";
+            text += " grants you crazy eloquence in the eyes of humanoids with	";
         }
 
         if (tip.caracHumain.type == CaracHumainType.Stuff)

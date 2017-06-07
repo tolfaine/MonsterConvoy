@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class InvasionManager : MonoBehaviour
 {
 
-    int loop = 0;
+    static int loop = 0;
     int turn = 0;
     GameObject[] pawns;
     bool[] activeInvasions = new bool[25];
@@ -19,9 +19,7 @@ public class InvasionManager : MonoBehaviour
     private void Start()
     {
         pawns = GameObject.FindGameObjectsWithTag("MapNode");
-
-
-
+        
         //Sort this array based on id.
         for (int i = 0; i < pawns.Length; ++i)
         {
@@ -633,5 +631,6 @@ public class InvasionManager : MonoBehaviour
             pawns[pawns[i].GetComponent<Id>().id] = pawns[i];
             pawns[i] = temp;
         }
+        newTurn();
     }
 }
