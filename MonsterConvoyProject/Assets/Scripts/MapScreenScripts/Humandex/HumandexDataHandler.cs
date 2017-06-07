@@ -17,16 +17,10 @@ public class HumandexDataHandler : MonoBehaviour
     public Text[] humandexMutationDescription = new Text[4];
 
     bool[] viewed = new bool[numEntries]; // todo if !viewed && discovered {display notification}
-    string[] imageName = new string[numEntries]; // Take the enum name parse it. Locate the image in teh correct postion of the thing
 
     void Start()
     {
-        for (int i = pageNumber * numEntriesPerPage; i < TipsManager.Instance().tipsKnownByPlayer.Count; ++i)
-        {
-            humandexMutationIcon[i].sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + TipsManager.Instance().tipsKnownByPlayer[i].caracMonster.enumCaract.ToString());
-            humandexMutationName[i].text = TipsManager.Instance().tipsKnownByPlayer[i].caracMonster.sName;
-            humandexMutationDescription[i].text = CorrectTip(TipsManager.Instance().tipsKnownByPlayer[i]);
-        }
+        UpdatePage();
     }
 
     public void TurnPageRight()
@@ -58,10 +52,14 @@ public class HumandexDataHandler : MonoBehaviour
 
         for (int i = 0; i < pageRibbons.Length; ++i)
         {
-            pageRibbons[i].SetActive(true);
+            if (TipsManager.Instance().tipsKnownByPlayer.Count > i * numEntriesPerPage)
+                pageRibbons[i].SetActive(true);
+            else
+                pageRibbons[i].SetActive(false);
         }
 
         pageRibbons[pageNumber].SetActive(false);
+
 
         int emptyBoxes = numEntriesPerPage; 
         for (int i = pageNumber*numEntriesPerPage; i < TipsManager.Instance().tipsKnownByPlayer.Count; ++i)
@@ -71,10 +69,12 @@ public class HumandexDataHandler : MonoBehaviour
             humandexMutationDescription[i].text = CorrectTip(TipsManager.Instance().tipsKnownByPlayer[i]);
             emptyBoxes--;
         }
-        for (int i = numEntriesPerPage; i > 0; i--)
+        for (int i = numEntriesPerPage - 1; i >= 0; i--)
         {
-        //    humandexEntry[i].SetActive(false);
+            humandexEntry[i].SetActive(false);
         }
+        
+        
     }
 
     private string CorrectTip(Tip tip)
