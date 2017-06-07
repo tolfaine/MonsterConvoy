@@ -38,6 +38,22 @@ public class FighterMouvementManager : MonoBehaviour {
 
     public CombatManager combatManager;
 
+    public Vector3 SpawnPosition;
+
+    public bool bFighterJoiningCombat = false;
+    public bool bMoveFighterJoiningToPosition;
+    public bool bFighterJoiningArrivedToPosition;
+    public GameObject FighterJoining;
+    public Vector3 lastDeadFighterPosition;
+
+    public void SpawnMonster(GameObject fightern)
+    {
+        bFighterJoiningCombat = true;
+
+        
+
+    }
+
     // Use this for initialization
     void Start () {
         fightPosition = fightTransform.position;
@@ -73,6 +89,8 @@ public class FighterMouvementManager : MonoBehaviour {
         
     }
     */
+
+
     void CheckPosition()
     {
         Vector3 position = fighterObj.transform.position;

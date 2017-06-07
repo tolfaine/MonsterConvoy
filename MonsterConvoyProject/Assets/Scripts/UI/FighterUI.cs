@@ -82,6 +82,11 @@ public class FighterUI : MonoBehaviour {
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
             ui.SetActive(false); 
             canvas.SetActive(false);
+
+            Renderer[] rs = GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in rs)
+                    r.enabled = false;
+
             // mutation 
         }
         if (fighter.justTookDamage)

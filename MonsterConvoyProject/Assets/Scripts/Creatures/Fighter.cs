@@ -72,6 +72,16 @@ public class Fighter : Creature{
             // float rand = 0.5f;
             float rand = Random.Range(0f, 1f);
 
+            float terrain = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modRoll.GetValueOfAction(action, this.eCreatureType);
+            rand += terrain;
+
+            if (this.eCreatureType == CreatureType.Human)
+            {
+                float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, (Human)this, (GroupMonsterFighter)combatManager.monsterGroupFighter);
+
+                rand += bonus;
+            }
+
 
             if (combatManager.protoScript != null && combatManager. protoScript.combat != null  && combatManager.protoScript.combat.currentTurn != null)
             {

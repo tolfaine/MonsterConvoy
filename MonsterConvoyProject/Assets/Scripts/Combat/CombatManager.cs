@@ -230,6 +230,50 @@ public class CombatManager : MonoBehaviour
             if (combatOrder[i].fighter == currentFighter)
                 currentFighterIndex = i;
         }
+
+        if(monsterGroupFighter.lFighters.Count < 4)
+        {
+            if(caravane.lFighters.Count>= 4)
+            {
+                Fighter lastDeadFighter = monsterGroupFighter.ReplacDeadFighter();
+
+                GameObject prefab = prefabMonster;
+                CreatureType creatureType = CreatureType.Monster;
+
+                Fighter fighter = caravane.lFighters[3];
+
+                fighter.bTryToescape = false;
+                GameObject g = Instantiate(prefab, fighterMouvementManager.SpawnPosition, Quaternion.Euler(0, 90, 0)) as GameObject;
+
+                GameObject mo;
+
+                GameObject model = creaturePrefabManager.GetMonster(fighter.nID);
+                mo = Instantiate(model, Vector3.zero, Quaternion.Euler(0, 270, 0)) as GameObject;
+
+
+                mo.transform.parent = g.transform;
+                mo.transform.localPosition = Vector3.zero;
+                mo.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+                mo.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+
+
+                g.GetComponent<FighterUI>().fighter = fighter;
+
+                monsterGroupFighter.lFighters.Add(fighter);
+                g.transform.parent = GameObject.FindGameObjectWithTag("Monsters").transform;
+                g.name = fighter.sName;
+
+                MouseOverCreature mouseOver = mo.transform.GetChild(0).gameObject.AddComponent<MouseOverCreature>();
+                mouseOver.fighterUI = g.GetComponent<FighterUI>();
+
+                g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
+
+                fighterMouvementManager.lastDeadFighterPosition = lastDeadFighter.currentUI.gameObject.transform.position;
+                fighterMouvementManager.SpawnMonster(g);
+
+            }
+        }
     }
 
     void CheckCombatEnded()
@@ -308,7 +352,7 @@ public class CombatManager : MonoBehaviour
                 }
             }
 
-            if (!bTurnInProgress)
+            if (!bTurnInProgress && !fighterMouvementManager.bFighterJoiningCombat)
             {
                 if (protoScript != null)
                     if(protoScript.combat != null)
@@ -521,7 +565,8 @@ public class CombatManager : MonoBehaviour
 
             bool takeM = true;
 
-            float rand = Random.Range(0, 1);
+            float rand = Random.Range(0f, 1f);
+
             if (rand > 0.5)
                 takeM = false;
 

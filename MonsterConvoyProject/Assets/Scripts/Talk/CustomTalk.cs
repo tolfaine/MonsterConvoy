@@ -344,12 +344,12 @@ public class CustomTalk : MonoBehaviour {
 
         if (isReaction)
         {
-            /*
+            
             if (type == CreatureType.Human)
                 follow = humanAnchor;
             else
                 follow = monsterAnchor;
-                */
+                
         }
 
 
