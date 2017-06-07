@@ -76,7 +76,6 @@ public class Invasion : MonoBehaviour {
                 invasionGrowthRate = distanceFromPortalToCapital / 25;
                 break;
         }
-        GameObject.FindGameObjectWithTag("PawnManager").GetComponent<PawnManager>().RegenerateMap();
         turnNumber++;
     }
 
@@ -96,7 +95,7 @@ public class Invasion : MonoBehaviour {
         {
             other.GetComponent<PlaceType>().invasionStatus = true;
 
-            flag.transform.position = other.transform.position + (Vector3.left * 3) + (Vector3.back * 2);
+            flag.transform.position = other.transform.position + (Vector3.left * 3) + (Vector3.back);
             GameObject.Instantiate(flag, other.transform);
 
             if (other.GetComponent<PlaceType>().placeType.Equals(PlaceType.Place.DEPART))
@@ -110,8 +109,8 @@ public class Invasion : MonoBehaviour {
                     ps = g.GetComponent<ProtoScript>();
                     
                 }
-              //  ps.map.ToMutation();
-                OnNewLoop();
+                ps.map.ToMutation();
+                //OnNewLoop();
             }
         }
     }
