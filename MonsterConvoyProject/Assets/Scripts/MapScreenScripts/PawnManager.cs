@@ -18,7 +18,8 @@ public class PawnManager : MonoBehaviour {
 
     void Start()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
     }
 
     private void Awake()

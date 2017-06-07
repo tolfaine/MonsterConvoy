@@ -107,7 +107,7 @@ public class CaractHumain
 
     protected int nId;
     [SerializeField]
-    protected string sName;
+    public string sName;
     public CaracHumainType type;
 
    

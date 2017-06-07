@@ -12,6 +12,17 @@ public class TipsManager : MonoBehaviour {
 
     public Tip lastRevealedTip = null;
 
+    static TipsManager instance;
+    public static TipsManager Instance()
+    {
+        return instance;
+    }
+
+    private void Start()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     void Awake()
     {
@@ -24,20 +35,8 @@ public class TipsManager : MonoBehaviour {
             Destroy(transform.gameObject);
 
         Initialise();
-
-
     }
-    // Use this for initialization
-
-    void Start () {
-       // LearnTip(tipsNotKnownByPlayer[0]);
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+    
     void Initialise()
     {
         CaractHumainStuff test = CaractHumainStuff.ARC;
@@ -103,7 +102,6 @@ public class TipsManager : MonoBehaviour {
         }
 
         tipsNotKnownByPlayer = listTips;
-        int lel = 10;
     }
 
     public Tip GetRandomUnknownTip()
