@@ -28,8 +28,8 @@ public class CustomTalkEditor : Editor
         EditorGUILayout.LabelField("monsterAnchor");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("monsterAnchor"), GUIContent.none);
 
-        EditorGUILayout.LabelField("ReactionTalk");
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("reactTalk"), GUIContent.none);
+      //  EditorGUILayout.LabelField("ReactionTalk");
+     //   EditorGUILayout.PropertyField(serializedObject.FindProperty("reactTalk"), GUIContent.none);
         
 
         EditorGUILayout.LabelField("Put below the Text file to be parsed and become the talks!");
@@ -44,7 +44,7 @@ public class CustomTalkEditor : Editor
 				"Are you sure that is the correct bahaviour?", MessageType.Warning, true);
 		}
 
-        rpgTalk.isReaction = GUILayout.Toggle(rpgTalk.isReaction, "Is Reation?");
+      //  rpgTalk.isReaction = GUILayout.Toggle(rpgTalk.isReaction, "Is Reation?");
 
         EditorGUILayout.BeginVertical( (GUIStyle) "HelpBox"); 
 

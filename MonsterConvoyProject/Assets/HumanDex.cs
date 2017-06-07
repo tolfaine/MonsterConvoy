@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Fake Humandex class. 
 public class HumanDex : MonoBehaviour {
-
-    public TipsManager tipManager;
+    
     public Tip lastTip;
     public bool tipSet = false;
 
@@ -13,24 +13,9 @@ public class HumanDex : MonoBehaviour {
 
     public Text titre;
     public Text text;
-
-	// Use this for initialization
-	void Start () {
-        GameObject g = GameObject.FindGameObjectWithTag("TipManager");
-
-        if(g != null)
-        {
-           tipManager = g.GetComponent<TipsManager>();
-
-        }
-
-    }
-	
-	// Update is called once per frame
+    
 	void Update () {
-
-
-        lastTip = tipManager.lastRevealedTip;
+        lastTip = TipsManager.Instance().lastRevealedTip;
 
         if (lastTip != null)
         {
@@ -128,7 +113,7 @@ public class HumanDex : MonoBehaviour {
                 }
                 else if (lastTip.caracHumain == CaractHumainStuff.RICHE)
                 {
-                    humanS = "a gold bag.";
+                    humanS = "a bag of gold.";
                 }
                 else if (lastTip.caracHumain == CaractHumainStuff.TOURISTE)
                 {
@@ -173,7 +158,6 @@ public class HumanDex : MonoBehaviour {
             }
 
             text.text += humanS;
-
         }
     }
 }

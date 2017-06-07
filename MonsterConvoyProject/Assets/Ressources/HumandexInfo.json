@@ -1,0 +1,100 @@
+{
+    "HumandexEntry":[      
+      {
+        "id": 0,
+        "discovered": false,
+        "name": "Knight",
+        "tip": "Insert the tip"
+      },
+      {
+        "id": 1,
+        "discovered": false,
+        "name": "Paladin",
+        "tip": "Insert the tip"
+      },
+      {
+        "id": 2,
+        "discovered": false,
+        "name": "Fireman",
+        "tip": "Insert the tip"
+      },
+      {
+        "id": 3,
+        "discovered": false,
+        "name": "Hunter",
+        "tip": "Insert the tip"
+      },
+      {
+        "id": 4,
+        "discovered": false,
+        "name": "Merchant",
+        "tip": "Insert the tip"
+      },
+      {
+        "id": 5,
+        "discovered": false,
+        "name": "Thief",
+        "tip": "Insert the tip"
+      },
+      {
+        "id": 6,
+        "discovered": false,
+        "name": "Sunbather",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 7,
+        "discovered": false,
+        "name": "Hiker",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 8,
+        "discovered": false,
+        "name": "Priest",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 9,
+        "discovered": false,
+        "name": "Dancer",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 10,
+        "discovered": false,
+        "name": "Assassin",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 11,
+        "discovered": false,
+        "name": "Druid",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 12,
+        "discovered": false,
+        "name": "Peasant",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 13,
+        "discovered": false,
+        "name": "Mage",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 14,
+        "discovered": false,
+        "name": "Ninja",
+        "tip": "Insert the tip"
+      },      
+      {
+        "id": 15,
+        "discovered": false,
+        "name": "Monk",
+        "tip": "Insert the tip"
+      }
+  ]
+}

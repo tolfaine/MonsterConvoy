@@ -154,14 +154,14 @@ public class CustomTalk : MonoBehaviour {
 	public int maxCharInWidth = 50;
 	public int maxCharInHeight = 4;
 
-    private bool canReaction = true;
+  //  private bool canReaction = true;
 
-    public CustomTalk reactTalk;
-    public bool needReaction;
-    public CreatureType creatureReaction;
-    public ActionType actionReaction;
+  //  public CustomTalk reactTalk;
+ //   public bool needReaction;
+ //   public CreatureType creatureReaction;
+ //   public ActionType actionReaction;
 
-    public bool isReaction;
+//    public bool isReaction;
 
     public GameObject humanAnchor;
     public GameObject monsterAnchor;
@@ -176,6 +176,8 @@ public class CustomTalk : MonoBehaviour {
 			//NewTalk ();
 		}
 
+        /*
+         * 
         if (isReaction)
         {
            monsterFirstNormalTalkLine = 2;
@@ -188,10 +190,13 @@ public class CustomTalk : MonoBehaviour {
            humanLastNormalFearLine = 57;
         }
 
+        */
+        /*
         if (GameObject.FindGameObjectWithTag("ProtoManager"))
         {
             canReaction = false;
         }
+        */
 	}
 
     /// <summary>
@@ -344,6 +349,7 @@ public class CustomTalk : MonoBehaviour {
         int minLine = 0;
         int maxLine = 0;
 
+        /*
         if (isReaction)
         {
             
@@ -353,6 +359,7 @@ public class CustomTalk : MonoBehaviour {
                 follow = monsterAnchor;
                 
         }
+        */
 
 
         if(type == CreatureType.Human)
@@ -377,12 +384,14 @@ public class CustomTalk : MonoBehaviour {
                 minLine = humanFirstNormalTalkLine;
                 maxLine = humanLastNormalTalkLine;
 
+                /*
                 if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Monster;
                     actionReaction = action;
                 }
+                */
             }
             else if (action == ActionType.FEAR)
             {
@@ -407,12 +416,14 @@ public class CustomTalk : MonoBehaviour {
                 minLine = monsterFirstNormalTalkLine;
                 maxLine = monsterLastNormalTalkLine;
 
+                /*
                 if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Human;
                     actionReaction = action;
                 }
+                */
             }
             else if (action == ActionType.FEAR)
             {
@@ -427,13 +438,13 @@ public class CustomTalk : MonoBehaviour {
                     maxLine = monsterLastNormalFearLine;
                 }
 
-
+                /*
                 if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Human;
                     actionReaction = action;
-                }
+                }*/
             }
             else
                 return;
@@ -901,11 +912,13 @@ public class CustomTalk : MonoBehaviour {
 
 		} else {
 
+            /*
             if (needReaction)
             {
                 reactTalk.NewTalk(creatureReaction, actionReaction, 1f);
                 needReaction = false;
             }
+            */
 
             if (!shouldStayOnScreen) {
 				textUI.enabled = false;
