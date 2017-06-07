@@ -167,7 +167,9 @@ public class CustomTalk : MonoBehaviour {
     public GameObject monsterAnchor;
 
     public bool isMageTalk = false;
-    
+
+    public string caractMonster;
+    public string caractHumain;
 
     void Awake(){
 		if (startOnAwake) {
@@ -485,7 +487,18 @@ public class CustomTalk : MonoBehaviour {
 				if (currentLine >= actualLineToStart) {
 					if (actualLineToBreak == -1 || currentLine <= actualLineToBreak) {
 
-						if (wordWrap) {
+
+                        if (line.Contains("*mutation*"))
+                        {
+                            line = line.Replace("*mutation*", caractMonster);
+                        }
+
+                        if (line.Contains("*cheveux*"))
+                        {
+                            line = line.Replace("*cheveux*", caractHumain);
+                        }
+
+                        if (wordWrap) {
 							CheckIfTheTextFits (line);
 						} else {
 							rpgtalkElements.Add (readSceneElement (line));
@@ -545,15 +558,20 @@ public class CustomTalk : MonoBehaviour {
 
 		newElement.originalSpeakerName = line;
 
-		//replace any variable that may exist on the text
-		for (int i = 0; i < variables.Length; i++) {
-			if (line.Contains (variables[i].variableName)) {
-				line = line.Replace (variables[i].variableName, variables[i].variableValue);
-			}
-		}
+        //replace any variable that may exist on the text
+        if (line.Contains("*mutation*"))
+        {
+            line = line.Replace("*mutation*", caractMonster);
+        }
 
-		//If we want to show the dialoger's name, slipt the line at the ':'
-		if (dialoger) {
+        if (line.Contains("*cheveux*"))
+        {
+            line = line.Replace("*cheveux*", caractHumain);
+        }
+
+
+        //If we want to show the dialoger's name, slipt the line at the ':'
+        if (dialoger) {
 
 			if (line.IndexOf (':') != -1) {
 
@@ -746,8 +764,26 @@ public class CustomTalk : MonoBehaviour {
         //int maxCharInHeight = Mathf.FloorToInt ((heightBase * textUI.rectTransform.rect.height) / 71);
 
         //int maxCharInWidth = 25;
-      //  int maxCharInHeight = 2;
+        //  int maxCharInHeight = 2;
 
+        for (int i = 0; i < variables.Length; i++)
+        {
+            if (line.Contains(variables[i].variableName))
+            {
+                line = line.Replace(variables[i].variableName, variables[i].variableValue);
+            }
+
+            if (line.Contains("*mutation*"))
+            {
+                line = line.Replace("*mutation*", caractMonster);
+            }
+
+            if (line.Contains("*cheveux*"))
+            {
+                line = line.Replace("*cheveux*", caractHumain);
+            }
+        }
+        
 
         int maxCharsOnUI = maxCharInWidth * maxCharInHeight;
 		if (line.Length > maxCharsOnUI) {

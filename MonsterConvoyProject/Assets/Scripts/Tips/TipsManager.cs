@@ -116,6 +116,15 @@ public class TipsManager : MonoBehaviour {
     {
         lastRevealedTip = tip;
 
+        CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+
+        if (combatManager.protoScript != null && combatManager.protoScript.combat != null)
+        {
+            combatManager.protoScript.combat.customTalk.caractMonster = tip.caracMonster.enumCaract.ToString();
+            combatManager.protoScript.combat.customTalk.caractHumain = tip.caracHumain. sName;
+        }
+
+
         if (tipsNotKnownByPlayer.Contains(tip))
         {
             tipsKnownByPlayer.Add(tip);
