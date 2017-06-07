@@ -3,16 +3,15 @@ using UnityEngine.UI;
 
 public class HumandexDataHandler : MonoBehaviour
 {
-
     public GameObject humandexIcon;
     public GameObject newEntryNotification;
     public GameObject[] pageRibbons = new GameObject[4];
 
     public int pageNumber = 0;
-    private int numEntriesPerPage = 4;
+    private const int numEntriesPerPage = 4;
     const int numEntries = 16;
 
-    public GameObject[] pages = new GameObject[3]; //Page == layout
+    public GameObject[] humandexEntry = new GameObject[numEntriesPerPage];
     public Image[] humandexMutationIcon = new Image[4];
     public Text[] humandexMutationName = new Text[4];
     public Text[] humandexMutationDescription = new Text[4];
@@ -64,7 +63,7 @@ public class HumandexDataHandler : MonoBehaviour
 
         pageRibbons[pageNumber].SetActive(false);
 
-        int emptyBoxes = 4; 
+        int emptyBoxes = numEntriesPerPage; 
         for (int i = pageNumber*numEntriesPerPage; i < TipsManager.Instance().tipsKnownByPlayer.Count; ++i)
         {
             humandexMutationIcon[i].sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + TipsManager.Instance().tipsKnownByPlayer[i].caracMonster.enumCaract.ToString());
@@ -72,9 +71,9 @@ public class HumandexDataHandler : MonoBehaviour
             humandexMutationDescription[i].text = CorrectTip(TipsManager.Instance().tipsKnownByPlayer[i]);
             emptyBoxes--;
         }
-        for (int i = 0; i < emptyBoxes; i++)
+        for (int i = numEntriesPerPage; i > 0; i--)
         {
-            //Refresh empty pages with empty.
+        //    humandexEntry[i].SetActive(false);
         }
     }
 
