@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Invasion : MonoBehaviour {
 
     Vector3 invasionOrigin; //The location of the portal 
-    int invasionSize = 1; //Multiplier which increases the invasion radius on every turn
+    public int invasionSize = 1; //Multiplier which increases the invasion radius on every turn
     int invasionRadius = 12; //The initial radius of the invasion.
     float invasionGrowthRate = 0.0f;
     float lerpSpeed = 0.1f; //The speed which the invasion grows at the start of each turn (Does not impact the size of the invasion).
@@ -108,9 +109,21 @@ public class Invasion : MonoBehaviour {
                 if (g != null)
                 {
                     ps = g.GetComponent<ProtoScript>();
-                    
+                    ps.map.ToMutation();
+                }else
+                {
+                    string sceneType = "mutations";
+
+                    //Change scene on node click
+                    for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
+                    {
+                        //TODO preserve node types in file and reload from there. 
+                        SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
+                    }
+                    SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
                 }
-              //  ps.map.ToMutation();
+                //  ps.map.ToMutation();
                 OnNewLoop();
             }
         }

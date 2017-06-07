@@ -11,7 +11,8 @@ public class ScriptedSelection : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-       // Invoke("EnterSelection", 0.5f);
+        // Invoke("EnterSelection", 0.5f);
+       // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
     }
 	
 	// Update is called once per frame
@@ -24,10 +25,12 @@ public class ScriptedSelection : MonoBehaviour {
         if (iteration == 0)
         {
             customTalk.NewTalkScripted(ScriptText, 2, 2);
+           // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
         }
         if (iteration == 1)
         {
-            customTalk.NewTalkScripted(ScriptText, 2, 2);
+           // customTalk.NewTalkScripted(ScriptText, 2, 2);
+           // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
         }
         iteration++;
     }

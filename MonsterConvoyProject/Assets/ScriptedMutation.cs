@@ -22,7 +22,10 @@ public class ScriptedMutation : MonoBehaviour {
     public void EnterMutation()
     {
         if (iteration == 0)
+        {
             customTalk.NewTalkScripted(ScriptText, 2, 2);
+          //  AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+        }
 
 
         iteration++;

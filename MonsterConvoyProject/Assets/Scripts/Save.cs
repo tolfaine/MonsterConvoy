@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.IO;
 using LitJson;
 
@@ -38,8 +37,8 @@ public class Save : MonoBehaviour {
 
         if (File.Exists(filePath))
         {
-            bool yesWasClicked = EditorUtility.DisplayDialog("Save the game", "Are you sure to replace your previous save?", "Yes", "No");
-            if (yesWasClicked)
+          //  bool yesWasClicked = EditorUtility.DisplayDialog("Save the game", "Are you sure to replace your previous save?", "Yes", "No");
+          //  if (yesWasClicked)
                 File.WriteAllText(Application.dataPath + "/Ressources/Save/saveFile.json", tmp_file);
         }
         else {

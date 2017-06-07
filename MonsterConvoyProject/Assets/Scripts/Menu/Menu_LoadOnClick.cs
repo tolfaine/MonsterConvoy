@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -18,7 +17,6 @@ public enum MenuAction {
 public class Menu_LoadOnClick : MonoBehaviour {
     //bool enable_loadGame = true;
     private Button target_Loadbtn;
-    private Object background_scene;
     string sPath;
     JsonData jsFileSave;
 
@@ -35,10 +33,13 @@ public class Menu_LoadOnClick : MonoBehaviour {
             else {
                 target_Loadbtn.interactable = false;
                 //enable_loadGame = false;
-                target_Loadbtn.GetComponentInChildren<Image>().color = Color.grey;
+                //target_Loadbtn.GetComponentInChildren<Image>().color = Color.grey;
             }
             int index_scene = Random.Range(11, 21);
+            //SceneManager.LoadScene("DONJON", LoadSceneMode.Additive);
             SceneManager.LoadScene(index_scene, LoadSceneMode.Additive);
+            //GameObject combatPrefab = GameObject.Find("CombatPrefab").GetComponent<GameObject>();
+            //combatPrefab.SetActive(false);
         }
     }
     /*public void Update()
@@ -49,7 +50,7 @@ public class Menu_LoadOnClick : MonoBehaviour {
     public void loadScene(int action) {
         switch (action) {
             case 0:
-                SceneManager.LoadScene("PLAGE");
+                SceneManager.LoadScene("CAPITAL");
                 break;
             case 1:
                 //Load data before
@@ -67,8 +68,8 @@ public class Menu_LoadOnClick : MonoBehaviour {
         }
     }
     public void confirmQuit() {
-        bool yesWasClicked = EditorUtility.DisplayDialog("Quit the game", "Are you sure to quit the game?", "Yes", "No");
-        if(yesWasClicked)
+       // bool yesWasClicked = EditorUtility.DisplayDialog("Quit the game", "Are you sure to quit the game?", "Yes", "No");
+      //  if(yesWasClicked)
             Application.Quit();
     }
 }

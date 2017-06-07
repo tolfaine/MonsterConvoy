@@ -42,18 +42,40 @@ public class ScriptedMap : MonoBehaviour {
         }
     }
 
+    public bool talkInProgress()
+    {
+        if (customTalk.textUI.IsActive())
+            return true;
+        return false;
+    }
+
     public void EnterMap()
     {
-        if(iteration == 0)
+        if (iteration == 0)
+        {
             customTalk.NewTalkScripted(ScriptText, 2, 2);
+           // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+        }
         if (iteration == 1)
+        {
             customTalk.NewTalkScripted(ScriptText, 5, 5);
+            //AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+        }
         if (iteration == 2)
-            customTalk.NewTalkScripted(ScriptText, 11,11);
+        {
+            customTalk.NewTalkScripted(ScriptText, 11, 11);
+           // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+        }
         if (iteration == 3)
+        {
             customTalk.NewTalkScripted(ScriptText, 14, 14);
-        if (iteration == 4)
-            Destroy(gameObject.transform.parent);
+          //  AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+        }
+        if (iteration == 5)
+        {
+            Destroy(gameObject.transform.parent.gameObject);
+        }
+
 
         iteration++;
     }
@@ -66,12 +88,16 @@ public class ScriptedMap : MonoBehaviour {
     public void CloseHumanDex()
     {
         if (iteration == 2)
+        {
+          //  AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
             customTalk.NewTalkScripted(ScriptText, 7, 8);
+        }
     }
 
     public void ToMutation()
     {
         customTalk.NewTalkScripted(ScriptText,11,11);
+        //AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
         switchToMutation = true;
 
 

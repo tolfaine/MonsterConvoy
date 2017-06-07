@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ValidationCache Version="1" SchemaVersion="75">
-	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="3058041903" DateHigh="30595638"/>
+	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="3573613530" DateHigh="30595659"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Factory SoundSeed Air Objects.wwu" DateLow="3058071781" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Factory Synth One.wwu" DateLow="3058111888" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Attenuations\Default Work Unit.wwu" DateLow="3058121903" DateHigh="30595638"/>
@@ -20,7 +20,7 @@
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory iZotope Multiband Distortion.wwu" DateLow="3058292371" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory iZotope Singleband Distortion.wwu" DateLow="3058302382" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory McDSP Effects.wwu" DateLow="3058232350" DateHigh="30595638"/>
-	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Events\Default Work Unit.wwu" DateLow="3058322574" DateHigh="30595638"/>
+	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Events\Default Work Unit.wwu" DateLow="3573628558" DateHigh="30595659"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Game Parameters\Default Work Unit.wwu" DateLow="3058322574" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Game Parameters\Factory SoundSeed Air Game Syncs.wwu" DateLow="3058332462" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="3058342485" DateHigh="30595638"/>
@@ -33,7 +33,7 @@
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Queries\Default Work Unit.wwu" DateLow="3349014267" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Queries\Factory Queries.wwu" DateLow="3349650063" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\SoundBanks\Default Work Unit.wwu" DateLow="3349660125" DateHigh="30595638"/>
-	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Soundcaster Sessions\Default Work Unit.wwu" DateLow="3349670120" DateHigh="30595638"/>
+	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Soundcaster Sessions\Default Work Unit.wwu" DateLow="3577344271" DateHigh="30595659"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\States\Default Work Unit.wwu" DateLow="3349670120" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Switches\Default Work Unit.wwu" DateLow="3349680155" DateHigh="30595638"/>
 	<ValidationCacheItem File="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Triggers\Default Work Unit.wwu" DateLow="3349680155" DateHigh="30595638"/>

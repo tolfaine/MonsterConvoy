@@ -29,6 +29,8 @@ public class Human : Fighter{
 
         if (action == ActionType.TALK)
         {
+            lastActionResult = RollResultEnum.Normal;
+
             //((GroupHumanFighter)groupHuman).GetConvinced(this);
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();

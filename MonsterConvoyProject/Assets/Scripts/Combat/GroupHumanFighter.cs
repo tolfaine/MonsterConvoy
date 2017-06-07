@@ -96,7 +96,9 @@ public class GroupHumanFighter : GroupFighter {
             }
             else
             {
-                bCanBeFeared = false;
+                bCanListen = false;
+                bWantsToAttack = true;
+                bInConversation = false;
             }
 
 
