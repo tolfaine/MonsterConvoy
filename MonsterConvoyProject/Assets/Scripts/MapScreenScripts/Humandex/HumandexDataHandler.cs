@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class HumandexDataHandler : MonoBehaviour
 {
     public GameObject humandexIcon;
-    public GameObject newEntryNotification;
     public GameObject[] pageRibbons = new GameObject[4];
 
     public int pageNumber = 0;
@@ -16,29 +15,22 @@ public class HumandexDataHandler : MonoBehaviour
     public Text[] humandexMutationName = new Text[4];
     public Text[] humandexMutationDescription = new Text[4];
 
-    bool[] viewed = new bool[numEntries]; // todo if !viewed && discovered {display notification}
-
+    bool[] viewed = new bool[numEntries];
+    
     void Start()
     {
-        UpdatePage();
-    }
-
-    public void TurnPageRight()
-    {
-        if (pageNumber < (int)(numEntries / numEntriesPerPage))
+        bool newTip = false;
+        for (int i = 0; i < TipsManager.Instance().tipsKnownByPlayer.Count; ++i)
         {
-            pageNumber++;
-            UpdatePage();
+            if (!viewed[i])
+            {
+                newTip = true;
+                JumpToPage((int)(i / numEntriesPerPage));
+                break;
+            }
         }
-    }
-
-    public void TurnPageLeft()
-    {
-        if (pageNumber > 0)
-        {
-            pageNumber--;
-            UpdatePage();
-        }
+        if(!newTip)
+            JumpToPage(0);
     }
 
     public void JumpToPage(int newPageNumber)
@@ -47,9 +39,8 @@ public class HumandexDataHandler : MonoBehaviour
         UpdatePage();
     }
 
-    private void UpdatePage()
+    public void UpdatePage()
     {
-
         for (int i = 0; i < pageRibbons.Length; ++i)
         {
             if (TipsManager.Instance().tipsKnownByPlayer.Count > i * numEntriesPerPage)
@@ -60,25 +51,33 @@ public class HumandexDataHandler : MonoBehaviour
 
         pageRibbons[pageNumber].SetActive(false);
 
-
-        int emptyBoxes = numEntriesPerPage; 
-
-        for (int i = 0; i < numEntriesPerPage; ++i)
+        for (int i = 0; i < humandexEntry.Length; ++i)
         {
-            if (TipsManager.Instance().tipsKnownByPlayer.Count > pageNumber * numEntriesPerPage + i)
+            if (TipsManager.Instance().tipsKnownByPlayer.Count > (pageNumber * numEntriesPerPage) + i)
             {
-                humandexMutationIcon[i].sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + TipsManager.Instance().tipsKnownByPlayer[pageNumber * numEntriesPerPage + i].caracMonster.enumCaract.ToString());
-                humandexMutationName[i].text = TipsManager.Instance().tipsKnownByPlayer[pageNumber * numEntriesPerPage + i].caracMonster.sName;
-                humandexMutationDescription[i].text = CorrectTip(TipsManager.Instance().tipsKnownByPlayer[pageNumber * numEntriesPerPage + i]);
-                emptyBoxes--;
+                humandexEntry[i].SetActive(true);
+                humandexMutationIcon[i].sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + TipsManager.Instance().tipsKnownByPlayer[(pageNumber * numEntriesPerPage) + i].caracMonster.enumCaract.ToString());
+                humandexMutationName[i].text = TipsManager.Instance().tipsKnownByPlayer[(pageNumber * numEntriesPerPage) + i].caracMonster.sName;
+                humandexMutationDescription[i].text = CorrectTip(TipsManager.Instance().tipsKnownByPlayer[(pageNumber * numEntriesPerPage) + i]);
+                viewed[(pageNumber * numEntriesPerPage) + i] = true;
+            }
+            else
+            {
+                humandexEntry[i].SetActive(false);
             }
         }
-        for (int i = emptyBoxes - 1; i >= 0; i--)
+
+        for (int i = 0; i < TipsManager.Instance().tipsKnownByPlayer.Count; ++i)
         {
-            humandexEntry[i].SetActive(false);
+            if (!viewed[i])
+            {
+                humandexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/newEntryIcon");
+            }
+            else
+            {
+                humandexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/humandexIcon");
+            }
         }
-        
-        
     }
 
     private string CorrectTip(Tip tip)

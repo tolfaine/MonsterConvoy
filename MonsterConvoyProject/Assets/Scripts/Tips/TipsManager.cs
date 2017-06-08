@@ -36,7 +36,7 @@ public class TipsManager : MonoBehaviour {
 
         Initialise();
     }
-    
+
     void Initialise()
     {
         CaractHumainStuff test = CaractHumainStuff.ARC;
@@ -57,7 +57,7 @@ public class TipsManager : MonoBehaviour {
         //System.Array.Copy( , allCaracMonster, CaractMonster.GetAllCarac().Count);
         Tip tip;
 
-        for (int i = 0; i < allCaracMonster.Count && allCaracHumain.Count>0;)
+        for (int i = 0; i < allCaracMonster.Count && allCaracHumain.Count > 0;)
         {
             tip = new Tip();
 
@@ -101,7 +101,10 @@ public class TipsManager : MonoBehaviour {
             listTips.Add(tip);
         }
 
-        tipsNotKnownByPlayer = listTips;
+        for (int i = 0; i < listTips.Count; i++)
+        {
+            tipsNotKnownByPlayer.Add(listTips[i]);
+        }
     }
 
     public Tip GetRandomUnknownTip()
