@@ -267,6 +267,12 @@ public class CombatManagerUI : MonoBehaviour {
             ps.map.EnterMap();
             ps.currentIndex++;
         }
+
+        g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if (g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
     }
 
 }
