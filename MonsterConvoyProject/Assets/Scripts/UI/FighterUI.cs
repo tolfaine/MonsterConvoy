@@ -221,8 +221,7 @@ public class FighterUI : MonoBehaviour {
     }
     // Update is called once per frame
     void FixedUpdate () {
-        UpdateText();
-
+        UpdateText(); //TODO this is broken
     }
 
     void UpdateText()

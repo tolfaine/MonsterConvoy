@@ -8,22 +8,36 @@ public class MutationSelection : MonoBehaviour {
 
     public int idMonster;
     public CaractMonster mutation;
-    public Text text;
+    public GameObject monsterIcon;
+    public GameObject mutationIcon;
+    public Text mutationName;
     Scene currentScene;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void Start()
+    {
+        MutationManager mutationManager = GameObject.FindGameObjectWithTag("MutationManager").GetComponent<MutationManager>();
+        CreaturesData creatureData = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>();
+
+        if (mutationManager.allMutations.Count > 0)
+        {
+            MutationManager.MutationData data = mutationManager.GetRandomMutation(1)[0];
+
+            idMonster = data.nIdMonster;
+            mutation = CaractMonster.GetCaractMonsterOfEnum(data.mutation);
+
+            monsterIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/MonsterIcons/" + creatureData.GetFighterOfID<Monster>(CreatureType.Monster, idMonster).sName);
+            mutationIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + mutation.sName);
+            mutationName.text = mutation.sName;
+        }
+        else
+            Destroy(gameObject);
+     }
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currentScene = scene;
@@ -33,7 +47,6 @@ public class MutationSelection : MonoBehaviour {
         MutationManager mutationManager = GameObject.FindGameObjectWithTag("MutationManager").GetComponent<MutationManager>();
 
         mutationManager.AddMutationID(idMonster, mutation);
-
 
         string s = "CAPITAL";
         SceneManager.LoadScene(s);
@@ -47,9 +60,6 @@ public class MutationSelection : MonoBehaviour {
              if (go.tag != "Spotligth")
                  SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(true);
          }
-
-         Invasion invasion = GameObject.FindGameObjectWithTag("Invasion").GetComponent<Invasion>();
-         invasion.OnNewLoop();
          */
 
         GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
@@ -61,7 +71,5 @@ public class MutationSelection : MonoBehaviour {
             ps.map.EnterMap();
             ps.currentIndex++;
         }
-
-
     }
 }
