@@ -16,8 +16,9 @@ public class RollProbaManager : MonoBehaviour {
     public class SpecialProba
     {
         public float probaFight;
-        public float ed;
         public float bard;
+        public float ed;
+
     }
 
     public RollProba Attack;

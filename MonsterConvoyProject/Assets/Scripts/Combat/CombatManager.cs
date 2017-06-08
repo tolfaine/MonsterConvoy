@@ -179,7 +179,7 @@ public class CombatManager : MonoBehaviour
         
         float rand = Random.Range(0f, 1f);
 
-        /*
+        
         if (rand < rollProbaManager.specialProba.probaFight && protoScript == null)
         {
             bSpecialFight = true;
@@ -195,8 +195,6 @@ public class CombatManager : MonoBehaviour
             }
 
         }
-
-        */
         
 
         InstantiateMonster();
@@ -854,6 +852,7 @@ public class CombatManager : MonoBehaviour
                 Human humain = new Human();
                 humain.CopyHuman(defaultHuman);
                 humain.nID = idModel;
+                humain.sName = "Ed";
 
                 GameObject g = Instantiate(prefab, humansPosition[0].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
@@ -884,6 +883,7 @@ public class CombatManager : MonoBehaviour
                 Human humain = new Human();
                 humain.CopyHuman(defaultHuman);
                 humain.nID = idModel;
+                humain.sName = "Bard";
 
                 GameObject g = Instantiate(prefab, humansPosition[0].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 

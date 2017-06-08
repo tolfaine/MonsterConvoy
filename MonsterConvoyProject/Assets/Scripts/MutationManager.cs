@@ -5,6 +5,7 @@ using UnityEngine;
 public class MutationManager : MonoBehaviour {
 
     public static bool created = false;
+    static MutationManager instance; 
 
     [System.Serializable]
     public class MutationData
@@ -22,10 +23,19 @@ public class MutationManager : MonoBehaviour {
         }
     }
 
+
+
     public List<MutationData> allMutations = new List<MutationData>(1);
+
+    public static MutationManager Instance()
+    {
+        return instance; 
+    }
 
     public void Awake()
     {
+        if (instance == null)
+            instance = this;
 
         if (!created)
         {
