@@ -64,11 +64,11 @@ public class HumanDex : MonoBehaviour {
 
             string effetS = "";
 
-            if (lastTip.modroll == ModRoll.ATTACKH)
+            if (lastTip.modroll == ModRoll.ATTACKDMG)
             {
                 effetS = " can protect you from the attack of a human with ";
             }
-            else if (lastTip.modroll == ModRoll.ATTACKM)
+            else if (lastTip.modroll == ModRoll.ATTACKH)
             {
                 effetS = " may distract the attack of pink thingies with ";
             }

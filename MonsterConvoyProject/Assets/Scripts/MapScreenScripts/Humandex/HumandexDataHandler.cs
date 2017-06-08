@@ -117,11 +117,11 @@ public class HumandexDataHandler : MonoBehaviour
                 break;
         }
 
-        if (tip.modroll == ModRoll.ATTACKH)
+        if (tip.modroll == ModRoll.ATTACKDMG)
         {
             text += " can protect you from the attack of a human with ";
         }
-        else if (tip.modroll == ModRoll.ATTACKM)
+        else if (tip.modroll == ModRoll.ATTACKH)
         {
             text  += " may distract the attack of pink thingies with ";
         }

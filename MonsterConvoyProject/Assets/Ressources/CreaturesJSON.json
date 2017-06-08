@@ -85,68 +85,68 @@
     "Humans":[
       {
         "id" : 2000,
-        "name": "Archer"
+        "name": "archer"
       },
       {
         "id": 2001,
-        "name": "Assassin"
+        "name": "assassin"
       },
       {
         "id": 2002,
-        "name": "Berserk"
+        "name": "berserk"
       },
       {
         "id": 2003,
-        "name": "Hunter"
+        "name": "hunter"
       }
       ,
       {
         "id": 2004,
-        "name": "Knight"
+        "name": "knight"
       },
       {
         "id": 2005,
-        "name": "Dancer"
+        "name": "dancer"
       },
       {
         "id": 2006,
-        "name": "Druid"
+        "name": "druid"
       },
       {
         "id": 2007,
-        "name": "Mage"
+        "name": "mage"
       },
       {
         "id": 2008,
-        "name": "Merchant"
+        "name": "merchant"
       },
       {
         "id": 2009,
-        "name": "Paladin"
+        "name": "paladin"
       },
       {
         "id": 2010,
-        "name": "Peasent"
+        "name": "peasant"
       },
       {
         "id": 2011,
-        "name": "Sunbather"
+        "name": "sunbather"
       },
       {
         "id": 2012,
-        "name": "Fireman"
+        "name": "fireman"
       },
       {
         "id": 2013,
-        "name": "Priest"
+        "name": "priest"
       },
       {
         "id": 2014,
-        "name": "Hiker"
+        "name": "hiker"
       },
       {
         "id": 2015,
-        "name": "Thief"
+        "name": "rogue"
       }
   ]
 }

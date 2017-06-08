@@ -144,6 +144,86 @@ public class TipsManager : MonoBehaviour {
         }
     }
 
+    public float GetBonusDmg(Human human, GroupMonsterFighter groupMonster)
+    {
+        float bonus = 0;
+
+        List<Tip> myTips = GetTipsOfDmg();
+
+        CaractHumainCheveux chm = human.currentUI.gameObject.GetComponentInChildren<ModelHumainUI>().caractCheveux;
+
+        myTips = GetTipsAboutHumainCarac(chm, myTips);
+
+        foreach (Fighter fighter in groupMonster.lFighters)
+        {
+            if (fighter.CanAttack())
+            {
+                ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
+
+                CaractMonster tempCarac = modelM.caractMonster;
+                CaractMonster permaCarac = modelM.permanentCarMutation;
+
+                foreach (Tip tip in myTips)
+                {
+                    if (tip.caracMonster == tempCarac)
+                    {
+                        bonus += tip.modroll.GetBonusDmgAttack();
+                    }
+                    else if (tip.caracMonster == permaCarac)
+                    {
+                        bonus += tip.modroll.GetBonusDmgAttack();
+                    }
+
+                    if (bonus != 0)
+                        break;
+                }
+            }
+
+            if (bonus != 0)
+                break;
+        }
+
+
+        myTips = GetTipsOfDmg();
+
+        CaractHumainStuff chs = human.currentUI.gameObject.GetComponentInChildren<ModelHumainUI>().caractStuff;
+
+        myTips = GetTipsAboutHumainCarac(chs, myTips);
+
+        foreach (Fighter fighter in groupMonster.lFighters)
+        {
+            if (fighter.CanAttack())
+            {
+                ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
+
+                CaractMonster tempCarac = modelM.caractMonster;
+                CaractMonster permaCarac = modelM.permanentCarMutation;
+
+                foreach (Tip tip in myTips)
+                {
+                    if (tip.caracMonster == tempCarac)
+                    {
+                        bonus += tip.modroll.GetBonusDmgAttack();
+                    }
+                    else if (tip.caracMonster == permaCarac)
+                    {
+                        bonus += tip.modroll.GetBonusDmgAttack();
+                    }
+
+                    if (bonus != 0)
+                        break;
+                }
+            }
+
+            if (bonus != 0)
+                break;
+        }
+        //   CaractMonster mutation;
+
+
+        return bonus;
+    }
+
     public float GetBonus(ActionType actionType, Monster monster, GroupHumanFighter groupHuman)
     {
         float bonus = 0;
@@ -382,6 +462,30 @@ public class TipsManager : MonoBehaviour {
         foreach (Tip tip in aList)
         {
             if (tip.caracMonster == caracMonster)
+                finalList.Add(tip);
+        }
+        return finalList;
+
+    }
+    public List<Tip> GetTipsOfDmg()
+    {
+        List<Tip> finalList = new List<Tip>();
+
+        foreach (Tip tip in listTips)
+        {
+            if (tip.modroll.dmgAttack != 0)
+                finalList.Add(tip);
+        }
+        return finalList;
+    }
+
+    public List<Tip> GetTipsOfDmg(List<Tip> aList, CreatureType creatureType)
+    {
+        List<Tip> finalList = new List<Tip>();
+
+        foreach (Tip tip in aList)
+        {
+            if (tip.modroll.dmgAttack != 0)
                 finalList.Add(tip);
         }
         return finalList;

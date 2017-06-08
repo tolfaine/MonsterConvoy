@@ -30,11 +30,13 @@ public class CreaturesData : MonoBehaviour {
         //DontDestroyOnLoad(transform.parent.gameObject);
         sPath = File.ReadAllText(Application.dataPath + "/Ressources/CreaturesJSON.json");
         jsCreatureData = JsonMapper.ToObject(sPath);
-     //   LoadMonsters();
-     //   LoadHumans();
+
+        LoadMonsters();
+        LoadHumans();
     }
 
     void LoadMonsters() {
+        lMonsters = new List<MonsterData>();
 
         JsonData creature;
         string sCreatureType = "Monsters";
@@ -54,7 +56,7 @@ public class CreaturesData : MonoBehaviour {
     }
     void LoadHumans()
     {
-
+        lHumans = new List<HumanData>();
         JsonData creature;
         string sCreatureType = "Humans";
 

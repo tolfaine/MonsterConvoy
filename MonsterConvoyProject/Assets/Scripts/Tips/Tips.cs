@@ -16,17 +16,23 @@ public class ModRoll
     public float modRollFearM = 0;
     public float modRollAttackM = 0;
 
+   // public int dmgTak = 0;
+    public float dmgAttack = 0;
+    //public int dmfAttack = 0;
+
     public string sName;
 
     private static List<ModRoll> allBonus = new List<ModRoll>();
 
-   // public static readonly ModRoll TALKH = new ModRoll(0.1f, 0, 0, 0, 0, 0, "++Talk H");
-   // public static readonly ModRoll FEARH = new ModRoll(0, 0.1f, 0, 0, 0, 0, "++Talk H");
-    public static readonly ModRoll ATTACKH = new ModRoll(0, 0, -0.1f, 0, 0, 0, "Humain miss ++");
+    // public static readonly ModRoll TALKH = new ModRoll(0.1f, 0, 0, 0, 0, 0, "++Talk H");
+    // public static readonly ModRoll FEARH = new ModRoll(0, 0.1f, 0, 0, 0, 0, "++Talk H");
+    public static readonly ModRoll ATTACKDMG = new ModRoll(0, 0, 0, 0, 0, 0, -0.5f, "Human deals less dmg --");
 
-    public static readonly ModRoll TALKM = new ModRoll(0, 0, 0, 0.1f, 0, 0, "Monster Talk ++");
-    public static readonly ModRoll FEARM = new ModRoll(0, 0, 0, 0, 0.1f, 0, "Monster Fear ++");
-    public static readonly ModRoll ATTACKM = new ModRoll(0, 0, 0, 0, 0, 0.1f, "Monster Attack ++");
+    public static readonly ModRoll ATTACKH = new ModRoll(0, 0, -0.1f, 0, 0, 0,0, "Humain miss --");
+
+    public static readonly ModRoll TALKM = new ModRoll(0, 0, 0, 0.1f, 0, 0,0, "Monster Talk ++");
+    public static readonly ModRoll FEARM = new ModRoll(0, 0, 0, 0, 0.1f, 0,0, "Monster Fear ++");
+   // public static readonly ModRoll ATTACKM = new ModRoll(0, 0, 0, 0, 0, 0.1f,0, "Monster Attack ++");
 
     public static  ModRoll GetRandomMod()
     {
@@ -34,7 +40,7 @@ public class ModRoll
         return allBonus[randIndex];
     }
 
-    private ModRoll(float talkH, float fearH, float attackH, float talkM, float fearM, float attackM, string name)
+    private ModRoll(float talkH, float fearH, float attackH, float talkM, float fearM, float attackM, float damageAttack, string name)
     {
         modRollTalkH = talkH;
         modRollFearH = fearH;
@@ -44,9 +50,15 @@ public class ModRoll
         modRollFearM = fearM;
         modRollAttackM = attackM;
 
+        dmgAttack = damageAttack;
+
         sName = name;
 
         allBonus.Add(this);
+    }
+    public float GetBonusDmgAttack()
+    {
+        return dmgAttack;
     }
 
     public float GetValueOfAction(ActionType actionType, CreatureType creatureType)

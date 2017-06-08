@@ -151,9 +151,14 @@ public class CombatManager : MonoBehaviour
     public SpecialType specialType;
     public GroupIA specialGroup;
 
+    public RollProbaManager rollProbaManager;
     void Start()
     {
-
+        GameObject rollObj = GameObject.FindGameObjectWithTag("RollProbaManager");
+        if (rollObj != null)
+        {
+            rollProbaManager = rollObj.GetComponent<RollProbaManager>();
+        }
 
         discoveredTip = null ;
 
@@ -170,21 +175,29 @@ public class CombatManager : MonoBehaviour
         fighterMouvementManager = GameObject.FindGameObjectWithTag("FighterMouvementManager").GetComponent<FighterMouvementManager>();
         creaturePrefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
 
-        /*
+
+        
         float rand = Random.Range(0f, 1f);
-        if (rand < 0.5f && protoScript == null)
+
+        /*
+        if (rand < rollProbaManager.specialProba.probaFight && protoScript == null)
         {
             bSpecialFight = true;
             float rand2 = Random.Range(0f, 1f);
 
-            if (rand2 > 0.5f && !specialManager.iaBard.endStory)
+            if (rand2 < rollProbaManager.specialProba.bard && !specialManager.iaBard.endStory)
             {
                 specialType = SpecialType.Bard;
             }
-            else
+            else if (!specialManager.iaEd.isDead)
+            {
                 specialType = SpecialType.Ed;
+            }
+
         }
+
         */
+        
 
         InstantiateMonster();
         InstantiateHuman();
@@ -961,7 +974,7 @@ public class CombatManager : MonoBehaviour
         int counter = 0;
         Fighter fighter = null;
 
-        while (fighter == null || counter > 20)
+        while ((fighter == null && (!bSpecialFight || (bSpecialFight && currentFighter != fighter))) || counter > 20)
         {
             currentFighterIndex++;
 

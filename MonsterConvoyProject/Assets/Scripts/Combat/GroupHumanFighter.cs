@@ -71,7 +71,6 @@ public class GroupHumanFighter : GroupFighter {
                 bWantsToAttack = true;
             }
 
-
             AddFear(fearDamage);
         }
     }

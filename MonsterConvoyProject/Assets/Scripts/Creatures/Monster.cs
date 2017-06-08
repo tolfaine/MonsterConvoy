@@ -69,12 +69,12 @@ public class Monster : Fighter{
                 rand = 0;
             }
 
-            if (rand > 0.9f)
+            if (rand > combatManager.rollProbaManager.Fear.normal)
             {
                 lastActionResult = RollResultEnum.Crit;
                 ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Crit, this);
             }
-            else if (rand > 0.2f)
+            else if (rand > combatManager.rollProbaManager.Fear.fail)
             {
                 lastActionResult = RollResultEnum.Normal;
                 ((GroupHumanFighter)groupHuman).GetFeared(RollResultEnum.Normal, this);
@@ -123,12 +123,12 @@ public class Monster : Fighter{
                 rand = 0;
             }
 
-            if (rand > 0.9f)
+            if (rand > combatManager.rollProbaManager.Discussion.normal)
             {
                 lastActionResult = RollResultEnum.Crit;
                 ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Crit, this);
             }
-            else if (rand > 0.2f)
+            else if (rand > combatManager.rollProbaManager.Discussion.fail)
             {
                 lastActionResult = RollResultEnum.Normal;
                 ((GroupHumanFighter)groupHuman).GetConvinced(RollResultEnum.Normal, this);
@@ -150,11 +150,14 @@ public class Monster : Fighter{
 
     public override void PerformActionOnSelf(ActionType action, GroupFighter monsterFighter)
     {
+
         if (action == ActionType.ESCAPE)
         {
             float rand = Random.Range(0f, 1f);
 
-            if (rand > 0.3f)
+            CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+
+            if (rand > combatManager.rollProbaManager.Escape.fail)
             {
                 bTryToescape = true;
                 AkSoundEngine.PostEvent("Play_flee", GameObject.FindGameObjectWithTag("MainCamera"));

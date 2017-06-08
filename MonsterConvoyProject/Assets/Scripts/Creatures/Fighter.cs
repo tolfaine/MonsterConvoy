@@ -29,7 +29,9 @@ public class Fighter : Creature{
     public ActionType lastAction = null;
     public bool performingAction = false;
 
-    public Fighter() : base() {}
+    public Fighter() : base() {
+
+    }
 
 
     public void CopyFighter(Fighter fighter)
@@ -94,16 +96,27 @@ public class Fighter : Creature{
                     rand = l;
             }
 
-            if (rand >= 0.90)
+            int damage = this.GetDamage();
+
+            if(eCreatureType == CreatureType.Human)
             {
-                fighter.TakeDamage(this.GetDamage() * 2);
+                float damageMod = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonusDmg((Human)this, (GroupMonsterFighter)combatManager.monsterGroupFighter);
+                if(damageMod != 0)
+                {
+                    damage /= 2;
+                }
+            }
+
+            if (rand >= combatManager.rollProbaManager.Attack.normal)
+            {
+                fighter.TakeDamage(damage * 2);
                 AkSoundEngine.PostEvent("Play_" + sName + "_crit", GameObject.FindGameObjectWithTag("MainCamera"));
 
                 lastActionResult = RollResultEnum.Crit;
             }
-            else if (rand > 0.1)
+            else if (rand > combatManager.rollProbaManager.Attack.fail)
             {
-                fighter.TakeDamage(this.GetDamage());
+                fighter.TakeDamage(damage);
                 AkSoundEngine.PostEvent("Play_" + sName + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
 
                 lastActionResult = RollResultEnum.Normal;

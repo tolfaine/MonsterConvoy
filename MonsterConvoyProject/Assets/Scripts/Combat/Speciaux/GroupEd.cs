@@ -53,4 +53,12 @@ public class GroupEd : GroupHumanFighter
        
     }
 
+    public virtual void CheckFightersLife()
+    {
+        base.CheckFightersLife();
+
+       ((IAEd)groupLogic).isDead = allFightersDead;
+
+    }
+
 }
