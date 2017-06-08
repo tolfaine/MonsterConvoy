@@ -40,11 +40,12 @@ public class GroupHumanFighter : GroupFighter {
 
 
     public GroupHumanFighter() : base() {
+        bIsSpecial = false;
         this.groupLogic = new GroupIA();
         ((GroupIA)this.groupLogic).groupHumanFighter = this ;
     }
 
-    public void GetFeared(RollResultEnum rollResult ,Monster monster)
+    public override void GetFeared(RollResultEnum rollResult ,Monster monster)
     {
         if (bCanBeFeared)
         {
@@ -75,7 +76,7 @@ public class GroupHumanFighter : GroupFighter {
         }
     }
 
-    public void GetConvinced(RollResultEnum rollResult, Monster monster)
+    public override void GetConvinced(RollResultEnum rollResult, Monster monster)
     {
         if (bCanListen)
         {
@@ -132,7 +133,7 @@ public class GroupHumanFighter : GroupFighter {
 
     }
 
-    private void AddFear(int fear)
+    protected void AddFear(int fear)
     {
         nCurrentFear += fear;
 
@@ -147,7 +148,7 @@ public class GroupHumanFighter : GroupFighter {
         }
     }
 
-    private void AddConvice(int convice)
+    protected void AddConvice(int convice)
     {
         nCurrentConvice += convice;
 

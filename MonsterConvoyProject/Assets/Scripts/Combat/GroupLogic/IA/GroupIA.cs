@@ -25,7 +25,7 @@ public class GroupIA : GroupLogic {
 		
 	}
     
-    public ActionType SelectAction(List<Fighter> Enemies , List<Fighter> Allies)
+    public virtual ActionType SelectAction(List<Fighter> Enemies , List<Fighter> Allies)
     {
 
         GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
@@ -101,7 +101,7 @@ public class GroupIA : GroupLogic {
         }
     }
     
-    public Fighter SelectTarget(List<Fighter> Enemies, List<Fighter> Allies)
+    public virtual Fighter SelectTarget(List<Fighter> Enemies, List<Fighter> Allies)
     {
 
         GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
@@ -112,8 +112,12 @@ public class GroupIA : GroupLogic {
 
             if(protoScript.combat.iteration == 2)
             {
-                if (Enemies[2].CanAttack())
-                    return Enemies[2];
+                if(Enemies.Count >= 3)
+                {
+                    if (Enemies[2].CanAttack())
+                        return Enemies[2];
+                }
+
             }
 
         }

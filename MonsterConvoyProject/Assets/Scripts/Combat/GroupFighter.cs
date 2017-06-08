@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [System.Serializable]
 public class GroupFighter {
 
@@ -16,6 +17,8 @@ public class GroupFighter {
     public bool allFightersDead = false;
 
     public bool bEscaping= false;
+
+    public bool bIsSpecial = false;
 
     public GroupFighter() { }
 
@@ -84,6 +87,16 @@ public class GroupFighter {
     }
 
     public virtual void OneFighterGotTargetted()
+    {
+
+    }
+
+    public virtual void GetFeared(RollResultEnum rollResult, Monster monster)
+    {
+
+    }
+
+    public virtual void GetConvinced(RollResultEnum rollResult, Monster monster)
     {
 
     }

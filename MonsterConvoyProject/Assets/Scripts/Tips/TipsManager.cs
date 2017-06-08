@@ -22,6 +22,9 @@ public class TipsManager : MonoBehaviour {
     {
         if (instance == null)
             instance = this;
+
+        Tip tip = GetRandomUnknownTip();
+        LearnTip(tip);
     }
 
     void Awake()
@@ -101,7 +104,15 @@ public class TipsManager : MonoBehaviour {
             listTips.Add(tip);
         }
 
-        tipsNotKnownByPlayer = listTips;
+
+        foreach(Tip t in listTips)
+        {
+            Tip newTip = new Tip();
+            newTip.CopyTips(t);
+            tipsNotKnownByPlayer.Add(newTip);
+        }
+
+        //tipsNotKnownByPlayer = listTips;
     }
 
     public Tip GetRandomUnknownTip()
@@ -114,12 +125,16 @@ public class TipsManager : MonoBehaviour {
     {
         lastRevealedTip = tip;
 
-        CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
-
-        if (combatManager.protoScript != null && combatManager.protoScript.combat != null)
+        GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
+        if(g != null)
         {
-            combatManager.protoScript.combat.customTalk.caractMonster = tip.caracMonster.enumCaract.ToString();
-            combatManager.protoScript.combat.customTalk.caractHumain = tip.caracHumain. sName;
+            CombatManager combatManager = g.GetComponent<CombatManager>();
+
+            if (combatManager.protoScript != null && combatManager.protoScript.combat != null)
+            {
+                combatManager.protoScript.combat.customTalk.caractMonster = tip.caracMonster.enumCaract.ToString();
+                combatManager.protoScript.combat.customTalk.caractHumain = tip.caracHumain.sName;
+            }
         }
 
 

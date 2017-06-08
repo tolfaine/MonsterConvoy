@@ -7,7 +7,7 @@ public enum CaracHumainType { Stuff, Cheveux}
 [System.Serializable]
 public class CaractMonster
 {
-    protected static List<CaractMonster> allCaractMonster = new List<CaractMonster>(0);
+    protected static readonly List<CaractMonster> allCaractMonster = new List<CaractMonster>(0);
 
     public enum _enumCaractMonster { NONE, TENTACULES, CORNES , AILES, MOUSTACHES, CARAPACE, SAC, SOURCILS, CHAPEAU }
 
@@ -42,25 +42,80 @@ public class CaractMonster
 
     public static CaractMonster GetRandomCarac()
     {
-        int randIndex = Random.Range(1, allCaractMonster.Count+1);
-        return allCaractMonster[randIndex];
+        int randIndex = Random.Range(1, 8);
+
+        if(randIndex == 1)
+        {
+            return TENTACULES;
+        }
+        if (randIndex == 2)
+        {
+            return CORNES;
+        }
+        if (randIndex == 3)
+        {
+            return AILES;
+        }
+        if (randIndex == 4)
+        {
+            return MOUSTACHES;
+        }
+        if (randIndex == 5)
+        {
+            return CARAPACE;
+        }
+        if (randIndex == 6)
+        {
+            return SAC;
+        }
+        if (randIndex == 7)
+        {
+            return SOURCILS;
+        }
+        if (randIndex == 8)
+        {
+            return CHAPEAU;
+        }
+
+        return CaractMonster.NONE;
+
+      //  return allCaractMonster[randIndex];
     }
 
     public static CaractMonster GetRandomCaracExept(_enumCaractMonster enumMut, _enumCaractMonster enumMut2)
     {
+        CaractMonster car = GetRandomCarac();
+        while(car.enumCaract  == enumMut || car.enumCaract == enumMut2)
+        {
+            car = GetRandomCarac();
+        }
+        /*
         int randIndex = Random.Range(1, allCaractMonster.Count );
 
         while(allCaractMonster[randIndex].enumCaract == enumMut || allCaractMonster[randIndex].enumCaract == enumMut2)
         {
             randIndex = Random.Range(1, allCaractMonster.Count );
-        }
-        return allCaractMonster[randIndex];
+        }*/
+        // return allCaractMonster[randIndex];
+
+        return car;
     }
 
     public static List<CaractMonster> GetAllCarac()
     {
+        /*
         List<CaractMonster> allCarac = allCaractMonster;
         allCarac.RemoveAt(0);
+        */
+        List<CaractMonster> allCarac = new List<CaractMonster>();
+        allCarac.Add(AILES);
+        allCarac.Add(CARAPACE);
+        allCarac.Add(CHAPEAU);
+        allCarac.Add(CORNES);
+        allCarac.Add(MOUSTACHES);
+        allCarac.Add(SAC);
+        allCarac.Add(SOURCILS);
+        allCarac.Add(TENTACULES);
         return allCarac;
     }
 

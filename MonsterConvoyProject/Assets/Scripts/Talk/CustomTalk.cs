@@ -48,6 +48,9 @@ public class CustomTalk : MonoBehaviour {
     public TextAsset humanTalk;
     public TextAsset monsterTalk;
 
+    public TextAsset bardTalk;
+    public TextAsset edTalk;
+
     public TextAsset actualTextToParse;
 
     [Tooltip("If the player click on it, should it be skipped?")]
@@ -336,7 +339,292 @@ public class CustomTalk : MonoBehaviour {
             animatorWhenTalking.SetBool(animatorBooleanName, true);
         }
     }
+    public void NewTalkED(int lineNb)
+    {
 
+        lineToStart = lineNb;
+        lineToBreak = lineNb;
+
+        txtToParse = edTalk;
+
+        //reduce one for the line to Start and break
+        if (lineToBreak == -1)
+        {
+            actualLineToBreak = lineToBreak;
+        }
+        else
+        {
+            actualLineToBreak = lineToBreak - 1;
+        }
+        actualLineToStart = lineToStart - 1;
+
+        if (textAudio != null)
+        {
+            if (rpgAudioSorce == null)
+            {
+                rpgAudioSorce = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
+        lookForClick = true;
+
+        //Stop any blinking arrows that shouldn't appear
+        CancelInvoke("blink");
+        if (blinkWhenReady)
+        {
+            blinkWhenReady.SetActive(false);
+        }
+
+
+        //reset positions
+        cutscenePosition = 1;
+        currentChar = 0;
+
+
+        //create a new CutsCeneElement
+        rpgtalkElements = new List<RpgtalkElement>();
+
+        if (txtToParse != null)
+        {
+            // read the TXT file into the elements list
+            StringReader reader = new StringReader(txtToParse.text);
+
+            string line = reader.ReadLine();
+            int currentLine = 0;
+
+            while (line != null)
+            {
+
+                if (currentLine >= actualLineToStart)
+                {
+                    if (actualLineToBreak == -1 || currentLine <= actualLineToBreak)
+                    {
+
+
+                        if (line.Contains("*mutation*"))
+                        {
+                            line = line.Replace("*mutation*", caractMonster);
+                        }
+
+                        if (line.Contains("*cheveux*"))
+                        {
+                            line = line.Replace("*cheveux*", caractHumain);
+                        }
+
+                        if (wordWrap)
+                        {
+                            CheckIfTheTextFits(line);
+                        }
+                        else
+                        {
+                            rpgtalkElements.Add(readSceneElement(line));
+                        }
+                    }
+                }
+
+                line = reader.ReadLine();
+                currentLine++;
+            }
+
+
+            if (rpgtalkElements.Count == 0)
+            {
+                Debug.LogError("The Line To Start and the Line To Break are not fit for the given TXT");
+                return;
+            }
+        }
+
+
+
+
+
+        //Set the speaker name and photo
+        if (dialoger)
+        {
+            dialogerUI.text = rpgtalkElements[0].speakerName;
+            if (shouldUsePhotos)
+            {
+                for (int i = 0; i < photos.Length; i++)
+                {
+                    if (photos[i].name == rpgtalkElements[0].originalSpeakerName)
+                    {
+                        UIPhoto.sprite = photos[i].photo;
+                        if (animatorWhenTalking && animatorIntName != "")
+                        {
+                            animatorWhenTalking.SetInteger(animatorIntName, i);
+                        }
+                    }
+                }
+            }
+        }
+
+        //show what need to be shown
+        textUI.enabled = true;
+        if (dialoger)
+        {
+            dialogerUI.enabled = true;
+        }
+        for (int i = 0; i < showWithDialog.Length; i++)
+        {
+            showWithDialog[i].SetActive(true);
+        }
+
+
+        //if we have an animator.. play it
+        if (animatorWhenTalking != null)
+        {
+            animatorWhenTalking.SetBool(animatorBooleanName, true);
+        }
+    }
+    public void NewTalkBard(int lineNb, bool start, bool run)
+    {
+
+        lineToStart = lineNb;
+        lineToBreak = lineNb;
+
+        if (start)
+        {
+            lineToStart = 2;
+            lineToBreak = 2;
+
+        }
+        if (run)
+        {
+            lineToStart = 1;
+            lineToBreak = 1;
+        }
+
+        txtToParse = bardTalk;
+
+        //reduce one for the line to Start and break
+        if (lineToBreak == -1)
+        {
+            actualLineToBreak = lineToBreak;
+        }
+        else
+        {
+            actualLineToBreak = lineToBreak - 1;
+        }
+        actualLineToStart = lineToStart - 1;
+
+        if (textAudio != null)
+        {
+            if (rpgAudioSorce == null)
+            {
+                rpgAudioSorce = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
+        lookForClick = true;
+
+        //Stop any blinking arrows that shouldn't appear
+        CancelInvoke("blink");
+        if (blinkWhenReady)
+        {
+            blinkWhenReady.SetActive(false);
+        }
+
+
+        //reset positions
+        cutscenePosition = 1;
+        currentChar = 0;
+
+
+        //create a new CutsCeneElement
+        rpgtalkElements = new List<RpgtalkElement>();
+
+        if (txtToParse != null)
+        {
+            // read the TXT file into the elements list
+            StringReader reader = new StringReader(txtToParse.text);
+
+            string line = reader.ReadLine();
+            int currentLine = 0;
+
+            while (line != null)
+            {
+
+                if (currentLine >= actualLineToStart)
+                {
+                    if (actualLineToBreak == -1 || currentLine <= actualLineToBreak)
+                    {
+
+
+                        if (line.Contains("*mutation*"))
+                        {
+                            line = line.Replace("*mutation*", caractMonster);
+                        }
+
+                        if (line.Contains("*cheveux*"))
+                        {
+                            line = line.Replace("*cheveux*", caractHumain);
+                        }
+
+                        if (wordWrap)
+                        {
+                            CheckIfTheTextFits(line);
+                        }
+                        else
+                        {
+                            rpgtalkElements.Add(readSceneElement(line));
+                        }
+                    }
+                }
+
+                line = reader.ReadLine();
+                currentLine++;
+            }
+
+
+            if (rpgtalkElements.Count == 0)
+            {
+                Debug.LogError("The Line To Start and the Line To Break are not fit for the given TXT");
+                return;
+            }
+        }
+
+
+
+
+
+        //Set the speaker name and photo
+        if (dialoger)
+        {
+            dialogerUI.text = rpgtalkElements[0].speakerName;
+            if (shouldUsePhotos)
+            {
+                for (int i = 0; i < photos.Length; i++)
+                {
+                    if (photos[i].name == rpgtalkElements[0].originalSpeakerName)
+                    {
+                        UIPhoto.sprite = photos[i].photo;
+                        if (animatorWhenTalking && animatorIntName != "")
+                        {
+                            animatorWhenTalking.SetInteger(animatorIntName, i);
+                        }
+                    }
+                }
+            }
+        }
+
+        //show what need to be shown
+        textUI.enabled = true;
+        if (dialoger)
+        {
+            dialogerUI.enabled = true;
+        }
+        for (int i = 0; i < showWithDialog.Length; i++)
+        {
+            showWithDialog[i].SetActive(true);
+        }
+
+
+        //if we have an animator.. play it
+        if (animatorWhenTalking != null)
+        {
+            animatorWhenTalking.SetBool(animatorBooleanName, true);
+        }
+    }
 
     public void NewTalk(CreatureType type,ActionType action, float roll){
 
