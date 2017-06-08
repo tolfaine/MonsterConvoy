@@ -23,7 +23,7 @@ public class OnClick : MonoBehaviour
     void OnMouseDown()
     {
         //If the neighbours of the node we click on contains the current active node. We can travel.
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
         {
             NodeConnections.activeNode = gameObject;
 
@@ -76,7 +76,7 @@ public class OnClick : MonoBehaviour
             ReturnToNormal();
         }
 
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
         {
             spotLight.GetComponent<Light>().enabled = true;
             if (strobeUp)
@@ -97,7 +97,7 @@ public class OnClick : MonoBehaviour
     void OnMouseOver()
     {
         highlighted = true;
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode))
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
         {
             gameObject.transform.Rotate(new Vector3(0, 1f, 0));
             altered = true;
