@@ -161,8 +161,7 @@ public class CombatManager : MonoBehaviour
         InstantiateMonster();
         InstantiateHuman();
 
-        monsterGroupFighter.SetInitialFighters();
-        humanGroupFighter.SetInitialFighters();
+
 
         monsterGroupFighter.groupLogic = logic.GetComponent<PlayerLogic>();
         humanGroupFighter.groupLogic = logic.GetComponent<GroupIA>();
@@ -189,6 +188,9 @@ public class CombatManager : MonoBehaviour
     public void CanStartCombat()
     {
         bCombatStarted = true;
+
+        monsterGroupFighter.SetInitialFighters();
+        humanGroupFighter.SetInitialFighters();
     }
 
     void Update()

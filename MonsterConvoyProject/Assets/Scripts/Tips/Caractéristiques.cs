@@ -59,7 +59,9 @@ public class CaractMonster
 
     public static List<CaractMonster> GetAllCarac()
     {
-        return allCaractMonster;
+        List<CaractMonster> allCarac = allCaractMonster;
+        allCarac.RemoveAt(0);
+        return allCarac;
     }
 
     public static CaractMonster GetCaractMonsterOfEnum(_enumCaractMonster IenumCaract)

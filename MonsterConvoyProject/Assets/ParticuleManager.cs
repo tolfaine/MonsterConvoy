@@ -21,6 +21,8 @@ public class ParticuleManager : MonoBehaviour {
         public GameObject talkCritParticule;
         public GameObject talkFailParticule;
         public GameObject fearParticule;
+        public GameObject fearCritParticule;
+        public GameObject fearFailParticule;
     }
 
     public MonsterParticuleData defaultParticules;
@@ -94,7 +96,14 @@ public class ParticuleManager : MonoBehaviour {
     {
         if (action == ActionType.FEAR)
         {
-
+            if (rollResult == RollResultEnum.Crit)
+            {
+                return defaultParticules.fearCritParticule;
+            }
+            if (rollResult == RollResultEnum.Fail)
+            {
+                return defaultParticules.fearFailParticule;
+            }
             return defaultParticules.fearParticule;
 
         }else if (action == ActionType.ATTACK)

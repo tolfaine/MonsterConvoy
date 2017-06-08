@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class MouseOverAction : MouseOver
 {
+    public Sprite clickSprite;
+    public Sprite normalSprite;
+
     public ActionType.ActionEnum action;
     private CombatManager combatManager;
-    private bool bIsActive = true;
+
+    public  bool bIsActive = true;
 
     public void  SetActive(bool active)
     {
         bIsActive = active;
+
+        if (!bIsActive)
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
+            GetComponentInChildren<SpriteRenderer>().color = Color.black;
+        }else
+        {
+            GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        }
     }
 
     protected override void Start()

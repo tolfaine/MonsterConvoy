@@ -10,6 +10,11 @@ public class Caravane : MonoBehaviour {
     public int nNbCreatureInCaravane = 10;
     Scene currentScene;
 
+    public bool bEnteringInvadedZone = false;
+
+
+
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -41,6 +46,11 @@ public class Caravane : MonoBehaviour {
         }
         else
             Destroy(transform.gameObject);
+
+        if (bEnteringInvadedZone)
+        {
+
+        }
 
     }
     

@@ -154,26 +154,30 @@ public class CustomTalk : MonoBehaviour {
 	public int maxCharInWidth = 50;
 	public int maxCharInHeight = 4;
 
-    private bool canReaction = true;
+  //  private bool canReaction = true;
 
-    public CustomTalk reactTalk;
-    public bool needReaction;
-    public CreatureType creatureReaction;
-    public ActionType actionReaction;
+  //  public CustomTalk reactTalk;
+ //   public bool needReaction;
+ //   public CreatureType creatureReaction;
+ //   public ActionType actionReaction;
 
-    public bool isReaction;
+//    public bool isReaction;
 
     public GameObject humanAnchor;
     public GameObject monsterAnchor;
 
     public bool isMageTalk = false;
-    
+
+    public string caractMonster;
+    public string caractHumain;
 
     void Awake(){
 		if (startOnAwake) {
 			//NewTalk ();
 		}
 
+        /*
+         * 
         if (isReaction)
         {
            monsterFirstNormalTalkLine = 2;
@@ -186,10 +190,13 @@ public class CustomTalk : MonoBehaviour {
            humanLastNormalFearLine = 57;
         }
 
+        */
+        /*
         if (GameObject.FindGameObjectWithTag("ProtoManager"))
         {
             canReaction = false;
         }
+        */
 	}
 
     /// <summary>
@@ -342,6 +349,7 @@ public class CustomTalk : MonoBehaviour {
         int minLine = 0;
         int maxLine = 0;
 
+        /*
         if (isReaction)
         {
             
@@ -351,6 +359,7 @@ public class CustomTalk : MonoBehaviour {
                 follow = monsterAnchor;
                 
         }
+        */
 
 
         if(type == CreatureType.Human)
@@ -375,12 +384,14 @@ public class CustomTalk : MonoBehaviour {
                 minLine = humanFirstNormalTalkLine;
                 maxLine = humanLastNormalTalkLine;
 
+                /*
                 if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Monster;
                     actionReaction = action;
                 }
+                */
             }
             else if (action == ActionType.FEAR)
             {
@@ -405,12 +416,14 @@ public class CustomTalk : MonoBehaviour {
                 minLine = monsterFirstNormalTalkLine;
                 maxLine = monsterLastNormalTalkLine;
 
+                /*
                 if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Human;
                     actionReaction = action;
                 }
+                */
             }
             else if (action == ActionType.FEAR)
             {
@@ -425,13 +438,13 @@ public class CustomTalk : MonoBehaviour {
                     maxLine = monsterLastNormalFearLine;
                 }
 
-
+                /*
                 if (!isReaction && canReaction)
                 {
                     needReaction = true;
                     creatureReaction = CreatureType.Human;
                     actionReaction = action;
-                }
+                }*/
             }
             else
                 return;
@@ -485,7 +498,18 @@ public class CustomTalk : MonoBehaviour {
 				if (currentLine >= actualLineToStart) {
 					if (actualLineToBreak == -1 || currentLine <= actualLineToBreak) {
 
-						if (wordWrap) {
+
+                        if (line.Contains("*mutation*"))
+                        {
+                            line = line.Replace("*mutation*", caractMonster);
+                        }
+
+                        if (line.Contains("*cheveux*"))
+                        {
+                            line = line.Replace("*cheveux*", caractHumain);
+                        }
+
+                        if (wordWrap) {
 							CheckIfTheTextFits (line);
 						} else {
 							rpgtalkElements.Add (readSceneElement (line));
@@ -545,15 +569,20 @@ public class CustomTalk : MonoBehaviour {
 
 		newElement.originalSpeakerName = line;
 
-		//replace any variable that may exist on the text
-		for (int i = 0; i < variables.Length; i++) {
-			if (line.Contains (variables[i].variableName)) {
-				line = line.Replace (variables[i].variableName, variables[i].variableValue);
-			}
-		}
+        //replace any variable that may exist on the text
+        if (line.Contains("*mutation*"))
+        {
+            line = line.Replace("*mutation*", caractMonster);
+        }
 
-		//If we want to show the dialoger's name, slipt the line at the ':'
-		if (dialoger) {
+        if (line.Contains("*cheveux*"))
+        {
+            line = line.Replace("*cheveux*", caractHumain);
+        }
+
+
+        //If we want to show the dialoger's name, slipt the line at the ':'
+        if (dialoger) {
 
 			if (line.IndexOf (':') != -1) {
 
@@ -746,8 +775,26 @@ public class CustomTalk : MonoBehaviour {
         //int maxCharInHeight = Mathf.FloorToInt ((heightBase * textUI.rectTransform.rect.height) / 71);
 
         //int maxCharInWidth = 25;
-      //  int maxCharInHeight = 2;
+        //  int maxCharInHeight = 2;
 
+        for (int i = 0; i < variables.Length; i++)
+        {
+            if (line.Contains(variables[i].variableName))
+            {
+                line = line.Replace(variables[i].variableName, variables[i].variableValue);
+            }
+
+            if (line.Contains("*mutation*"))
+            {
+                line = line.Replace("*mutation*", caractMonster);
+            }
+
+            if (line.Contains("*cheveux*"))
+            {
+                line = line.Replace("*cheveux*", caractHumain);
+            }
+        }
+        
 
         int maxCharsOnUI = maxCharInWidth * maxCharInHeight;
 		if (line.Length > maxCharsOnUI) {
@@ -865,11 +912,13 @@ public class CustomTalk : MonoBehaviour {
 
 		} else {
 
+            /*
             if (needReaction)
             {
                 reactTalk.NewTalk(creatureReaction, actionReaction, 1f);
                 needReaction = false;
             }
+            */
 
             if (!shouldStayOnScreen) {
 				textUI.enabled = false;
