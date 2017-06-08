@@ -143,4 +143,11 @@ public class Tip
     {
         return modroll.modAction(actionType, creatureType);
     }
+
+    public void CopyTips(Tip tipToCopy)
+    {
+        caracHumain = tipToCopy.caracHumain;
+        caracMonster = tipToCopy.caracMonster;
+        modroll = tipToCopy.modroll;
+    }
 }

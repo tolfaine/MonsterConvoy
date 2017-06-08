@@ -23,6 +23,11 @@ public class CustomTalkEditor : Editor
         EditorGUILayout.LabelField("Monster Talk!");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("monsterTalk"), GUIContent.none);
 
+        EditorGUILayout.LabelField("Bard Talk!");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("bardTalk"), GUIContent.none);
+        EditorGUILayout.LabelField("Ed Talk!");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("edTalk"), GUIContent.none);
+
         EditorGUILayout.LabelField("humanAnchor");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("humanAnchor"), GUIContent.none);
         EditorGUILayout.LabelField("monsterAnchor");

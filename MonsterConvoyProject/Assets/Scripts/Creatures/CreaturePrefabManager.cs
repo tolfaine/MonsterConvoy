@@ -37,6 +37,7 @@ public class CreaturePrefabManager : MonoBehaviour {
     public List<PrefabData> lMonsters = new List<PrefabData>(1);
     public List<PrefabData> lBoss = new List<PrefabData>(1);
     public List<PrefabDataHumain> lHumains = new List<PrefabDataHumain>(1);
+    public List<PrefabData> lSpecial = new List<PrefabData>(1);
 
     private void Awake()
     {
@@ -72,6 +73,19 @@ public class CreaturePrefabManager : MonoBehaviour {
 
         return lHumains[randomIndex].id;
     }
+
+    public GameObject GetSpecial(int id)
+    {
+        foreach (PrefabData prefabD in lSpecial)
+        {
+            if (prefabD.id == id)
+            {
+                return prefabD.prefab;
+            }
+        }
+        return null;
+    }
+
     public GameObject GetHuman(int id)
     {
         foreach (PrefabDataHumain prefabD in lHumains)

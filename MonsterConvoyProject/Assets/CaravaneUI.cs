@@ -35,6 +35,10 @@ public class CaravaneUI : MonoBehaviour {
 
             ImageFighterManager ifm = g.GetComponentInChildren<ImageFighterManager>();
             ifm.UpdateImage(fighter.nID);
+
+            HealthUiFighter health = g.GetComponentInChildren<HealthUiFighter>();
+            health.UpdateLife((float)fighter.nCurrentHealth / (float)fighter.nHealthMax);
+
         }
     }
 }

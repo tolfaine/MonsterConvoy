@@ -77,9 +77,13 @@ public class Fighter : Creature{
 
             if (this.eCreatureType == CreatureType.Human)
             {
-                float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, (Human)this, (GroupMonsterFighter)combatManager.monsterGroupFighter);
+                if (!combatManager.humanGroupFighter.bIsSpecial)
+                {
+                    float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, (Human)this, (GroupMonsterFighter)combatManager.monsterGroupFighter);
 
-                rand += bonus;
+                    rand += bonus;
+                }
+
             }
 
 

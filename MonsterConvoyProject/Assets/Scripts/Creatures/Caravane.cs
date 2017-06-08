@@ -30,11 +30,27 @@ public class Caravane : MonoBehaviour {
     void AddNew()
     {
         lFighters.Add(new Monster());
+
+        GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if (g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
+
     }
 
     void Remove(int index)
     {
         lFighters.RemoveAt(index);
+
+        GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if(g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
+
+            
+
     }
 
     private void Awake()
@@ -69,7 +85,15 @@ public class Caravane : MonoBehaviour {
         foreach (Monster monster in lFighters)
         {
             if (monster.IsDead())
+            {
                 lFighters.Remove(monster);
+                GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
+                if (g != null)
+                {
+                    g.GetComponent<CaravaneUI>().UpdateUI();
+                }
+
+            }
         }
     }
 }

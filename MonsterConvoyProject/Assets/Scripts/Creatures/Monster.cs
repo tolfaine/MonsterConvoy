@@ -49,10 +49,11 @@ public class Monster : Fighter{
             //float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
-            // CEST PAS OPTI DE LE CALCULER A CHAQUE FOIS
-            float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action,this, (GroupHumanFighter)groupHuman);
-
-            rand += bonus;
+            if (!groupHuman.bIsSpecial)
+            {
+                float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
+                rand += bonus;
+            }
 
             float terrain = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modRoll.GetValueOfAction(action, CreatureType.Monster);
 
@@ -100,8 +101,13 @@ public class Monster : Fighter{
             float rand = Random.Range(0f, 1f);
 
             // CEST PAS OPTI DE LE CALCULER A CHAQUE FOIS
-            float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
-            rand += bonus;
+
+            if (!groupHuman.bIsSpecial)
+            {
+                float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
+                rand += bonus;
+            }
+
 
             float terrain = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modRoll.GetValueOfAction(action, CreatureType.Monster);
 

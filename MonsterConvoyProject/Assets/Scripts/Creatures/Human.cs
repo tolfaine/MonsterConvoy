@@ -55,8 +55,21 @@ public class Human : Fighter{
             ((GroupHumanFighter)cm.GetGroupFighterOfFighter(this)).bInConversation = true; ;
 
             
+            if(combatManager.humanGroupFighter.bIsSpecial && combatManager.specialType == SpecialType.Bard)
+            {
+                ((IABard)combatManager.humanGroupFighter.groupLogic).Talk();
 
-            ActionTalk(action, rand);
+            }
+            else if (combatManager.humanGroupFighter.bIsSpecial && combatManager.specialType == SpecialType.Ed)
+            {
+                ((IAEd)combatManager.humanGroupFighter.groupLogic).Talk();
+
+            }else
+            {
+                ActionTalk(action, rand);
+            }
+
+
         }
     }
 
