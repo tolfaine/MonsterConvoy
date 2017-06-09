@@ -152,8 +152,17 @@ public class CombatManager : MonoBehaviour
     public GroupIA specialGroup;
 
     public RollProbaManager rollProbaManager;
+
+    public bool isBossCombat = false;
+
     void Start()
     {
+
+        bool canFight = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().bCanFightHere;
+
+        if (!canFight)
+            gameObject.SetActive(false);
+
         GameObject rollObj = GameObject.FindGameObjectWithTag("RollProbaManager");
         if (rollObj != null)
         {
@@ -180,17 +189,23 @@ public class CombatManager : MonoBehaviour
         float rand = Random.Range(0f, 1f);
 
         
-        if (rand < rollProbaManager.specialProba.probaFight && protoScript == null)
+        if (rand < rollProbaManager.specialProba.probaFight && protoScript == null && !isBossCombat)
         {
-            bSpecialFight = true;
+
             float rand2 = Random.Range(0f, 1f);
 
-            if (rand2 < rollProbaManager.specialProba.bard && !specialManager.iaBard.endStory)
+            if (rand2 < rollProbaManager.specialProba.bard)
             {
-                specialType = SpecialType.Bard;
+                if (!specialManager.iaBard.endStory)
+                {
+                    bSpecialFight = true;
+                    specialType = SpecialType.Bard;
+                }
+
             }
             else if (!specialManager.iaEd.isDead)
             {
+                bSpecialFight = true;
                 specialType = SpecialType.Ed;
             }
 
@@ -396,6 +411,10 @@ public class CombatManager : MonoBehaviour
                 {
                     ((IABard)humanGroupFighter.groupLogic).EndCombat();
                 }
+                if (bSpecialFight && specialType == SpecialType.Ed)
+                {
+                    ((IAEd)humanGroupFighter.groupLogic).EndCombat();
+                }
                 if (combatEndType != CombatManager.CombatEndType.MonsterEscape && combatEndType != CombatManager.CombatEndType.MonstersDead)
                 {
                     if (discoveredTip == null)
@@ -486,6 +505,14 @@ public class CombatManager : MonoBehaviour
                 {
                     if (!bActionChoosed)
                     {
+                        if(currentFighter.eCreatureType == CreatureType.Monster)
+                        {
+                            if (((Monster)currentFighter).isBoss)
+                            {
+                                actionChoosed = ActionType.FEAR;
+                                bActionChoosed = true;
+                            }
+                        }
                         // Choose action
                     }
                     else if (bActionRequireTarget && !bTargetChoosed)
@@ -755,7 +782,7 @@ public class CombatManager : MonoBehaviour
                 fighter.bTryToescape = false;
                 GameObject g = Instantiate(prefab, monstersPosition[i].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
-                GameObject mo;
+            GameObject mo;
 
                 GameObject model = creaturePrefabManager.GetMonster(fighter.nID);
                 mo = Instantiate(model, monstersPosition[i].position, Quaternion.Euler(0, 270, 0)) as GameObject;
@@ -779,6 +806,48 @@ public class CombatManager : MonoBehaviour
 
                 g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
             }
+
+         if (isBossCombat)
+        {
+
+            monstersPosition = new List<Transform>();
+            foreach (Transform child in monstersPositionParent.transform)
+            {
+                monstersPosition.Add(child);
+            }
+
+            humanGroupFighter = new GroupEd();
+
+            int idModel = 40;
+            GameObject model = creaturePrefabManager.GetSpecial(idModel);
+            //Human humain = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetFighterOfID<Human>(creatureType, idModel);
+            Monster monster = new Monster();
+            monster.nID = idModel;
+            monster.sName = "PlantePirate";
+            monster.isBoss = true;
+            monster.nPower = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().defaultMonster.nPower;
+            monster.nHealthMax = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().defaultMonster.nHealthMax;
+            monster.nCurrentHealth = monster.nHealthMax;
+
+            GameObject g = Instantiate(prefab, monstersPosition[4].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+
+            GameObject mo = Instantiate(model, monstersPosition[4].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+            mo.transform.parent = g.transform;
+            mo.transform.localPosition = Vector3.zero;
+            mo.transform.localScale = new Vector3(-0.3f, 0.3f, 0.3f);
+
+            mo.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+
+            MouseOverCreature mouseOver = mo.transform.GetChild(0).gameObject.AddComponent<MouseOverCreature>();
+            mouseOver.fighterUI = g.GetComponent<FighterUI>();
+
+            g.GetComponent<FighterUI>().fighter = monster;
+            monsterGroupFighter.lFighters.Add(monster);
+            g.transform.parent = GameObject.FindGameObjectWithTag("Humans").transform;
+            g.name = monster.sName;
+
+            g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
+        }
  
 
     }
@@ -853,6 +922,7 @@ public class CombatManager : MonoBehaviour
                 humain.CopyHuman(defaultHuman);
                 humain.nID = idModel;
                 humain.sName = "Ed";
+                humain.nPower = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().defaultHuman.nPower;
 
                 GameObject g = Instantiate(prefab, humansPosition[0].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 
@@ -974,8 +1044,11 @@ public class CombatManager : MonoBehaviour
         int counter = 0;
         Fighter fighter = null;
 
-        while ((fighter == null && (!bSpecialFight || (bSpecialFight && currentFighter != fighter))) || counter > 20)
+        bool changeFighter = false;
+
+        while ((fighter == null || changeFighter) || counter > 20)
         {
+
             currentFighterIndex++;
 
             if (combatOrder.Count == 0)
@@ -989,6 +1062,17 @@ public class CombatManager : MonoBehaviour
             if (!fighter.CanAttack())
             {
                 fighter = null;
+            }
+
+            if (bSpecialFight && fighter!= null)
+            {
+                if(currentFighter == fighter)
+                {
+                    changeFighter = true;
+                }else
+                {
+                    changeFighter = false;
+                }
             }
             counter++;
         }

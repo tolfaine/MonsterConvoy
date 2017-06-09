@@ -5,11 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class Monster : Fighter{
 
+    public bool isBoss = false;
     //public int nFearPower;
 
 
     public Monster() : base() {
         this.eCreatureType = CreatureType.Monster;
+        isBoss = false;
     }
 
     public Monster(Fighter fighter) : base()
@@ -49,7 +51,7 @@ public class Monster : Fighter{
             //float rand = 0.1f;
             float rand = Random.Range(0f, 1f);
 
-            if (!groupHuman.bIsSpecial)
+            if (!groupHuman.bIsSpecial && !isBoss)
             {
                 float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
                 rand += bonus;
@@ -102,7 +104,7 @@ public class Monster : Fighter{
 
             // CEST PAS OPTI DE LE CALCULER A CHAQUE FOIS
 
-            if (!groupHuman.bIsSpecial)
+            if (!groupHuman.bIsSpecial && !isBoss)
             {
                 float bonus = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonus(action, this, (GroupHumanFighter)groupHuman);
                 rand += bonus;

@@ -21,12 +21,22 @@ public class RollProbaManager : MonoBehaviour {
 
     }
 
+    [System.Serializable]
+    public class ComportementProbaHumain
+    {
+        public float escape;
+        public float discussion;
+        public float attack;
+    }
+
     public RollProba Attack;
     public RollProba Fear;
     public RollProba Discussion;
     public RollProba Escape;
 
     public SpecialProba specialProba;
+
+    public ComportementProbaHumain humanComp;
 
     // Use this for initialization
     void Start () {

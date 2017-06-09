@@ -37,7 +37,7 @@ public class Menu_LoadOnClick : MonoBehaviour {
                 target_Loadbtn.GetComponentInChildren<Image>().color = Color.grey;
             }
             int index_scene = Random.Range(11, 21);
-            SceneManager.LoadScene("DONJON", LoadSceneMode.Additive);
+            SceneManager.LoadScene("TaverneMenu", LoadSceneMode.Additive);
         }
     }
     /*public void Update()

@@ -50,5 +50,14 @@ public class IAEd : GroupIA {
         }
     }
 
+    public void EndCombat()
+    {
+
+        if(groupEd.lFighters.Count == 0 || groupEd.lFighters[0].IsDead())
+        {
+            isDead = true;
+        }
+
+    }
 
 }

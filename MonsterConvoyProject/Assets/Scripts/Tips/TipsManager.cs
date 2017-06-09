@@ -160,23 +160,27 @@ public class TipsManager : MonoBehaviour {
             {
                 ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
 
-                CaractMonster tempCarac = modelM.caractMonster;
-                CaractMonster permaCarac = modelM.permanentCarMutation;
-
-                foreach (Tip tip in myTips)
+                if(modelM != null)
                 {
-                    if (tip.caracMonster == tempCarac)
-                    {
-                        bonus += tip.modroll.GetBonusDmgAttack();
-                    }
-                    else if (tip.caracMonster == permaCarac)
-                    {
-                        bonus += tip.modroll.GetBonusDmgAttack();
-                    }
+                    CaractMonster tempCarac = modelM.caractMonster;
+                    CaractMonster permaCarac = modelM.permanentCarMutation;
 
-                    if (bonus != 0)
-                        break;
+                    foreach (Tip tip in myTips)
+                    {
+                        if (tip.caracMonster == tempCarac)
+                        {
+                            bonus += tip.modroll.GetBonusDmgAttack();
+                        }
+                        else if (tip.caracMonster == permaCarac)
+                        {
+                            bonus += tip.modroll.GetBonusDmgAttack();
+                        }
+
+                        if (bonus != 0)
+                            break;
+                    }
                 }
+
             }
 
             if (bonus != 0)
@@ -196,23 +200,27 @@ public class TipsManager : MonoBehaviour {
             {
                 ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
 
-                CaractMonster tempCarac = modelM.caractMonster;
-                CaractMonster permaCarac = modelM.permanentCarMutation;
-
-                foreach (Tip tip in myTips)
+                if(modelM != null)
                 {
-                    if (tip.caracMonster == tempCarac)
-                    {
-                        bonus += tip.modroll.GetBonusDmgAttack();
-                    }
-                    else if (tip.caracMonster == permaCarac)
-                    {
-                        bonus += tip.modroll.GetBonusDmgAttack();
-                    }
+                    CaractMonster tempCarac = modelM.caractMonster;
+                    CaractMonster permaCarac = modelM.permanentCarMutation;
 
-                    if (bonus != 0)
-                        break;
+                    foreach (Tip tip in myTips)
+                    {
+                        if (tip.caracMonster == tempCarac)
+                        {
+                            bonus += tip.modroll.GetBonusDmgAttack();
+                        }
+                        else if (tip.caracMonster == permaCarac)
+                        {
+                            bonus += tip.modroll.GetBonusDmgAttack();
+                        }
+
+                        if (bonus != 0)
+                            break;
+                    }
                 }
+               
             }
 
             if (bonus != 0)
@@ -316,23 +324,27 @@ public class TipsManager : MonoBehaviour {
             {
                 ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
 
-                CaractMonster tempCarac = modelM.caractMonster;
-                CaractMonster permaCarac = modelM.permanentCarMutation;
-
-                foreach (Tip tip in myTips)
+                if(modelM != null)
                 {
-                    if (tip.caracMonster == tempCarac)
-                    {
-                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
-                    }
-                    else if (tip.caracMonster == permaCarac)
-                    {
-                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
-                    }
+                    CaractMonster tempCarac = modelM.caractMonster;
+                    CaractMonster permaCarac = modelM.permanentCarMutation;
 
-                    if (bonus  != 0)
-                        break;
+                    foreach (Tip tip in myTips)
+                    {
+                        if (tip.caracMonster == tempCarac)
+                        {
+                            bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                        }
+                        else if (tip.caracMonster == permaCarac)
+                        {
+                            bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                        }
+
+                        if (bonus != 0)
+                            break;
+                    }
                 }
+
             }
 
             if (bonus != 0)
@@ -352,23 +364,27 @@ public class TipsManager : MonoBehaviour {
             {
                 ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
 
-                CaractMonster tempCarac = modelM.caractMonster;
-                CaractMonster permaCarac = modelM.permanentCarMutation;
-
-                foreach (Tip tip in myTips)
+                if(modelM != null)
                 {
-                    if (tip.caracMonster == tempCarac)
-                    {
-                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
-                    }
-                    else if (tip.caracMonster == permaCarac)
-                    {
-                        bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
-                    }
+                    CaractMonster tempCarac = modelM.caractMonster;
+                    CaractMonster permaCarac = modelM.permanentCarMutation;
 
-                    if (bonus != 0)
-                        break;
+                    foreach (Tip tip in myTips)
+                    {
+                        if (tip.caracMonster == tempCarac)
+                        {
+                            bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                        }
+                        else if (tip.caracMonster == permaCarac)
+                        {
+                            bonus += tip.modroll.GetValueOfAction(actionType, human.eCreatureType);
+                        }
+
+                        if (bonus != 0)
+                            break;
+                    }
                 }
+
             }
 
             if (bonus != 0)
@@ -413,13 +429,18 @@ public class TipsManager : MonoBehaviour {
             foreach (Fighter fighter in allMonster)
             {
                 ModelMonsterUI modelM = ((Monster)fighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
-                CaractMonster firstMutation = modelM.caractMonster;
-                CaractMonster permaMutation = modelM.permanentCarMutation;
 
-                if (tip.caracMonster == firstMutation)
-                    bConcernM = true;
-                else if (tip.caracMonster == permaMutation)
-                    bConcernM = true;
+                if(modelM != null)
+                {
+                    CaractMonster firstMutation = modelM.caractMonster;
+                    CaractMonster permaMutation = modelM.permanentCarMutation;
+
+                    if (tip.caracMonster == firstMutation)
+                        bConcernM = true;
+                    else if (tip.caracMonster == permaMutation)
+                        bConcernM = true;
+                }
+
             }
 
             if (bConcernH && bConcernM)

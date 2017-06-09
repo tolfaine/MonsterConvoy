@@ -16,6 +16,21 @@ public class CombatTerrainInfo : MonoBehaviour {
     public ModComportement modComportement;
     public ModRoll modRoll;
 
+    public float combatChance;
+
+    public bool bCanFightHere = true;
+
+
+    private void Awake()
+    {
+        float rand = Random.Range(0f, 1f);
+
+        if(rand > combatChance)
+        {
+            bCanFightHere = false;
+        }
+    }
+
     // Use this for initialization
     void Start () {
 		

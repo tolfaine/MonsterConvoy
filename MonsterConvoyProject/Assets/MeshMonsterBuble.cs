@@ -16,6 +16,8 @@ public class MeshMonsterBuble : MonoBehaviour {
 
     public GameObject talk;
 
+    public bool processedEnd = false;
+
     // Use this for initialization
     void Start () {
         prefabManager = GameObject.FindGameObjectWithTag("CreaturePrefabManager").GetComponent<CreaturePrefabManager>();
@@ -98,6 +100,33 @@ public class MeshMonsterBuble : MonoBehaviour {
 
         }
 
+        if(cm.bCombatEnded && !processedEnd)
+        {
+            processedEnd = true;
+
+            if(cm.bSpecialFight && cm.specialType == SpecialType.Bard)
+            {
+                foreach (Transform child in currentMeshHolder.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+                currentMeshHolder.transform.position = positionHuman.transform.position;
+
+                GameObject gHuman = prefabManager.GetSpecial(31);
+              //  ModelHumainUI modelUI = gHuman.GetComponent<ModelHumainUI>();
+              //  ModelHumainUI modelCurrent = ((Human)currentFighter).currentUI.gameObject.GetComponentInChildren<ModelHumainUI>();
+
+              //  modelUI.SetCaract(modelCurrent.caractCheveux);
+
+                GameObject instanceHuman = Instantiate(gHuman, Vector3.zero, Quaternion.Euler(0, 90, 0)) as GameObject;
+                instanceHuman.transform.parent = currentMeshHolder.transform;
+                instanceHuman.transform.localPosition = Vector3.zero;
+
+                instanceHuman.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            }
+
+
+        }
 
         if (talk.active == true)
         {

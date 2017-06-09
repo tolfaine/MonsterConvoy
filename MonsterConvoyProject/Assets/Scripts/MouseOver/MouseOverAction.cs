@@ -19,10 +19,11 @@ public class MouseOverAction : MouseOver
         if (!bIsActive)
         {
             GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
-            GetComponentInChildren<SpriteRenderer>().color = Color.black;
+            
         }else
         {
             GetComponentInChildren<SpriteRenderer>().color = Color.white;
+            GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
         }
     }
 
@@ -41,7 +42,16 @@ public class MouseOverAction : MouseOver
             bMouseClicking = false;
             bMouseOver = false;
             combatManager.PlayerClickedAction(ActionType.GetActionTypeWithID((int)action));
+
+            GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
+
+        }else if (bIsActive)
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
         }
 
     }
+
+
+
 }

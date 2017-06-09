@@ -98,7 +98,7 @@ public class Fighter : Creature{
 
             int damage = this.GetDamage();
 
-            if(eCreatureType == CreatureType.Human)
+            if(eCreatureType == CreatureType.Human && !combatManager.humanGroupFighter.bIsSpecial)
             {
                 float damageMod = GameObject.FindGameObjectWithTag("TipManager").GetComponent<TipsManager>().GetBonusDmg((Human)this, (GroupMonsterFighter)combatManager.monsterGroupFighter);
                 if(damageMod != 0)
@@ -235,7 +235,7 @@ public class Fighter : Creature{
     }
     public int GetDamage()
     {
-        return nPower + 10;
+        return nPower;
     }
     public bool IsDead()
     {

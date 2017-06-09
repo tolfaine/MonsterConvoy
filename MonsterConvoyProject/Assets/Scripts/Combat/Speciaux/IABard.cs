@@ -29,7 +29,7 @@ public class IABard : GroupIA
     {
         if(!endStory)
             return ActionType.TALK;
-        groupHumanFighter.bIsFeared = true;
+        groupBard.bIsFeared = true;
         return ActionType.ESCAPE;
 
     }
@@ -61,7 +61,8 @@ public class IABard : GroupIA
     {
         combatJustEnded = true;
         theyLeftOnce = true;
-        Talk();
+        if(!endStory)
+            Talk();
         combatJustEnded = false;
     }
 
