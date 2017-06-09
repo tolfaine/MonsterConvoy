@@ -671,7 +671,7 @@ public class CustomTalk : MonoBehaviour {
                 {
                     txtToParse = humanFailAttack;
 
-                    minLine = 1;
+                    minLine = 2;
                     maxLine = 33;
                 }
                 else
@@ -692,7 +692,7 @@ public class CustomTalk : MonoBehaviour {
                     txtToParse = humanTalkReac;
                 }
 
-                minLine = 1;
+                minLine = 2;
                 maxLine = 22;
 
                 /*
@@ -764,7 +764,9 @@ public class CustomTalk : MonoBehaviour {
             }
             else if (action == ActionType.FEAR)
             {
-                if(roll < 0.2f)
+                txtToParse = monsterTalk;
+
+                if (roll < 0.2f)
                 {
                     minLine = 27;
                     maxLine = 57;

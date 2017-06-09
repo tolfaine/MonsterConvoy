@@ -893,7 +893,7 @@ public class CombatManager : MonoBehaviour
 
             if (protoScript == null)
             {
-               currentNbHuman = Random.Range(2, nbCreaturePerGroup);
+               currentNbHuman = Random.Range(2, nbCreaturePerGroup+1);
                //currentNbHuman = 2;
             }
 
