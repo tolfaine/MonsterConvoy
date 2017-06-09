@@ -13,7 +13,7 @@ public class GroupIA : GroupLogic {
 
     public ActionType currentAction;
 
-    private bool bIsFirstLogicTurn = true;
+    public bool bIsFirstLogicTurn = true;
 
     public RollProbaManager rollProbaManager;
 

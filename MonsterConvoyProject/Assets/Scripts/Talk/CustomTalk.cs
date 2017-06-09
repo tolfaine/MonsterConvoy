@@ -48,6 +48,12 @@ public class CustomTalk : MonoBehaviour {
     public TextAsset humanTalk;
     public TextAsset monsterTalk;
 
+    public TextAsset humanTalkReac;
+    public TextAsset monsterTalkReac;
+
+    private bool talkHasBeenInit = false;
+    public bool combatHasBeenInit = false;
+
     public TextAsset bardTalk;
     public TextAsset edTalk;
 

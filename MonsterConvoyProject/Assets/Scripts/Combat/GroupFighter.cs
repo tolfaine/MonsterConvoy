@@ -20,6 +20,8 @@ public class GroupFighter {
 
     public bool bIsSpecial = false;
 
+    public int nbFightersAlive = 0;
+
     public GroupFighter() { }
 
     public GroupLogic GetGroupLogic() { return this.groupLogic; }
@@ -64,12 +66,12 @@ public class GroupFighter {
 
     public virtual void CheckFightersLife()
     {
-        int nNbFighterAlive = 0;
+        nbFightersAlive = 0;
 
         foreach(Fighter fighter in this.lFighters)
         {
             if (fighter.nCurrentHealth > 0)
-                nNbFighterAlive++;
+                nbFightersAlive++;
             else
             {
                 lDeadFightersNotReplace.Add(fighter);
@@ -77,7 +79,7 @@ public class GroupFighter {
             }
         }
 
-        if (nNbFighterAlive == 0)
+        if (nbFightersAlive == 0)
             allFightersDead = true;
     }
 

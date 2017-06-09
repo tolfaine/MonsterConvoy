@@ -109,7 +109,8 @@ public class CombatManager : MonoBehaviour
 
     public GameObject logic;
 
-    int nNbCreaturePerGroup = 4;
+    int nbCreaturePerGroup = 4;
+    int currentNbHuman = 0;
 
     public Caravane caravane;
     public HumanCaravane humanCamp;
@@ -157,6 +158,7 @@ public class CombatManager : MonoBehaviour
 
     void Start()
     {
+        currentNbHuman = nbCreaturePerGroup;
 
         bool canFight = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().bCanFightHere;
 
@@ -628,7 +630,17 @@ public class CombatManager : MonoBehaviour
             nbFighters += monsterGroupFighter.lFighters.Count;
             nbFighters += humanGroupFighter.lFighters.Count;
 
-            for (int i = 0; i < 8; i++)
+            if (takeM)
+            {
+                ((GroupIA)humanGroupFighter.groupLogic).bIsFirstLogicTurn = false;
+
+            }
+                
+            else
+            {
+                ((GroupIA)humanGroupFighter.groupLogic).bIsFirstLogicTurn = true;
+            }
+            for (int i = 0; i < nbFighters; i++)
             {
                 if (takeM)
                 {
@@ -776,7 +788,7 @@ public class CombatManager : MonoBehaviour
         }
 
 
-            for (int i = 0; i < nNbCreaturePerGroup && i < caravane.lFighters.Count; i++)
+            for (int i = 0; i < nbCreaturePerGroup && i < caravane.lFighters.Count; i++)
             {
                 fighter = caravane.lFighters[i];
                 fighter.bTryToescape = false;
@@ -870,11 +882,24 @@ public class CombatManager : MonoBehaviour
         {
             humanGroupFighter = new GroupHumanFighter();
 
-            for (int i = 0; i < nNbCreaturePerGroup; i++)
+
+            if (protoScript == null)
+            {
+               currentNbHuman = Random.Range(2, nbCreaturePerGroup);
+               //currentNbHuman = 2;
+            }
+
+
+
+            for (int i = 0; i < currentNbHuman; i++)
             {
                 int idModel = creaturePrefabManager.GetRandomHumanID();
                 GameObject model = creaturePrefabManager.GetHuman(idModel);
                 Human humain = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetFighterOfID<Human>(creatureType, idModel);
+                humain.sexe = enumSex.None;
+
+                enumSex sexCurrent = creaturePrefabManager.GetSexPrefabId(model, idModel);
+                humain.sexe = sexCurrent;
 
                 ModelHumainUI modelUI = model.GetComponent<ModelHumainUI>();
                 if (modelUI != null)

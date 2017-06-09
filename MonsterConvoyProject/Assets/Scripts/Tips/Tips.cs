@@ -26,12 +26,14 @@ public class ModRoll
 
     // public static readonly ModRoll TALKH = new ModRoll(0.1f, 0, 0, 0, 0, 0, "++Talk H");
     // public static readonly ModRoll FEARH = new ModRoll(0, 0.1f, 0, 0, 0, 0, "++Talk H");
+
     public static readonly ModRoll ATTACKDMG = new ModRoll(0, 0, 0, 0, 0, 0, -0.5f, "Human deals less dmg --");
 
-    public static readonly ModRoll ATTACKH = new ModRoll(0, 0, -0.1f, 0, 0, 0,0, "Humain miss --");
+    public static readonly ModRoll ATTACKH = new ModRoll(0, 0, -0.7f, 0, 0, 0,0, "Humain miss --");
 
-    public static readonly ModRoll TALKM = new ModRoll(0, 0, 0, 0.1f, 0, 0,0, "Monster Talk ++");
-    public static readonly ModRoll FEARM = new ModRoll(0, 0, 0, 0, 0.1f, 0,0, "Monster Fear ++");
+    public static readonly ModRoll TALKM = new ModRoll(0, 0, 0, 0.7f, 0, 0,0, "Monster Talk ++");
+    public static readonly ModRoll FEARM = new ModRoll(0, 0, 0, 0, 0.7f, 0,0, "Monster Fear ++");
+
    // public static readonly ModRoll ATTACKM = new ModRoll(0, 0, 0, 0, 0, 0.1f,0, "Monster Attack ++");
 
     public static  ModRoll GetRandomMod()

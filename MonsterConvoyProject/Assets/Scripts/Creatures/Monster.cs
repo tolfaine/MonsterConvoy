@@ -10,6 +10,7 @@ public class Monster : Fighter{
 
 
     public Monster() : base() {
+        this.sexe = enumSex.None;
         this.eCreatureType = CreatureType.Monster;
         isBoss = false;
     }
@@ -159,6 +160,10 @@ public class Monster : Fighter{
 
             CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
 
+            if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
+            {
+                rand = combatManager.protoScript.combat.currentTurn.fRoll;
+            }
             if (rand > combatManager.rollProbaManager.Escape.fail)
             {
                 bTryToescape = true;

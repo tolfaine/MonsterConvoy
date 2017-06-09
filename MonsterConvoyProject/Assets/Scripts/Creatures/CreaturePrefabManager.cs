@@ -39,6 +39,18 @@ public class CreaturePrefabManager : MonoBehaviour {
     public List<PrefabDataHumain> lHumains = new List<PrefabDataHumain>(1);
     public List<PrefabData> lSpecial = new List<PrefabData>(1);
 
+    public enumSex GetSexPrefabId(GameObject prefab, int id)
+    {
+        PrefabDataHumain prefabData = GetHumanData(id);
+
+        if (prefab == prefabData.prefabF)
+            return enumSex.Female;
+        else if (prefab == prefabData.prefabM)
+            return enumSex.Male;
+        else
+            return enumSex.None;
+    }
+
     private void Awake()
     {
         if (!created)
@@ -81,6 +93,34 @@ public class CreaturePrefabManager : MonoBehaviour {
             if (prefabD.id == id)
             {
                 return prefabD.prefab;
+            }
+        }
+        return null;
+    }
+
+    public PrefabDataHumain GetHumanData(int id)
+    {
+        foreach (PrefabDataHumain prefabD in lHumains)
+        {
+            if (prefabD.id == id)
+            {
+                return prefabD;
+
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetHumanOfSex(int id, enumSex sex)
+    {
+        foreach (PrefabDataHumain prefabD in lHumains)
+        {
+            if (prefabD.id == id)
+            {
+                if(sex == enumSex.Female)
+                    return prefabD.prefabF;
+                else
+                    return prefabD.prefabM;
             }
         }
         return null;

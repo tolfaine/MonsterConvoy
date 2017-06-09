@@ -23,6 +23,10 @@ public class Caravane : MonoBehaviour {
     {
         currentScene = scene;
 
+        foreach(Monster monster in lFighters)
+        {
+            monster.bHasbeenAttcked = false;
+        }
     }
 
     void AddNew()

@@ -67,8 +67,11 @@ public class MeshMonsterBuble : MonoBehaviour {
             {
                 
                 currentMeshHolder.transform.position = positionHuman.transform.position;
-                
-                GameObject gHuman = prefabManager.GetHuman(currentFighter.nID);
+
+                //  GameObject gHuman = prefabManager.GetHuman(currentFighter.nID);
+
+                GameObject gHuman = prefabManager.GetHumanOfSex(currentFighter.nID, currentFighter.sexe);
+
                 ModelHumainUI modelUI = gHuman.GetComponent<ModelHumainUI>();
                 ModelHumainUI modelCurrent = ((Human)currentFighter).currentUI.gameObject.GetComponentInChildren<ModelHumainUI>();
 

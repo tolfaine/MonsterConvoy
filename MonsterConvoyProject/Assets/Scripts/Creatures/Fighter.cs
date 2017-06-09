@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum enumSex { Female, Male, None}
 [System.Serializable]
 public class Fighter : Creature{
 
@@ -9,6 +10,8 @@ public class Fighter : Creature{
     public int nCurrentHealth;
     public int nPower;
     public bool bIsImportant;
+
+    public enumSex sexe;
 
     //public int nInitiative;
     //public int nArmor;
