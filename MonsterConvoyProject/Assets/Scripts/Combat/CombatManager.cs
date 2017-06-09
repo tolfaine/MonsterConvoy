@@ -843,7 +843,7 @@ public class CombatManager : MonoBehaviour
 
             g.GetComponent<FighterUI>().fighter = monster;
             monsterGroupFighter.lFighters.Add(monster);
-            g.transform.parent = GameObject.FindGameObjectWithTag("Humans").transform;
+            g.transform.parent = GameObject.FindGameObjectWithTag("Monsters").transform;
             g.name = monster.sName;
 
             g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();

@@ -29,6 +29,10 @@ public class CombatTerrainInfo : MonoBehaviour {
         {
             bCanFightHere = false;
         }
+        else
+        {
+            bCanFightHere = true;
+        }
     }
 
     // Use this for initialization

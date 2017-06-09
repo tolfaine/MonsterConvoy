@@ -42,20 +42,26 @@ public class RecrutementManager : MonoBehaviour {
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
         currentScene = scene;
-        if(currentScene.name == "CAPITAL")
+        /*
+        if(currentScene.name == "CAPITAL" && isAtCapital)
         {
             caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
             caravane.lFighters = new List<Monster>();
 
-        }
+        }*/
     }
 
     private void Awake()
     {
-        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
+        if (isAtCapital)
+        {
+            caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
 
-        caravane.lFighters = new List<Monster>();
+            caravane.lFighters = new List<Monster>();
+        }
+
     }
     // Use this for initialization
     void Start () {
@@ -138,9 +144,15 @@ public class RecrutementManager : MonoBehaviour {
 
         for (int i = 0; i< nbRecrute; i++)
         {
-            //Monster monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
+            Monster monster = new Monster();
 
-            Monster monster = lData[i].GetMonster();
+            if (isAtCapital)
+            {
+                monster = lData[i].GetMonster();
+            }else
+            {
+                monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
+            }
 
             InstantiateMonsterAtPosition(availablePosition[0], monster);
 
@@ -259,7 +271,7 @@ public class RecrutementManager : MonoBehaviour {
         }
         else
         {
-            caravane.lFighters[index] = monster;
+            caravane.lFighters.Insert(index,monster);
             //    scriptSlot.nIndexInCaravane = index;
         }
 

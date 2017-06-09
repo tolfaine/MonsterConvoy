@@ -23,8 +23,6 @@ public class Caravane : MonoBehaviour {
     {
         currentScene = scene;
 
-        if(scene.name == "CAPITALE")
-            lFighters = new List<Monster>(1);
     }
 
     void AddNew()

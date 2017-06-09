@@ -36,7 +36,9 @@ public class BackToCarte : MonoBehaviour {
 
         Caravane caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
 
-        if (caravane.lFighters.Count == 4)
+
+        bool isAtCapital = GameObject.FindGameObjectWithTag("RecrutementManager").GetComponent<RecrutementManager>().isAtCapital;
+        if ( (isAtCapital && caravane.lFighters.Count == 4) || !isAtCapital)
         {
             GameObject g =  GameObject.FindGameObjectWithTag("ProtoManager");
             if(g!= null)
@@ -49,7 +51,7 @@ public class BackToCarte : MonoBehaviour {
                 }
             }
 
-            if (GameObject.FindGameObjectWithTag("RecrutementManager").GetComponent<RecrutementManager>().isAtCapital)
+            if (isAtCapital)
                 SceneManager.LoadScene(s);
             else
             {
