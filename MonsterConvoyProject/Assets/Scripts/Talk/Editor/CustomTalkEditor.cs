@@ -29,6 +29,12 @@ public class CustomTalkEditor : Editor
         EditorGUILayout.LabelField("Monster Talk Reac!");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("monsterTalkReac"), GUIContent.none);
 
+        EditorGUILayout.LabelField("Monster Fail attack  Reac!");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("humanFailAttack"), GUIContent.none);
+
+        EditorGUILayout.LabelField("MonsterInit Talk!");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("monsterInitTalk"), GUIContent.none);
+
         EditorGUILayout.LabelField("Bard Talk!");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("bardTalk"), GUIContent.none);
         EditorGUILayout.LabelField("Ed Talk!");

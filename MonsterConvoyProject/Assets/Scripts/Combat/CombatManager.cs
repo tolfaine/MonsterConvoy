@@ -591,6 +591,14 @@ public class CombatManager : MonoBehaviour
             }
         }else if (!currentFighter.performingAction)
         {
+
+            if (actionChoosed == ActionType.TALK)
+            {
+                talkManager.customTalk.talkHasBeenInit = true;
+            }
+
+            talkManager.customTalk.combatHasBeenInit = true;
+
             PutFighterInInitialPosition();
         }
 
