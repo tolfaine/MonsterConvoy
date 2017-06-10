@@ -151,6 +151,9 @@ public class PawnManager : MonoBehaviour {
                 }
             }
 
+            if (pawns[i].GetComponent<OnClick>().visited)
+                pawns[i].GetComponent<OnClick>().visited = false; 
+
             if (pawns[i].GetComponent<PlaceType>().placeType == PlaceType.Place.DEPART)
                 NodeConnections.activeNode = pawns[i];
         }

@@ -67,13 +67,16 @@ public class HumandexDataHandler : MonoBehaviour
             }
         }
 
+
+        bool newTip = false;
         for (int i = 0; i < TipsManager.Instance().tipsKnownByPlayer.Count; ++i)
         {
             if (!viewed[i])
             {
                 humandexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/newEntryIcon");
+                newTip = true;
             }
-            else
+            else if(!newTip)
             {
                 humandexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/humandexIcon");
             }
@@ -89,7 +92,7 @@ public class HumandexDataHandler : MonoBehaviour
                 text = "These won't make you fly but they";
                 break;
             case CaractMonster._enumCaractMonster.CARAPACE:
-                text = "She may sell sea shell, but this shell";
+                text = "She may sell sea shells, but this shell";
                 break;
             case CaractMonster._enumCaractMonster.CHAPEAU:
                 text = "A fancy top hat";
@@ -127,7 +130,7 @@ public class HumandexDataHandler : MonoBehaviour
         }
         else if (tip.modroll == ModRoll.FEARM)
         {
-            text += " will terrify any human with	";
+            text += " will terrify any human with ";
         }
         else if (tip.modroll == ModRoll.TALKM)
         {

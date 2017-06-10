@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class OnClick : MonoBehaviour
 {
 
-    bool visited = false;
+    public bool visited = false;
     bool highlighted = false;
     bool altered = false;
 
@@ -23,37 +23,36 @@ public class OnClick : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        //If the neighbours of the node we click on contains the current active node. We can travel.
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode)
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART
+            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)
+            && !EventSystem.current.IsPointerOverGameObject()) //HERE
         {
-            //If the neighbours of the node we click on contains the current active node. We can travel.
-            if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+            NodeConnections.activeNode = gameObject;
+
+            string sceneType;
+
+            if (GetComponent<PlaceType>().placeType != PlaceType.Place.TERRAIN)
+                sceneType = GetComponent<PlaceType>().placeType.ToString();
+            else
+                sceneType = GetComponent<PlaceType>().terrainType.ToString();
+
+            //Change scene on node click
+            for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
             {
-                NodeConnections.activeNode = gameObject;
-
-                string sceneType;
-
-                if (GetComponent<PlaceType>().placeType != PlaceType.Place.TERRAIN)
-                    sceneType = GetComponent<PlaceType>().placeType.ToString();
-                else
-                    sceneType = GetComponent<PlaceType>().terrainType.ToString();
-
-                //Change scene on node click
-                for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
-                {
-                    //TODO preserve node types in file and reload from there. 
-                    SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
-                }
-                SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
+                //TODO preserve node types in file and reload from there. 
+                SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
             }
+            SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
         }
-
     }
 
     bool strobeUp;
     int minLightIntensity = 3;
     int maxLightIntensity = 8;
-    float strobeSpeed = 0.5f;
+    float strobeSpeed = 7.0f;
     
     bool grown = false;
 
@@ -81,18 +80,21 @@ public class OnClick : MonoBehaviour
             ReturnToNormal();
         }
 
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) 
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART  
+            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)  
+            && !EventSystem.current.IsPointerOverGameObject())
         {
             spotLight.GetComponent<Light>().enabled = true;
             if (strobeUp)
             {
-                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, maxLightIntensity, strobeSpeed);
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, maxLightIntensity, strobeSpeed * Time.deltaTime);
                 if (spotLight.GetComponent<Light>().intensity >= maxLightIntensity - 0.1f)
                     strobeUp = false;
             }
             else
             {
-                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, minLightIntensity, strobeSpeed);
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, minLightIntensity, strobeSpeed * Time.deltaTime);
                 if (spotLight.GetComponent<Light>().intensity <= minLightIntensity + 0.1f)
                     strobeUp = true;
             }
@@ -101,25 +103,20 @@ public class OnClick : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        highlighted = true;
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode)
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART 
+            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)
+            && !EventSystem.current.IsPointerOverGameObject())
         {
-            highlighted = true;
-            if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
-            {
-                gameObject.transform.Rotate(new Vector3(0, 1f, 0));
-                altered = true;
-            }
+            gameObject.transform.Rotate(new Vector3(0, 1f, 0));
+            altered = true;
         }
-
     }
 
     void OnMouseExit()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            highlighted = false;
-        }
-            highlighted = false; 
+        highlighted = false; 
     }
 
     void ReturnToNormal()
