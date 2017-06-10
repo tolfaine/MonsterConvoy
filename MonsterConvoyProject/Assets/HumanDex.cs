@@ -34,28 +34,28 @@ public class HumanDex : MonoBehaviour {
 
             switch (lastTip.caracMonster.enumCaract)
             {
-                case CaractMonster. _enumCaractMonster.AILES:
+                case CaractMonster. _enumCaractMonster.WINGS:
                     mutationS = "These won't make you fly but they";
                     break;
-                case CaractMonster._enumCaractMonster.CARAPACE:
+                case CaractMonster._enumCaractMonster.SHELLS:
                     mutationS = "She may sell sea shell, but this shell";
                     break;
-                case CaractMonster._enumCaractMonster.CHAPEAU:
+                case CaractMonster._enumCaractMonster.HATS:
                     mutationS = "A fancy top hat";
                     break;
-                case CaractMonster._enumCaractMonster.CORNES:
+                case CaractMonster._enumCaractMonster.HORNS:
                     mutationS = "These horns won't make any sounds but they";
                     break;
                 case CaractMonster._enumCaractMonster.MOUSTACHES:
                     mutationS = "Not hipster intended, but this moustache";
                     break;
-                case CaractMonster._enumCaractMonster.SAC:
+                case CaractMonster._enumCaractMonster.BACKPACKS:
                     mutationS = "This handy backpack";
                     break;
-                case CaractMonster._enumCaractMonster.SOURCILS:
+                case CaractMonster._enumCaractMonster.EYELASHES:
                     mutationS = "Fuzzy eyebrows";
                     break;
-                case CaractMonster._enumCaractMonster.TENTACULES:
+                case CaractMonster._enumCaractMonster.TENTACLES:
                     mutationS = "A handful of tentacles";
                     break;
             }
