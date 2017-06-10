@@ -142,7 +142,7 @@ public class CreaturesData : MonoBehaviour {
         }
 
         int count = finalList.Count;
-        int rand = (int)Random.Range(0, count - 1);
+        int rand = (int)Random.Range(0, count);
 
         return finalList[rand]; 
     }

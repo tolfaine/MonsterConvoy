@@ -142,15 +142,39 @@ public class RecrutementManager : MonoBehaviour {
 
         List<MonsterData> lData = creatureData.GetAllMonsterImportance(canFindImportant);
 
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
+        ProtoScript protoScript = null;
+
         for (int i = 0; i< nbRecrute; i++)
         {
             Monster monster = new Monster();
 
-            if (isAtCapital)
+
+
+
+            if (g != null)
+            {
+                protoScript = g.GetComponent<ProtoScript>();
+            }
+
+            if (protoScript != null && isAtCapital && protoScript.selectin.iteration == 1)
             {
                 monster = lData[i].GetMonster();
+            }else if (isAtCapital)
+            {
+                Monster m1 = creatureData.GetRandomMonsterWithImportance(true).GetMonster();
+                Monster m2= creatureData.GetRandomMonsterWithImportance(false).GetMonster();
+
+                float rand = Random.Range(0f, 1f);
+                if (rand < 0.5f)
+                    monster = m1;
+                else
+                    monster = m2;
+
+               // 
             }else
             {
+
                 monster = creatureData.GetRandomMonsterWithImportance(canFindImportant).GetMonster();
             }
 

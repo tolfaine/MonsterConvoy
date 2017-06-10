@@ -20,6 +20,7 @@ public class GroupHumanFighter : GroupFighter {
     public bool bInConversation = false;
     public bool bWantsToAttack = false;
 
+
     // Modificateur discute
     // Modificateur peur
     // Modificateur preci
@@ -160,5 +161,18 @@ public class GroupHumanFighter : GroupFighter {
         {
             bIsConviced = true;
         }
+    }
+
+    public override void CheckFightersLife()
+    {
+        int nbFightBefore = nbFightersAlive;
+        base.CheckFightersLife();
+
+        if(nbFightBefore > nbFightersAlive)
+        {
+            if (!bCanBeFeared)
+                bCanBeFeared = true;
+        }
+
     }
 }

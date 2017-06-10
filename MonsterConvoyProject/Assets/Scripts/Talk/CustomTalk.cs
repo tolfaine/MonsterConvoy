@@ -45,8 +45,18 @@ public class CustomTalk : MonoBehaviour {
 	[Tooltip("Text file to be the talk")]
 	public TextAsset txtToParse;
 
+    public TextAsset monsterInitTalk;
+
     public TextAsset humanTalk;
     public TextAsset monsterTalk;
+
+    public TextAsset humanTalkReac;
+    public TextAsset monsterTalkReac;
+
+    public TextAsset humanFailAttack;
+
+    public bool talkHasBeenInit = false;
+    public bool combatHasBeenInit = false;
 
     public TextAsset bardTalk;
     public TextAsset edTalk;
@@ -179,6 +189,8 @@ public class CustomTalk : MonoBehaviour {
 			//NewTalk ();
 		}
 
+        talkHasBeenInit = false;
+        combatHasBeenInit = false;
         /*
          * 
         if (isReaction)
@@ -200,7 +212,7 @@ public class CustomTalk : MonoBehaviour {
             canReaction = false;
         }
         */
-	}
+    }
 
     /// <summary>
     /// Starts a new Talk.
@@ -652,14 +664,15 @@ public class CustomTalk : MonoBehaviour {
 
         if(type == CreatureType.Human)
         {
-            txtToParse = humanTalk;
 
             if (action == ActionType.ATTACK)
             {
                 if (roll < 0.1f)
                 {
-                    minLine = humanFirstNormalAttaqueLine;
-                    maxLine = humanLastNormalAttaqueLine;
+                    txtToParse = humanFailAttack;
+
+                    minLine = 2;
+                    maxLine = 33;
                 }
                 else
                 {
@@ -669,8 +682,18 @@ public class CustomTalk : MonoBehaviour {
             }
             else if (action == ActionType.TALK)
             {
-                minLine = humanFirstNormalTalkLine;
-                maxLine = humanLastNormalTalkLine;
+                if (!talkHasBeenInit)
+                {
+                    talkHasBeenInit = true;
+                    txtToParse = humanTalk;
+                }
+                else
+                {
+                    txtToParse = humanTalkReac;
+                }
+
+                minLine = 2;
+                maxLine = 22;
 
                 /*
                 if (!isReaction && canReaction)
@@ -692,7 +715,7 @@ public class CustomTalk : MonoBehaviour {
         }
         else if (type == CreatureType.Monster)
         {
-            txtToParse = monsterTalk;
+
 
             if (action == ActionType.ATTACK)
             {
@@ -701,8 +724,34 @@ public class CustomTalk : MonoBehaviour {
             }
             else if (action == ActionType.TALK)
             {
-                minLine = monsterFirstNormalTalkLine;
-                maxLine = monsterLastNormalTalkLine;
+                if (!talkHasBeenInit)
+                {
+                    txtToParse = monsterTalk;
+                    talkHasBeenInit = true;
+
+                    if (!combatHasBeenInit)
+                    {
+                        combatHasBeenInit = true;
+                        minLine = 77;
+                        maxLine = 107;
+
+                    }
+                    else
+                    {
+                        minLine = 2;
+                        maxLine = 22;
+ 
+                    }
+
+                }
+                else
+                {
+                    txtToParse = monsterTalkReac;
+                    minLine = 2;
+                    maxLine = 22;
+                }
+
+
 
                 /*
                 if (!isReaction && canReaction)
@@ -715,15 +764,17 @@ public class CustomTalk : MonoBehaviour {
             }
             else if (action == ActionType.FEAR)
             {
-                if(roll < 0.2f)
+                txtToParse = monsterTalk;
+
+                if (roll < 0.2f)
                 {
-                    minLine = monsterFirstNormalFearLine;
-                    maxLine = monsterLastNormalFearLine;
+                    minLine = 27;
+                    maxLine = 57;
                 }
                 else
                 {
-                    minLine = monsterFirstNormalFearLine;
-                    maxLine = monsterLastNormalFearLine;
+                    minLine = 27;
+                    maxLine = 57;
                 }
 
                 /*

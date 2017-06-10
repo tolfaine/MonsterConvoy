@@ -114,6 +114,8 @@ public class FighterUI : MonoBehaviour {
                 {
                     GameObject go = Instantiate(pm.GetParticuleOfAction(fighter.lastAction, fighter.lastActionResult)) as GameObject;
                     go.transform.position = ui.transform.position;
+                    go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, go.transform.localPosition.z);
+
                     particulPlaying = go.GetComponent<ParticleSystem>();
 
                     particulPlaying.Play();
@@ -127,6 +129,8 @@ public class FighterUI : MonoBehaviour {
                     {
                         GameObject go = Instantiate(partic) as GameObject;
                         go.transform.position = ui.transform.position;
+                        go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, go.transform.localPosition.z);
+
                         particulPlaying = go.GetComponent<ParticleSystem>();
 
                         particulPlaying.Play();
@@ -140,7 +144,7 @@ public class FighterUI : MonoBehaviour {
                     {
                         GameObject go2 = Instantiate(partic) as GameObject;
                         go2.transform.position = fighter.lastAttackedUI.ui.transform.position;
-
+                        go2.transform.localPosition = new Vector3(go2.transform.localPosition.x , go2.transform.localPosition.y, go2.transform.localPosition.z);
                         go2.GetComponent<ParticleSystem>().Play();
 
                         Destroy(go2, 5f);
@@ -176,6 +180,8 @@ public class FighterUI : MonoBehaviour {
 
                 }
 
+                go.transform.localPosition = new Vector3(go.transform.localPosition.x -1f, go.transform.localPosition.y, go.transform.localPosition.z);
+
                 talkParticules = go.GetComponent<ParticleSystem>();
 
                 talkParticules.Play();
@@ -198,7 +204,7 @@ public class FighterUI : MonoBehaviour {
                     go.transform.position = meshHolder.transform.position;
 
                 }
-
+                go.transform.localPosition = new Vector3(go.transform.localPosition.x -1f, go.transform.localPosition.y, go.transform.localPosition.z);
 
                 fearParticules = go.GetComponent<ParticleSystem>();
 
