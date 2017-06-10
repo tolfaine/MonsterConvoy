@@ -88,28 +88,28 @@ public class HumandexDataHandler : MonoBehaviour
         string text = "";
         switch (tip.caracMonster.enumCaract)
         {
-            case CaractMonster._enumCaractMonster.AILES:
+            case CaractMonster._enumCaractMonster.WINGS:
                 text = "These won't make you fly but they";
                 break;
-            case CaractMonster._enumCaractMonster.CARAPACE:
+            case CaractMonster._enumCaractMonster.SHELLS:
                 text = "She may sell sea shells, but this shell";
                 break;
-            case CaractMonster._enumCaractMonster.CHAPEAU:
+            case CaractMonster._enumCaractMonster.HATS:
                 text = "A fancy top hat";
                 break;
-            case CaractMonster._enumCaractMonster.CORNES:
+            case CaractMonster._enumCaractMonster.HORNS:
                 text = "These horns won't make any sounds but they";
                 break;
             case CaractMonster._enumCaractMonster.MOUSTACHES:
                 text = "Not hipster intended, but this moustache";
                 break;
-            case CaractMonster._enumCaractMonster.SAC:
+            case CaractMonster._enumCaractMonster.BACKPACKS:
                 text = "This handy backpack";
                 break;
-            case CaractMonster._enumCaractMonster.SOURCILS:
+            case CaractMonster._enumCaractMonster.EYELASHES:
                 text = "Fuzzy eyebrows";
                 break;
-            case CaractMonster._enumCaractMonster.TENTACULES:
+            case CaractMonster._enumCaractMonster.TENTACLES:
                 text = "A handful of tentacles";
                 break;
             case CaractMonster._enumCaractMonster.NONE:

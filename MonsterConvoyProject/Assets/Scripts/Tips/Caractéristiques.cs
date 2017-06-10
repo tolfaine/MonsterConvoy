@@ -9,17 +9,17 @@ public class CaractMonster
 {
     protected static readonly List<CaractMonster> allCaractMonster = new List<CaractMonster>(0);
 
-    public enum _enumCaractMonster { NONE, TENTACULES, CORNES , AILES, MOUSTACHES, CARAPACE, SAC, SOURCILS, CHAPEAU }
+    public enum _enumCaractMonster { NONE, TENTACLES, HORNS , WINGS, MOUSTACHES, SHELLS, BACKPACKS, EYELASHES, HATS }
 
     public static readonly CaractMonster NONE = new CaractMonster(0, _enumCaractMonster.NONE);
-    public static readonly CaractMonster TENTACULES = new CaractMonster(0, _enumCaractMonster.TENTACULES);
-    public static readonly CaractMonster CORNES = new CaractMonster(0, _enumCaractMonster.CORNES);
-    public static readonly CaractMonster AILES = new CaractMonster(0, _enumCaractMonster.AILES);
+    public static readonly CaractMonster TENTACULES = new CaractMonster(0, _enumCaractMonster.TENTACLES);
+    public static readonly CaractMonster CORNES = new CaractMonster(0, _enumCaractMonster.HORNS);
+    public static readonly CaractMonster AILES = new CaractMonster(0, _enumCaractMonster.WINGS);
     public static readonly CaractMonster MOUSTACHES = new CaractMonster(0, _enumCaractMonster.MOUSTACHES);
-    public static readonly CaractMonster CARAPACE = new CaractMonster(0, _enumCaractMonster.CARAPACE);
-    public static readonly CaractMonster SAC = new CaractMonster(0, _enumCaractMonster.SAC);
-    public static readonly CaractMonster SOURCILS = new CaractMonster(0, _enumCaractMonster.SOURCILS);
-    public static readonly CaractMonster CHAPEAU = new CaractMonster(0, _enumCaractMonster.CHAPEAU);
+    public static readonly CaractMonster CARAPACE = new CaractMonster(0, _enumCaractMonster.SHELLS);
+    public static readonly CaractMonster SAC = new CaractMonster(0, _enumCaractMonster.BACKPACKS);
+    public static readonly CaractMonster SOURCILS = new CaractMonster(0, _enumCaractMonster.EYELASHES);
+    public static readonly CaractMonster CHAPEAU = new CaractMonster(0, _enumCaractMonster.HATS);
 
 
     [SerializeField]
@@ -124,28 +124,28 @@ public class CaractMonster
         int i = 0;
         switch (IenumCaract)
         {
-            case _enumCaractMonster.AILES:
+            case _enumCaractMonster.WINGS:
                 return CaractMonster.AILES;
                 break;
-            case _enumCaractMonster.CARAPACE:
+            case _enumCaractMonster.SHELLS:
                 return CaractMonster.CARAPACE;
                 break;
-            case _enumCaractMonster.CHAPEAU:
+            case _enumCaractMonster.HATS:
                 return CaractMonster.CHAPEAU;
                 break;
-            case _enumCaractMonster.CORNES:
+            case _enumCaractMonster.HORNS:
                 return CaractMonster.CORNES;
                 break;
             case _enumCaractMonster.MOUSTACHES:
                 return CaractMonster.MOUSTACHES;
                 break;
-            case _enumCaractMonster.SAC:
+            case _enumCaractMonster.BACKPACKS:
                 return CaractMonster.SAC;
                 break;
-            case _enumCaractMonster.SOURCILS:
+            case _enumCaractMonster.EYELASHES:
                 return CaractMonster.SOURCILS;
                 break;
-            case _enumCaractMonster.TENTACULES:
+            case _enumCaractMonster.TENTACLES:
                 return CaractMonster.TENTACULES;
                 break;
             case _enumCaractMonster.NONE:

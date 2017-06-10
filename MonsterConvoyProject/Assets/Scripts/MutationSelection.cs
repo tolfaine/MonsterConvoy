@@ -27,7 +27,11 @@ public class MutationSelection : MonoBehaviour {
 
             monsterIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/MonsterIcons/" + creatureData.GetFighterOfID<Monster>(CreatureType.Monster, idMonster).sName);
             mutationIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + mutation.sName);
-            mutationName.text = mutation.sName;
+            char[] correctCapitalisation = mutation.sName.ToLowerInvariant().ToCharArray();
+            correctCapitalisation[0] = correctCapitalisation[0].ToString().ToUpperInvariant()[0];
+            mutationName.text = "";
+            for (int i = 0; i < correctCapitalisation.Length; ++i)
+                mutationName.text += correctCapitalisation[i];
         }
         else
             Destroy(gameObject);
