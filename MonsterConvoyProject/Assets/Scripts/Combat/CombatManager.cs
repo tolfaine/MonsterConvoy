@@ -156,6 +156,8 @@ public class CombatManager : MonoBehaviour
 
     public bool isBossCombat = false;
 
+
+
     void Start()
     {
         currentNbHuman = nbCreaturePerGroup;
@@ -320,7 +322,7 @@ public class CombatManager : MonoBehaviour
         }
 
 
-        if(monsterGroupFighter.lFighters.Count < 4)
+        if(monsterGroupFighter.lFighters.Count < 4 && !monsterGroupFighter.SomeTryToRun())
         {
             if(caravane.lFighters.Count>= 4)
             {
@@ -360,6 +362,11 @@ public class CombatManager : MonoBehaviour
 
                 fighterMouvementManager.lastDeadFighterPosition = lastDeadFighter.currentUI.gameObject.transform.position;
                 fighterMouvementManager.SpawnMonster(g);
+                fighterMouvementManager.lastDeadFighterPosition = lastDeadFighter.currentUI.transform.position;
+
+                g.transform.position = fighterMouvementManager.spawn.position;
+                Order order = new Order(fighter, 6);
+                combatOrder.Add(order);
 
             }
         }
@@ -449,7 +456,7 @@ public class CombatManager : MonoBehaviour
                 }
             }
 
-            if (!bTurnInProgress && !fighterMouvementManager.bFighterJoiningCombat)
+            if (!bTurnInProgress && !fighterMouvementManager.bMoveFighterJoiningToPosition)
             {
                 if (protoScript != null)
                     if(protoScript.combat != null)
@@ -891,7 +898,7 @@ public class CombatManager : MonoBehaviour
             humanGroupFighter = new GroupHumanFighter();
 
 
-            if (protoScript == null)
+            if (protoScript == null && !isBossCombat)
             {
                currentNbHuman = Random.Range(2, nbCreaturePerGroup+1);
                //currentNbHuman = 2;

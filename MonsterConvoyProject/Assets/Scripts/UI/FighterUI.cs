@@ -36,7 +36,7 @@ public class FighterUI : MonoBehaviour {
     public Text hpTxt;
 
 
-
+    public bool isTrigger = false;
 
     // Use this for initialization
     void Start () {
@@ -93,7 +93,28 @@ public class FighterUI : MonoBehaviour {
         {
             fighter.justTookDamage = false;
             slash.Play();
-     
+            
+            if (!isTrigger)
+            {
+                isTrigger = true;
+
+                GameObject g = GameObject.FindGameObjectWithTag("ParticuleManager");
+                if (g != null)
+                {
+                    ParticuleManager pm = g.GetComponent<ParticuleManager>();
+                    GameObject go = Instantiate(pm.defaultParticules.trigger) as GameObject;
+                    go.transform.position = ui.transform.position;
+                    go.transform.localPosition = new Vector3(go.transform.localPosition.x - 1f, go.transform.localPosition.y, go.transform.localPosition.z);
+
+                    ParticleSystem par = go.GetComponent<ParticleSystem>();
+
+                    par.Play();
+
+                    Destroy(go, 2f);
+                }
+            }
+
+
         }
 
         if (fighter.bTryToescape && !bHasBeenTurned )
@@ -114,7 +135,7 @@ public class FighterUI : MonoBehaviour {
                 {
                     GameObject go = Instantiate(pm.GetParticuleOfAction(fighter.lastAction, fighter.lastActionResult)) as GameObject;
                     go.transform.position = ui.transform.position;
-                    go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, go.transform.localPosition.z);
+                    go.transform.localPosition = new Vector3(go.transform.localPosition.x-0.5f, go.transform.localPosition.y, go.transform.localPosition.z);
 
                     particulPlaying = go.GetComponent<ParticleSystem>();
 
@@ -150,6 +171,17 @@ public class FighterUI : MonoBehaviour {
                         Destroy(go2, 5f);
                     }
 
+                    if(fighter.lastActionResult == RollResultEnum.Crit)
+                    {
+                        GameObject g = GameObject.FindGameObjectWithTag("ParticuleManager");
+                        ParticuleManager pm = g.GetComponent<ParticuleManager>();
+                        GameObject go2 = Instantiate(pm.defaultParticules.attackCriti) as GameObject;
+                        go2.transform.position = fighter.lastAttackedUI.ui.transform.position;
+                        go2.transform.localPosition = new Vector3(go2.transform.localPosition.x - 0.5f, go2.transform.localPosition.y + 1, go2.transform.localPosition.z);
+                        go2.GetComponent<ParticleSystem>().Play();
+
+                        Destroy(go2, 5f);
+                    }
 
 
                     // attackParticules.Play();

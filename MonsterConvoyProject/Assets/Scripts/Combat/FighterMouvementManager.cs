@@ -40,7 +40,9 @@ public class FighterMouvementManager : MonoBehaviour {
 
     public Vector3 SpawnPosition;
 
-    public bool bFighterJoiningCombat = false;
+    public Transform spawn;
+
+  //  public bool bFighterJoiningCombat = false;
     public bool bMoveFighterJoiningToPosition;
     public bool bFighterJoiningArrivedToPosition;
     public GameObject FighterJoining;
@@ -48,9 +50,8 @@ public class FighterMouvementManager : MonoBehaviour {
 
     public void SpawnMonster(GameObject fightern)
     {
-        bFighterJoiningCombat = true;
-
-        
+        bMoveFighterJoiningToPosition = true;
+        FighterJoining = fightern;
 
     }
 
@@ -69,6 +70,32 @@ public class FighterMouvementManager : MonoBehaviour {
                 CheckPosition();
             }
         }
+
+        if (bMoveFighterJoiningToPosition)
+        {
+
+            if (bMoveFighterJoiningToPosition && !bFighterJoiningArrivedToPosition)
+            {
+                float step = speed * Time.deltaTime;
+                FighterJoining.transform.position = Vector3.MoveTowards(FighterJoining.transform.position, lastDeadFighterPosition, step);
+            }
+
+
+
+            if (FighterJoining.transform.position == lastDeadFighterPosition)
+            {
+                bFighterJoiningArrivedToPosition = true;
+                if (bMoveFighterJoiningToPosition)
+                {
+                    bMoveFighterJoiningToPosition = false;
+
+                }
+                bFighterJoiningArrivedToPosition = false;
+            }
+
+
+        }
+
       //  NotifyCombatManager();
 
     }

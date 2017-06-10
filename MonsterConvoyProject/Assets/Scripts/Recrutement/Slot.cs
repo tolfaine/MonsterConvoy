@@ -11,7 +11,7 @@ public class Slot : MonoBehaviour
 
     public GameObject slotUI;
     public Monster monster;
-    public Text monsterText;
+  //  public Text monsterText;
 
     public bool bMouseClicking = false;
     public bool bClickProcessed = false;
@@ -43,7 +43,7 @@ public class Slot : MonoBehaviour
 
     public void SetText(string s)
     {
-        monsterText.text = s;
+      //  monsterText.text = s;
     }
 
     /*

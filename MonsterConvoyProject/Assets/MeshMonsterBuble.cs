@@ -71,6 +71,8 @@ public class MeshMonsterBuble : MonoBehaviour {
                 //  GameObject gHuman = prefabManager.GetHuman(currentFighter.nID);
 
                 GameObject gHuman = prefabManager.GetHumanOfSex(currentFighter.nID, currentFighter.sexe);
+                int layer = LayerMask.NameToLayer("UI");
+
 
                 ModelHumainUI modelUI = gHuman.GetComponent<ModelHumainUI>();
                 ModelHumainUI modelCurrent = ((Human)currentFighter).currentUI.gameObject.GetComponentInChildren<ModelHumainUI>();
@@ -89,6 +91,7 @@ public class MeshMonsterBuble : MonoBehaviour {
                 currentMeshHolder.transform.position = positionMonster.transform.position;
                 
                 GameObject gMonster = prefabManager.GetMonster(currentFighter.nID);
+
                 ModelMonsterUI modelUI = gMonster.GetComponent<ModelMonsterUI>();
                 ModelMonsterUI modelCurrent = ((Monster)currentFighter).currentUI.gameObject.GetComponentInChildren<ModelMonsterUI>();
 
@@ -97,6 +100,7 @@ public class MeshMonsterBuble : MonoBehaviour {
                 GameObject instanceMonster = Instantiate(gMonster, Vector3.zero, Quaternion.Euler(0, 90, 0)) as GameObject;
                 instanceMonster.transform.parent = currentMeshHolder.transform;
                 instanceMonster.transform.localPosition = Vector3.zero;
+
 
                 instanceMonster.transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
             }

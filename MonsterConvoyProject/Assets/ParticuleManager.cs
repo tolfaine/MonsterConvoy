@@ -23,6 +23,9 @@ public class ParticuleManager : MonoBehaviour {
         public GameObject fearParticule;
         public GameObject fearCritParticule;
         public GameObject fearFailParticule;
+
+        public GameObject attackCriti;
+        public GameObject trigger;
     }
 
     public MonsterParticuleData defaultParticules;

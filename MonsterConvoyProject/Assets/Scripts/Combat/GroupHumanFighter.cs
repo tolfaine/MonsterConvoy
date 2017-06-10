@@ -44,6 +44,7 @@ public class GroupHumanFighter : GroupFighter {
         bIsSpecial = false;
         this.groupLogic = new GroupIA();
         ((GroupIA)this.groupLogic).groupHumanFighter = this ;
+        eCreatureType = CreatureType.Human;
     }
 
     public override void GetFeared(RollResultEnum rollResult ,Monster monster)

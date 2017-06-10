@@ -14,20 +14,38 @@ public class CaravaneUI : MonoBehaviour {
 
     int teamIndex = 0;
     const int maxTeamDisplay = 4;
-    
-	void Start () {
+
+    public bool updateOnce = false;
+
+    private void Awake()
+    {
         teamIndex = 0;
         caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
         UpdateUI();
     }
+    
+	void Start () {
+        UpdateUI();
+    }
     private void OnEnable()
     {
-        teamIndex = 0;
-        UpdateUI(); 
+        UpdateUI();
     }
 
+    public void Update()
+    {
+        if (!updateOnce)
+        {
+            updateOnce = true;
+            UpdateUI();
+        }
+
+    }
     public void UpdateUI()
     {
+        upArrow.SetActive(true);
+        downArrow.SetActive(true);
+
         foreach (Transform child in listMonsters.transform)
         {
             Destroy(child.gameObject);
@@ -37,6 +55,14 @@ public class CaravaneUI : MonoBehaviour {
         {
             GameObject g = Instantiate(prefabSlot, Vector3.zero, Quaternion.identity) as GameObject;
             g.transform.parent = listMonsters.transform;
+
+            
+            Slot s = g.GetComponent<Slot>();
+            if(s != null)
+            {
+                s.monster = caravane.lFighters[i];
+            }
+            
 
             ImageFighterManager ifm = g.GetComponentInChildren<ImageFighterManager>();
             ifm.UpdateImage(caravane.lFighters[i].nID);
