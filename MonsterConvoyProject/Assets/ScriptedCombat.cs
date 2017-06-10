@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScriptedCombat : MonoBehaviour {
 
-    public enum CombatTalk { EnterCombat, EndCombat, Talk, HumanAttack, MonsterFailFear }
+    public enum CombatTalk { EnterCombat, EndCombat, Talk, HumanAttack, MonsterFailFear, HumainFailFear }
 
 
     public CustomTalk customTalk;
@@ -184,6 +184,11 @@ public class ScriptedCombat : MonoBehaviour {
                         secondNeedToTalk = false;
                         customTalk.NewTalkScripted(ScriptText, 22, 22);
                         break;
+
+                    case CombatTalk.HumanAttack:
+                        needToTalk = false;
+                        customTalk.NewTalkScripted(ScriptText, 20, 20);
+                        break;
                 }
             }
 
@@ -315,6 +320,16 @@ public class ScriptedCombat : MonoBehaviour {
     {
         secondNeedToTalk = true;
         secondTypeTalk = CombatTalk.MonsterFailFear;
+
+        /*
+        monsters.NewTalkScripted(ScriptText, 22,22);
+        */
+    }
+
+    public void HumainFailAttack()
+    {
+     //   secondNeedToTalk = true;
+   //     secondTypeTalk = CombatTalk.HumainFailFear;
 
         /*
         monsters.NewTalkScripted(ScriptText, 22,22);

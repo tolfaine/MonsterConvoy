@@ -126,15 +126,23 @@ public class RecrutementManager : MonoBehaviour {
 
             }else
             {
-                if(!isAtCapital || (isAtCapital && caravane.lFighters.Count <= 3))
-                AddSlot(monsterSelected, -1);
-                monsterToRecruteSelected.SetActive(false);
+                if((!isAtCapital && nbrecruted < nbCreatureToRecrute) || (isAtCapital && caravane.lFighters.Count <= 3))
+                {
+                    AddSlot(monsterSelected, -1);
+                    monsterToRecruteSelected.SetActive(false);
 
-                availablePosition.Add(monsterToRecruteSelected.transform.parent);
-               filledPosition.Remove(monsterToRecruteSelected.transform.parent);
+                    if (!isAtCapital)
+                        nbrecruted++;
+
+                    availablePosition.Add(monsterToRecruteSelected.transform.parent);
+                    filledPosition.Remove(monsterToRecruteSelected.transform.parent);
+
+                    monsterToRecruteSelected = null;
+                }
 
 
-                monsterToRecruteSelected = null;
+
+
             }
         }
 

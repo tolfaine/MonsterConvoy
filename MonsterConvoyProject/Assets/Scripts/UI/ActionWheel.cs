@@ -53,7 +53,7 @@ public class ActionWheel : MonoBehaviour {
             }
             else
             {
-                if (!combatManager.currentFighter.bHasbeenAttcked)
+                if (!combatManager.currentFighter.bHasTookDamage)
                     BlockOneAction(ActionType.ATTACK);
             }
         }

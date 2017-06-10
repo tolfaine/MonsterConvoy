@@ -99,12 +99,15 @@ public class FighterUI : MonoBehaviour {
                 isTrigger = true;
 
                 GameObject g = GameObject.FindGameObjectWithTag("ParticuleManager");
-                if (g != null)
+                if (g != null && fighter.eCreatureType == CreatureType.Monster)
                 {
                     ParticuleManager pm = g.GetComponent<ParticuleManager>();
                     GameObject go = Instantiate(pm.defaultParticules.trigger) as GameObject;
-                    go.transform.position = ui.transform.position;
-                    go.transform.localPosition = new Vector3(go.transform.localPosition.x - 1f, go.transform.localPosition.y, go.transform.localPosition.z);
+
+                    // go.transform.position = ui.transform.position;
+                    go.transform.parent = ui.transform;
+                    go.transform.localPosition = Vector3.zero;
+                    go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y + 0.5f, go.transform.localPosition.z -2f);
 
                     ParticleSystem par = go.GetComponent<ParticleSystem>();
 
@@ -176,7 +179,8 @@ public class FighterUI : MonoBehaviour {
                         GameObject g = GameObject.FindGameObjectWithTag("ParticuleManager");
                         ParticuleManager pm = g.GetComponent<ParticuleManager>();
                         GameObject go2 = Instantiate(pm.defaultParticules.attackCriti) as GameObject;
-                        go2.transform.position = fighter.lastAttackedUI.ui.transform.position;
+                        go2.transform.parent = fighter.lastAttackedUI.ui.transform;
+                        go2.transform.localPosition = Vector3.zero;
                         go2.transform.localPosition = new Vector3(go2.transform.localPosition.x - 0.5f, go2.transform.localPosition.y + 1, go2.transform.localPosition.z);
                         go2.GetComponent<ParticleSystem>().Play();
 
@@ -265,7 +269,7 @@ public class FighterUI : MonoBehaviour {
     void UpdateText()
     {
         // textMesh.text = fighter.nCurrentHealth + ""; //+ " / " + fighter.nHealthMax;
-        hpTxt.text = fighter.nCurrentHealth + "";
+       // hpTxt.text = fighter.nCurrentHealth + "";
 
         float curr = (float)fighter.nCurrentHealth;
         float max = (float)fighter.nHealthMax;

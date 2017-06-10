@@ -18,6 +18,7 @@ public class Fighter : Creature{
     //public int nPrecision;
 
     public bool bHasbeenAttcked;
+    public bool bHasTookDamage;
     
 
     public FighterUI currentUI;
@@ -48,6 +49,7 @@ public class Fighter : Creature{
         this.currentUI = fighter.currentUI;
         this.justTookDamage = fighter.justTookDamage;
         this.bHasbeenAttcked = fighter.bHasbeenAttcked;
+        this.bHasTookDamage = fighter.bHasTookDamage;
        // this.nInitiative = fighter.nInitiative;
        // this.nArmor = fighter.nArmor;
        // this.nPrecision = fighter.nPrecision;
@@ -99,7 +101,11 @@ public class Fighter : Creature{
                     rand = l;
             }
 
-            int damage = this.GetDamage();
+            if (combatManager.humanGroupFighter.bIsSpecial)
+            {
+                rand = 0.5f;
+            }
+              int damage = this.GetDamage();
 
             if(eCreatureType == CreatureType.Human && !combatManager.humanGroupFighter.bIsSpecial)
             {
@@ -120,14 +126,30 @@ public class Fighter : Creature{
             else if (rand > combatManager.rollProbaManager.Attack.fail)
             {
                 fighter.TakeDamage(damage);
-                AkSoundEngine.PostEvent("Play_" + sName + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
+
+                if(fighter.eCreatureType == CreatureType.Monster)
+                    AkSoundEngine.PostEvent("Play_" + "merchant" + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
+                else
+                    AkSoundEngine.PostEvent("Play_" + sName + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
 
                 lastActionResult = RollResultEnum.Normal;
+
+
             }
             else
             {
 
                 lastActionResult = RollResultEnum.Fail;
+
+                if(eCreatureType == CreatureType.Human)
+                {
+                    if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
+                    {
+                        if(combatManager.protoScript.combat.index < 7)
+                            combatManager.protoScript.combat.HumainFailAttack();
+                    }
+                }
+
 
                 Debug.Log("Fail");
                 AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
@@ -224,17 +246,15 @@ public class Fighter : Creature{
             GameObject g = GameObject.FindGameObjectWithTag("CombatManager");
             CombatManager cm = g.GetComponent<CombatManager>();
             (cm.GetGroupFighterOfFighter(this)).OneFighterTookDamage();
+
+            bHasTookDamage = true;
+            justTookDamage = true;
         }
 
         nCurrentHealth -= damage;
-        justTookDamage = true;
-
-        if (!bHasbeenAttcked)
-        {
-
-        }
-
         bHasbeenAttcked = true;
+
+
         if (nCurrentHealth <= 0)
         {       nCurrentHealth = 0;
             AkSoundEngine.SetSwitch("Tension", "T4", GameObject.FindGameObjectWithTag("MainCamera"));

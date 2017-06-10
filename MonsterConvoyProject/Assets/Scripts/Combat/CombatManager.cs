@@ -212,10 +212,14 @@ public class CombatManager : MonoBehaviour
                     }
 
                 }
-                else if (!specialManager.iaEd.isDead)
+                else if (!specialManager.iaEd.isDead && rand2 < rollProbaManager.specialProba.ed)
                 {
                     bSpecialFight = true;
                     specialType = SpecialType.Ed;
+                }else
+                {
+                    bSpecialFight = true;
+                    specialType = SpecialType.Slip;
                 }
             }
 
@@ -246,10 +250,14 @@ public class CombatManager : MonoBehaviour
                 ((IABard)(humanGroupFighter.groupLogic)).groupBard = (GroupBard)humanGroupFighter;
                 specialManager.iaBard.combatJustStarted = true;
             }
-            else
+            else if(specialType == SpecialType.Ed)
             {
                 humanGroupFighter.groupLogic = specialManager.iaEd;
                 ((IAEd)(humanGroupFighter.groupLogic)).groupEd = (GroupEd)humanGroupFighter;
+            }else
+            {
+                humanGroupFighter.groupLogic = specialManager.iaSlip;
+                ((IASlip)(humanGroupFighter.groupLogic)).groupSlip = (GroupSlip)humanGroupFighter;
             }
         }else
         {
@@ -727,7 +735,7 @@ public class CombatManager : MonoBehaviour
 
             if (humanGroupFighter.bIsSpecial)
             {
-                if (specialType == SpecialType.Ed || specialType == SpecialType.Bard)
+                if (specialType == SpecialType.Ed || specialType == SpecialType.Bard || specialType == SpecialType.Slip)
                 {
                     nbFighters = 0;
                     nbFighters += monsterGroupFighter.lFighters.Count;
@@ -1003,6 +1011,38 @@ public class CombatManager : MonoBehaviour
                 humain.CopyHuman(defaultHuman);
                 humain.nID = idModel;
                 humain.sName = "Bard";
+
+                GameObject g = Instantiate(prefab, humansPosition[0].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+
+                GameObject mo = Instantiate(model, humansPosition[0].position, Quaternion.Euler(0, 90, 0)) as GameObject;
+                mo.transform.parent = g.transform;
+                mo.transform.localPosition = Vector3.zero;
+                mo.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+                mo.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+
+                MouseOverCreature mouseOver = mo.transform.GetChild(0).gameObject.AddComponent<MouseOverCreature>();
+                mouseOver.fighterUI = g.GetComponent<FighterUI>();
+
+                g.GetComponent<FighterUI>().fighter = humain;
+                humanGroupFighter.lFighters.Add(humain);
+                g.transform.parent = GameObject.FindGameObjectWithTag("Humans").transform;
+                g.name = humain.sName;
+
+                g.GetComponent<FighterUI>().fighterRenderer = mouseOver.gameObject.GetComponent<Renderer>();
+
+            }
+            if (specialType == SpecialType.Slip)
+            {
+                humanGroupFighter = new GroupSlip();
+                int idModel = 32;
+                GameObject model = creaturePrefabManager.GetSpecial(idModel);
+                //Human humain = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetFighterOfID<Human>(creatureType, idModel);
+                Human humain = new Human();
+                humain.CopyHuman(defaultHuman);
+                humain.nPower = 0;
+                humain.nID = idModel;
+                humain.sName = "MecEnSlip";
 
                 GameObject g = Instantiate(prefab, humansPosition[0].position, Quaternion.Euler(0, 90, 0)) as GameObject;
 

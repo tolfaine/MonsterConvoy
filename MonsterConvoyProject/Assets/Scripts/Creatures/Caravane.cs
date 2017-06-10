@@ -26,6 +26,7 @@ public class Caravane : MonoBehaviour {
         foreach(Monster monster in lFighters)
         {
             monster.bHasbeenAttcked = false;
+            monster.bHasTookDamage = false;
         }
     }
 

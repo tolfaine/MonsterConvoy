@@ -58,7 +58,7 @@ public class ScriptedMap : MonoBehaviour {
         }
         if (iteration == 1)
         {
-            customTalk.NewTalkScripted(ScriptText, 5, 5);
+            customTalk.NewTalkScripted(ScriptText, 5, 8);
             //AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
         }
         if (iteration == 2)

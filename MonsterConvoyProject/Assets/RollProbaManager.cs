@@ -18,6 +18,7 @@ public class RollProbaManager : MonoBehaviour {
         public float probaFight;
         public float bard;
         public float ed;
+        public float slip;
 
     }
 

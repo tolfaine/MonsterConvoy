@@ -37,7 +37,37 @@ public class MouseOverCreature : MouseOver
             bClickProcessed = true;
             //Debug.Log("[MouseOverAction] bMouseClicking");
             combatManager.PlayerClickedCreature(fighterUI.fighter);
-            gameObject.GetComponentInChildren<Renderer>().material.color = mouseClickedColor;
+           // gameObject.GetComponentInChildren<Renderer>().material.color = mouseClickedColor;
+
+            if (fighter.eCreatureType == CreatureType.Human)
+            {
+
+                if (combatManager.currentFighter.eCreatureType == CreatureType.Monster)
+                {
+                    if (combatManager.bActionChoosed && combatManager.actionChoosed == ActionType.ATTACK && !combatManager.bTargetChoosed)
+                    {
+                        Renderer[] renders = gameObject.transform.parent.gameObject.GetComponentsInChildren<Renderer>();
+
+                        foreach (Renderer render in renders)
+                        {
+                            render.material.color = mouseClickedColor;
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                if (isInRecrutement)
+                {
+                    Renderer[] renders = gameObject.transform.parent.gameObject.GetComponentsInChildren<Renderer>();
+
+                    foreach (Renderer render in renders)
+                    {
+                        render.material.color = mouseClickedColor;
+                    }
+                }
+            }
         }
         else if (bMouseOver)
         {
@@ -90,5 +120,19 @@ public class MouseOverCreature : MouseOver
             }
 
         }
+    }
+
+    protected virtual void OnMouseOver()
+    {
+
+            bMouseOver = true;
+        
+    }
+
+    protected virtual void OnMouseExit()
+    {
+
+            bMouseOver = false;
+        
     }
 }
