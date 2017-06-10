@@ -72,7 +72,9 @@ public class CaravaneUI : MonoBehaviour {
         }
 
         if (teamIndex + maxTeamDisplay < caravane.lFighters.Count)
-        { downArrow.SetActive(true); }
+        {
+            downArrow.SetActive(true);
+        }
         else
         {
             downArrow.SetActive(false);
