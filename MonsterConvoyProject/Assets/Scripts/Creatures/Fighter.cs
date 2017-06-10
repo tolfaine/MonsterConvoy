@@ -157,6 +157,7 @@ public class Fighter : Creature{
                 }
             }
 
+
             // ActionTalk(action, rand);
 
         }
@@ -228,6 +229,11 @@ public class Fighter : Creature{
         nCurrentHealth -= damage;
         justTookDamage = true;
 
+        if (!bHasbeenAttcked)
+        {
+
+        }
+
         bHasbeenAttcked = true;
         if (nCurrentHealth <= 0)
         {       nCurrentHealth = 0;
@@ -235,6 +241,7 @@ public class Fighter : Creature{
         }
         if (nCurrentHealth > nHealthMax)
             nCurrentHealth = nHealthMax;
+
     }
     public int GetDamage()
     {

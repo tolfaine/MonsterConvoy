@@ -36,7 +36,7 @@ public class Caravane : MonoBehaviour {
         GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
         if (g != null)
         {
-            g.GetComponent<CaravaneUI>().UpdateUI();
+            g.GetComponent<CaravaneUI>().IncreaseIndex();
         }
 
     }
@@ -48,7 +48,7 @@ public class Caravane : MonoBehaviour {
         GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
         if(g != null)
         {
-            g.GetComponent<CaravaneUI>().UpdateUI();
+            g.GetComponent<CaravaneUI>().DecreaseIndex();
         }
 
             

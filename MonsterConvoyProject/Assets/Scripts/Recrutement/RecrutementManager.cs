@@ -36,6 +36,9 @@ public class RecrutementManager : MonoBehaviour {
     public Transform rootMonsters;
     Scene currentScene;
 
+    private int nbCreatureToRecrute = 1;
+    private int nbrecruted = 0;
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -55,13 +58,13 @@ public class RecrutementManager : MonoBehaviour {
 
     private void Awake()
     {
+        caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
         if (isAtCapital)
         {
-            caravane = GameObject.FindGameObjectWithTag("Caravane").GetComponent<Caravane>();
 
             caravane.lFighters = new List<Monster>();
         }
-
+        
     }
     // Use this for initialization
     void Start () {
@@ -75,9 +78,13 @@ public class RecrutementManager : MonoBehaviour {
         {
             Destroy(child.gameObject);
         }
+        
 
         InitialiseRecruts();
-        InitialiseSlots();
+
+        
+        if(isAtCapital)
+            InitialiseSlots();
         FillSlots();
     }
 	
@@ -89,15 +96,20 @@ public class RecrutementManager : MonoBehaviour {
         {
             if (monsterSelected.bIsImportant)
             {
-                if(monsterToTradeSelected != null)
+                if(monsterToTradeSelected != null && monsterToTradeSelected.nID != 0)
                 {
-                    int index = 0;
-                    ReplaceSlot(monsterSelected, monsterToTradeSelected);
-                    monsterToRecruteSelected.SetActive(false);
+                    if(nbrecruted <nbCreatureToRecrute)
+                    {
+                        int index = 0;
+                        ReplaceSlot(monsterSelected, monsterToTradeSelected);
+                        monsterToRecruteSelected.SetActive(false);
 
-                    slotSelected = null;
-                    monsterToTradeSelected = null;
-                    monsterToRecruteSelected = null;
+                        slotSelected = null;
+                        monsterToTradeSelected = null;
+                        monsterToRecruteSelected = null;
+                        nbrecruted++;
+                    }
+                    
                 }
 
                 if (isAtCapital)
@@ -114,6 +126,7 @@ public class RecrutementManager : MonoBehaviour {
 
             }else
             {
+                if(!isAtCapital || (isAtCapital && caravane.lFighters.Count <= 3))
                 AddSlot(monsterSelected, -1);
                 monsterToRecruteSelected.SetActive(false);
 
@@ -125,11 +138,12 @@ public class RecrutementManager : MonoBehaviour {
             }
         }
 
-        if(monsterToTradeSelected != null && isAtCapital)
+        if(monsterToTradeSelected != null && isAtCapital || (!isAtCapital && !monsterSelected.bIsImportant && nbrecruted ==1))
         {
             RemoveMonster(monsterToTradeSelected);
 
             monsterToTradeSelected = null;
+            nbrecruted--;
         }
 		//If slot left
         //If monster selected est un impportant one
@@ -262,6 +276,14 @@ public class RecrutementManager : MonoBehaviour {
         availablePosition.RemoveAt(0);
 
 
+        GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if (g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
+
+
+
     }
     void ReplaceSlot(Monster monsterToAdd, Monster monsterToTrade)
     {
@@ -269,12 +291,24 @@ public class RecrutementManager : MonoBehaviour {
 
         Monster replacedMonster = caravane.lFighters[indexM];
 
-        DeleteSlot(replacedMonster, indexM);
+        caravane.lFighters[indexM] = null;
+
+        caravane.lFighters.RemoveAt(indexM);
+
+        //DeleteSlot(replacedMonster, indexM);
 
         //Vector3 position = monsterToRecruteSelected.transform.position;
         InstantiateMonsterAtPosition(monsterToRecruteSelected.transform.parent, replacedMonster);
 
-        AddSlot(monsterToAdd, indexM);
+        caravane.lFighters.Insert(indexM, monsterToAdd);
+
+        GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if (g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
+
+        // AddSlot(monsterToAdd, indexM);
     }
 
     void AddSlot(Monster monster, int index)
@@ -286,7 +320,12 @@ public class RecrutementManager : MonoBehaviour {
 
         sl.transform.SetSiblingIndex(index);
 
-     //   scriptSlot.nIdCreature = monster.nID;
+        GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if (g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
+        //   scriptSlot.nIdCreature = monster.nID;
 
         if (index == -1)
         {
@@ -300,6 +339,15 @@ public class RecrutementManager : MonoBehaviour {
         }
 
         scriptSlot.SetText(scriptSlot.monster.sName);
+
+
+
+        g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if (g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
+
     }
 
     void DeleteSlot(Monster monster, int index)

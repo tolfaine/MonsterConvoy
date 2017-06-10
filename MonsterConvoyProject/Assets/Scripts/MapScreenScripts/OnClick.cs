@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class OnClick : MonoBehaviour
 {
@@ -25,7 +26,8 @@ public class OnClick : MonoBehaviour
         //If the neighbours of the node we click on contains the current active node. We can travel.
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode)
             && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART
-            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)) //HERE
+            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)
+            && !EventSystem.current.IsPointerOverGameObject()) //HERE
         {
             NodeConnections.activeNode = gameObject;
 
@@ -79,8 +81,9 @@ public class OnClick : MonoBehaviour
         }
 
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) 
-            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART  &&
-             (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited))//HERE
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART  
+            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)  
+            && !EventSystem.current.IsPointerOverGameObject())
         {
             spotLight.GetComponent<Light>().enabled = true;
             if (strobeUp)
@@ -102,8 +105,9 @@ public class OnClick : MonoBehaviour
     {
         highlighted = true;
         if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode)
-            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART &&
-             (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited))//HERE
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART 
+            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)
+            && !EventSystem.current.IsPointerOverGameObject())
         {
             gameObject.transform.Rotate(new Vector3(0, 1f, 0));
             altered = true;

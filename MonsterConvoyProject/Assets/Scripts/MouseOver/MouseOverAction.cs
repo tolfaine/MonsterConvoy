@@ -52,6 +52,19 @@ public class MouseOverAction : MouseOver
 
     }
 
+    protected override void OnMouseOver()
+    {
+            bMouseOver = true;
+
+    }
+
+    protected override void OnMouseExit()
+    {
+
+            bMouseOver = false;
+
+    }
+
 
 
 }

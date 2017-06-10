@@ -26,6 +26,17 @@ public class GroupFighter {
 
     public GroupLogic GetGroupLogic() { return this.groupLogic; }
 
+
+    public bool SomeTryToRun()
+    {
+        foreach (Fighter fighter in lFighters)
+        {
+            if (fighter.bTryToescape)
+                return true;
+        }
+
+        return false;
+    }
     public virtual void SetInitialFighters()
     {
         foreach(Fighter fighter in lFighters)
@@ -71,7 +82,17 @@ public class GroupFighter {
         foreach(Fighter fighter in this.lFighters)
         {
             if (fighter.nCurrentHealth > 0)
-                nbFightersAlive++;
+            {
+                if(eCreatureType == CreatureType.Human)
+                    nbFightersAlive++;
+                else
+                {
+                    Monster m = (Monster)fighter;
+                    if(!m.isBoss)
+                        nbFightersAlive++;
+                }
+            }
+
             else
             {
                 lDeadFightersNotReplace.Add(fighter);

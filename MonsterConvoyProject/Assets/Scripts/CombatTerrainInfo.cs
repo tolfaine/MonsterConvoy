@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class ModComportement
@@ -37,8 +38,12 @@ public class CombatTerrainInfo : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        for (int i = 0; i < SceneManager.sceneCount; ++i)
+        {
+            if (SceneManager.GetSceneAt(i).name != "Menu" && SceneManager.GetSceneAt(i).name != "CARTE")
+                AkSoundEngine.PostEvent(SceneManager.GetSceneAt(i).name, gameObject);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {

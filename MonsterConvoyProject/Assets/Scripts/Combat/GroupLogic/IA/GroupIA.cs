@@ -63,6 +63,8 @@ public class GroupIA : GroupLogic {
 
             if (combatManager.isBossCombat)
             {
+                groupHumanFighter.bWantsToAttack = true;
+                groupHumanFighter.bInConversation = false;
                 return ActionType.ATTACK;
 
             }
@@ -71,29 +73,29 @@ public class GroupIA : GroupLogic {
             ActionType.ActionEnum enumAction = GameObject.FindGameObjectWithTag("CombatTerrain").GetComponent<CombatTerrainInfo>().modComportement.action;
             ActionType acType = ActionType.GetActionTypeWithID((int)enumAction);
 
-            if (rand < rollProbaManager.humanComp.escape || (acType == ActionType.ESCAPE && (rand - 0.1) < 0.2))
+            if((acType == ActionType.ATTACK && rand > rollProbaManager.humanComp.discussion - 0.1)){
+                groupHumanFighter.bWantsToAttack = true;
+                groupHumanFighter.bInConversation = false;
+                return ActionType.ATTACK;
+            }
+
+            if (rand < rollProbaManager.humanComp.escape || (acType == ActionType.ESCAPE && rand < rollProbaManager.humanComp.escape+0.1))
             {
                 groupHumanFighter.bIsFeared = true;
                 return ActionType.ESCAPE;
             }
-            if (rand > rollProbaManager.humanComp.discussion || (acType == ActionType.TALK && (rand + 0.1) > 0.7))
+            if (rand < rollProbaManager.humanComp.discussion || (acType == ActionType.TALK && rand < rollProbaManager.humanComp.discussion +0.1))
             {
                 groupHumanFighter.bInConversation = true;
                 groupHumanFighter.bWantsToAttack = false;
                 return ActionType.TALK;
             }
 
-            else if (rand < rollProbaManager.humanComp.discussion || (acType == ActionType.ATTACK && (rand - 0.1) < 0.7))
+            else
             {
                 groupHumanFighter.bWantsToAttack = true;
                 groupHumanFighter.bInConversation = false;
                 return ActionType.ATTACK;
-            }
-            else
-            {
-                groupHumanFighter.bInConversation = true;
-                groupHumanFighter.bWantsToAttack = false;
-                return ActionType.TALK;
             }
         }
 
