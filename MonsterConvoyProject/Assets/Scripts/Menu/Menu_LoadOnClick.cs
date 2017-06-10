@@ -35,7 +35,7 @@ public class Menu_LoadOnClick : MonoBehaviour {
                 //enable_loadGame = false;
                 //target_Loadbtn.GetComponentInChildren<Image>().color = Color.grey;
             }
-            int index_scene = Random.Range(11, 21);
+            int index_scene = Random.Range(22, 33);
             //SceneManager.LoadScene("DONJON", LoadSceneMode.Additive);
             SceneManager.LoadScene(index_scene, LoadSceneMode.Additive);
             //GameObject combatPrefab = GameObject.Find("CombatPrefab").GetComponent<GameObject>();
