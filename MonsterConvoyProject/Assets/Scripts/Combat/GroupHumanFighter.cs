@@ -58,12 +58,16 @@ public class GroupHumanFighter : GroupFighter {
                 fearDamage = 1000;
                 bInConversation = false;
                 bWantsToAttack = true;
+
+                bCanListen = false;
             }
             else if (rollResult == RollResultEnum.Normal)
             {
                 fearDamage = 1;
                 bInConversation = false;
                 bWantsToAttack = true;
+
+                bCanListen = false;
             }
 
             else
@@ -111,6 +115,8 @@ public class GroupHumanFighter : GroupFighter {
 
     public override void OneFighterTookDamage()
     {
+        bCanListen = false;
+
         bHasTookDamageOnce = true;
         bHasBeenAttackedOnce = true;
 

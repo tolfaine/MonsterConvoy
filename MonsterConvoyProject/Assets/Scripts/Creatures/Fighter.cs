@@ -157,6 +157,7 @@ public class Fighter : Creature{
                 }
             }
 
+
             // ActionTalk(action, rand);
 
         }

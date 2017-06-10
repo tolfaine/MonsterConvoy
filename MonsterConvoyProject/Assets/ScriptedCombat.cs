@@ -29,6 +29,8 @@ public class ScriptedCombat : MonoBehaviour {
     public bool needToTalk;
     public CombatTalk typeTalk;
 
+    public bool secondNeedToTalk;
+    public CombatTalk secondTypeTalk;
 
     public void NextTurn()
     {
@@ -63,29 +65,31 @@ public class ScriptedCombat : MonoBehaviour {
         }
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (needToTalk)
         {
-            switch (typeTalk) {
+            switch (typeTalk)
+            {
                 case CombatTalk.EndCombat:
                     needToTalk = false;
                     if (iteration == 1)
                     {
                         customTalk.NewTalkScripted(ScriptText, 12, 12);
-                       // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+                        // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
                     }
                     if (iteration == 2)
                     {
                         customTalk.NewTalkScripted(ScriptText, 26, 26);
-                       // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+                        // AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
                     }
-                    
+
 
                     break;
                 case CombatTalk.EnterCombat:
-                  //  AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+                    //  AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
                     needToTalk = false;
                     break;
                 case CombatTalk.HumanAttack:
@@ -94,7 +98,7 @@ public class ScriptedCombat : MonoBehaviour {
                         needToTalk = false;
                         if (iteration == 2)
                         {
-                         //   AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
+                            //   AkSoundEngine.PostEvent("Play_TutoMage", gameObject);
                             if (nbAttack == 0)
                             {
                                 customTalk.NewTalkScripted(ScriptText, 17, 17);
@@ -115,61 +119,76 @@ public class ScriptedCombat : MonoBehaviour {
                     break;
                 case CombatTalk.MonsterFailFear:
                     needToTalk = false;
-                    monsters.NewTalkScripted(ScriptText, 22, 22);
+                    customTalk.NewTalkScripted(ScriptText, 22, 22);
                     break;
                 case CombatTalk.Talk:
                     needToTalk = false;
                     if (iteration == 1)
+                    {
+
+                        if (roundIt == 0)
                         {
-
-                            if (roundIt == 0)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 4, 4);
-                            }
-                            else if (roundIt == 1)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 5, 5);
-                            }
-                            else if (roundIt == 2)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 6, 6);
-                            }
-                            else if (roundIt == 3)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 7, 7);
-                            }
-                            else if (roundIt == 4)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 8, 8);
-                            }
-
-                            roundIt++;
+                            monsters.NewTalkScripted(ScriptText, 4, 4);
                         }
-                        if (iteration == 2)
+                        else if (roundIt == 1)
                         {
-                            if (roundIt == 0)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 18, 18);
-                            }
-                            else if (roundIt == 1)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 19, 19);
-                            }
-                            else if (roundIt == 2)
-                            {
-                                monsters.NewTalkScripted(ScriptText, 21, 21);
-                            }
-
-                            roundIt++;
+                            monsters.NewTalkScripted(ScriptText, 5, 5);
                         }
-                   
+                        else if (roundIt == 2)
+                        {
+                            monsters.NewTalkScripted(ScriptText, 6, 6);
+                        }
+                        else if (roundIt == 3)
+                        {
+                            monsters.NewTalkScripted(ScriptText, 7, 7);
+                        }
+                        else if (roundIt == 4)
+                        {
+                            monsters.NewTalkScripted(ScriptText, 8, 8);
+                        }
+
+                        roundIt++;
+                    }
+                    if (iteration == 2)
+                    {
+                        if (roundIt == 0)
+                        {
+                            monsters.NewTalkScripted(ScriptText, 18, 18);
+                        }
+                        else if (roundIt == 1)
+                        {
+                            monsters.NewTalkScripted(ScriptText, 19, 19);
+                        }
+                        else if (roundIt == 2)
+                        {
+                            monsters.NewTalkScripted(ScriptText, 21, 21);
+                        }
+
+                        roundIt++;
+                    }
+
                     break;
 
             }
-            
+
 
         }
-	}
+
+        if (secondNeedToTalk)
+        {
+            if (combatManager.bFighterInInitialPosition)
+            {
+                switch (secondTypeTalk)
+                {
+                    case CombatTalk.MonsterFailFear:
+                        secondNeedToTalk = false;
+                        customTalk.NewTalkScripted(ScriptText, 22, 22);
+                        break;
+                }
+            }
+
+        }
+    }
 
 
     public void EnterCombat()
@@ -294,8 +313,8 @@ public class ScriptedCombat : MonoBehaviour {
 
     public void MonsterFailFear()
     {
-        needToTalk = true;
-        typeTalk = CombatTalk.MonsterFailFear;
+        secondNeedToTalk = true;
+        secondTypeTalk = CombatTalk.MonsterFailFear;
 
         /*
         monsters.NewTalkScripted(ScriptText, 22,22);

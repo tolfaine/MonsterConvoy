@@ -157,7 +157,6 @@ public class CombatManager : MonoBehaviour
     public bool isBossCombat = false;
 
 
-
     void Start()
     {
         currentNbHuman = nbCreaturePerGroup;
@@ -193,24 +192,31 @@ public class CombatManager : MonoBehaviour
         float rand = Random.Range(0f, 1f);
 
         
-        if (rand < rollProbaManager.specialProba.probaFight && protoScript == null && !isBossCombat)
+        if ((rand < rollProbaManager.specialProba.probaFight || specialManager.iaBard.bardFollow) && protoScript == null && !isBossCombat )
         {
 
-            float rand2 = Random.Range(0f, 1f);
-
-            if (rand2 < rollProbaManager.specialProba.bard)
-            {
-                if (!specialManager.iaBard.endStory)
-                {
-                    bSpecialFight = true;
-                    specialType = SpecialType.Bard;
-                }
-
-            }
-            else if (!specialManager.iaEd.isDead)
+            if (specialManager.iaBard.bardFollow)
             {
                 bSpecialFight = true;
-                specialType = SpecialType.Ed;
+                specialType = SpecialType.Bard;
+            }else
+            {
+                float rand2 = Random.Range(0f, 1f);
+
+                if (rand2 < rollProbaManager.specialProba.bard)
+                {
+                    if (!specialManager.iaBard.endStory)
+                    {
+                        bSpecialFight = true;
+                        specialType = SpecialType.Bard;
+                    }
+
+                }
+                else if (!specialManager.iaEd.isDead)
+                {
+                    bSpecialFight = true;
+                    specialType = SpecialType.Ed;
+                }
             }
 
         }
@@ -520,6 +526,9 @@ public class CombatManager : MonoBehaviour
                             {
                                 actionChoosed = ActionType.FEAR;
                                 bActionChoosed = true;
+
+
+                                AkSoundEngine.PostEvent("Play_" + currentFighter.sName + "Fear", gameObject);
                             }
                         }
                         // Choose action
@@ -850,7 +859,7 @@ public class CombatManager : MonoBehaviour
             //Human humain = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().GetFighterOfID<Human>(creatureType, idModel);
             Monster monster = new Monster();
             monster.nID = idModel;
-            monster.sName = "PlantePirate";
+            monster.sName = "PiratePlant";
             monster.isBoss = true;
             monster.nPower = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().defaultMonster.nPower;
             monster.nHealthMax = GameObject.FindGameObjectWithTag("CreaturesData").GetComponent<CreaturesData>().defaultMonster.nHealthMax;

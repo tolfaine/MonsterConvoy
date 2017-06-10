@@ -768,12 +768,12 @@ public class CustomTalk : MonoBehaviour {
 
                 if (roll < 0.2f)
                 {
-                    minLine = 27;
+                    minLine = 28;
                     maxLine = 57;
                 }
                 else
                 {
-                    minLine = 27;
+                    minLine = 28;
                     maxLine = 57;
                 }
 

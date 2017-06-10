@@ -89,7 +89,15 @@ public class Monster : Fighter{
                // ((GroupHumanFighter)groupHuman).bCanBeFeared = false;
                 Debug.Log("Fail Fear:" + rand.ToString());
                 AkSoundEngine.PostEvent("Play_miss", GameObject.FindGameObjectWithTag("MainCamera"));
+
+
+                if (combatManager.protoScript != null && combatManager.protoScript.combat != null && combatManager.protoScript.combat.currentTurn != null)
+                {          
+                    combatManager.protoScript.combat.MonsterFailFear();
+                }
+             
             }
+
 
             ActionTalk(action, rand);
         }

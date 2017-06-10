@@ -9,6 +9,8 @@ public class IABard : GroupIA
     public bool combatJustStarted = false;
     public bool combatJustEnded = false;
 
+    public bool bardFollow = false;
+
     public bool endStory = false;
     // Text Bard 
 
@@ -29,6 +31,7 @@ public class IABard : GroupIA
     {
         if(!endStory)
             return ActionType.TALK;
+        bardFollow = false;
         groupBard.bIsFeared = true;
         return ActionType.ESCAPE;
 
@@ -53,7 +56,9 @@ public class IABard : GroupIA
             currentLine++;
 
             if (currentLine == 25)
+            {
                 endStory = true;
+            }
         }
     }
 
@@ -61,8 +66,12 @@ public class IABard : GroupIA
     {
         combatJustEnded = true;
         theyLeftOnce = true;
-        if(!endStory)
+        if (!endStory)
+        {
             Talk();
+            bardFollow = true;
+        }
+
         combatJustEnded = false;
     }
 
