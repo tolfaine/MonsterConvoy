@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class OnClick : MonoBehaviour
 {
 
-    bool visited = false;
+    public bool visited = false;
     bool highlighted = false;
     bool altered = false;
 
@@ -23,7 +23,9 @@ public class OnClick : MonoBehaviour
     void OnMouseDown()
     {
         //If the neighbours of the node we click on contains the current active node. We can travel.
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode)
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART
+            && (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited)) //HERE
         {
             NodeConnections.activeNode = gameObject;
 
@@ -48,7 +50,7 @@ public class OnClick : MonoBehaviour
     bool strobeUp;
     int minLightIntensity = 3;
     int maxLightIntensity = 8;
-    float strobeSpeed = 0.5f;
+    float strobeSpeed = 7.0f;
     
     bool grown = false;
 
@@ -76,18 +78,20 @@ public class OnClick : MonoBehaviour
             ReturnToNormal();
         }
 
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) 
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART  &&
+             (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited))//HERE
         {
             spotLight.GetComponent<Light>().enabled = true;
             if (strobeUp)
             {
-                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, maxLightIntensity, strobeSpeed);
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, maxLightIntensity, strobeSpeed * Time.deltaTime);
                 if (spotLight.GetComponent<Light>().intensity >= maxLightIntensity - 0.1f)
                     strobeUp = false;
             }
             else
             {
-                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, minLightIntensity, strobeSpeed);
+                spotLight.GetComponent<Light>().intensity = Mathf.Lerp(spotLight.GetComponent<Light>().intensity, minLightIntensity, strobeSpeed * Time.deltaTime);
                 if (spotLight.GetComponent<Light>().intensity <= minLightIntensity + 0.1f)
                     strobeUp = true;
             }
@@ -97,7 +101,9 @@ public class OnClick : MonoBehaviour
     void OnMouseOver()
     {
         highlighted = true;
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode)
+            && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART &&
+             (GetComponent<PlaceType>().placeType != PlaceType.Place.DONJON || !visited))//HERE
         {
             gameObject.transform.Rotate(new Vector3(0, 1f, 0));
             altered = true;
