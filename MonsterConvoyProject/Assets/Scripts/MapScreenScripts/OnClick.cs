@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class OnClick : MonoBehaviour
 {
@@ -22,27 +23,31 @@ public class OnClick : MonoBehaviour
 
     void OnMouseDown()
     {
-        //If the neighbours of the node we click on contains the current active node. We can travel.
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            NodeConnections.activeNode = gameObject;
-
-            string sceneType;
-
-            if (GetComponent<PlaceType>().placeType != PlaceType.Place.TERRAIN)
-                sceneType = GetComponent<PlaceType>().placeType.ToString();
-            else
-                sceneType = GetComponent<PlaceType>().terrainType.ToString();
-
-            //Change scene on node click
-            for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
+            //If the neighbours of the node we click on contains the current active node. We can travel.
+            if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
             {
-                //TODO preserve node types in file and reload from there. 
-                SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
+                NodeConnections.activeNode = gameObject;
+
+                string sceneType;
+
+                if (GetComponent<PlaceType>().placeType != PlaceType.Place.TERRAIN)
+                    sceneType = GetComponent<PlaceType>().placeType.ToString();
+                else
+                    sceneType = GetComponent<PlaceType>().terrainType.ToString();
+
+                //Change scene on node click
+                for (int i = 0; i < SceneManager.GetActiveScene().GetRootGameObjects().Length; i++)
+                {
+                    //TODO preserve node types in file and reload from there. 
+                    SceneManager.GetActiveScene().GetRootGameObjects()[i].SetActive(false);
+                }
+                SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
             }
-            SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
         }
+
     }
 
     bool strobeUp;
@@ -96,17 +101,25 @@ public class OnClick : MonoBehaviour
 
     void OnMouseOver()
     {
-        highlighted = true;
-        if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            gameObject.transform.Rotate(new Vector3(0, 1f, 0));
-            altered = true;
+            highlighted = true;
+            if (GetComponent<NodeConnections>().neighbourNodes.Contains(NodeConnections.activeNode) && GetComponent<PlaceType>().placeType != PlaceType.Place.DEPART)
+            {
+                gameObject.transform.Rotate(new Vector3(0, 1f, 0));
+                altered = true;
+            }
         }
+
     }
 
     void OnMouseExit()
     {
-        highlighted = false; 
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            highlighted = false;
+        }
+            highlighted = false; 
     }
 
     void ReturnToNormal()

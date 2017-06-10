@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseOver : MonoBehaviour {
 
@@ -83,12 +84,18 @@ public class MouseOver : MonoBehaviour {
 
     protected virtual void OnMouseOver()
     {
-        bMouseOver = true;
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            bMouseOver = true;
+        }
     }
 
     protected virtual void OnMouseExit()
     {
-        bMouseOver = false;
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            bMouseOver = false;
+        }
     }
 
 
