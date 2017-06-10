@@ -22,8 +22,7 @@ public class CaravaneUI : MonoBehaviour {
     }
     private void OnEnable()
     {
-        teamIndex = 0;
-        UpdateUI(); 
+        Start();
     }
 
     public void UpdateUI()
@@ -43,6 +42,10 @@ public class CaravaneUI : MonoBehaviour {
 
             HealthUiFighter health = g.GetComponentInChildren<HealthUiFighter>();
             health.UpdateLife((float)caravane.lFighters[i].nCurrentHealth / (float)caravane.lFighters[i].nHealthMax);
+
+            Tooltip tip = g.GetComponentInChildren<Tooltip>();
+            tip.caravaneIndex = i;
+            tip.gameObject.SetActive(false);
         }
 
         if (teamIndex + maxTeamDisplay < caravane.lFighters.Count)
