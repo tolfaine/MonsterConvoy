@@ -63,8 +63,11 @@ public class CaravaneUI : MonoBehaviour {
             health.UpdateLife((float)caravane.lFighters[i].nCurrentHealth / (float)caravane.lFighters[i].nHealthMax);
 
             Tooltip tip = g.GetComponentInChildren<Tooltip>();
-            tip.caravaneIndex = i;
-            tip.gameObject.SetActive(false);
+            if (tip != null)
+            {
+                tip.caravaneIndex = i;
+                tip.gameObject.SetActive(false);
+            }
         }
 
         if (teamIndex + maxTeamDisplay < caravane.lFighters.Count)

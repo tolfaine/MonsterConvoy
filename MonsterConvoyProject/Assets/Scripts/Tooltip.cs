@@ -19,8 +19,9 @@ public class Tooltip : MonoBehaviour {
     {
         Monster monster = caravane.lFighters[caravaneIndex];
         monsterName.text = monster.sName;
-        
-        mutationImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + MutationManager.Instance().GetMutationWithId(monster.nID).sName); 
+
+        if (MutationManager.Instance() != null)
+            mutationImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/" + MutationManager.Instance().GetMutationWithId(monster.nID).sName); 
     }
 
 }
