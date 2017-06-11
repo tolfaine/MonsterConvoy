@@ -80,18 +80,35 @@ public class MutationManager : MonoBehaviour {
         return CaractMonster.NONE;
     }
 
+    public List<CaractMonster> GetMutationsWithId(int id)
+    {
+        List < CaractMonster > mutations = new List<CaractMonster>();
+        foreach (MutationData mutationData in allMutations)
+        {
+            if (mutationData.nIdMonster == id)
+            {
+                mutations.Add(CaractMonster.GetCaractMonsterOfEnum(mutationData.mutation));
+            }
+        }
+
+        return mutations;
+    }
+
     public void AddMutationID( int id, CaractMonster mutation)
     {
         foreach (MutationData mutationData in allMutations)
         {
             if (mutationData.nIdMonster == id)
             {
-                mutationData.mutation = mutation.enumCaract;
-                return;
+                if (mutationData.mutation == CaractMonster._enumCaractMonster.NONE)
+                    mutationData.mutation = mutation.enumCaract;
+                else
+                {
+                    allMutations.Add(new MutationData(id, mutation, CaractMonster._enumCaractMonster.NONE));
+                    return;
+                }
             }
-
-        }
-      //  
+        } 
     }
 
     public List<MutationData> GetRandomMutation(int nbMutationRequested)

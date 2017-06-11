@@ -25,6 +25,7 @@ public class HumandexDataHandler : MonoBehaviour
             if (!viewed[i])
             {
                 newTip = true;
+                humandexIcon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/HumandexIcons/newEntryIcon");
                 JumpToPage((int)(i / numEntriesPerPage));
                 break;
             }
