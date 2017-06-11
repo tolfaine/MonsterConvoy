@@ -337,3 +337,4 @@ paket-files/
 MonsterConvoyProject/Assets/StreamingAssets/Audio/GeneratedSoundBanks/Windows/
 MonsterConvoyProject/MonsterConvoyProject_WwiseProject/Conversion Settings/Default Work Unit.wwu
 MonsterConvoyProject/Assets/StreamingAssets/Audio/GeneratedSoundBanks/Windows.meta
+*.meta
