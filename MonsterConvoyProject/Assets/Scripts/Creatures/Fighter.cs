@@ -127,7 +127,7 @@ public class Fighter : Creature{
             {
                 fighter.TakeDamage(damage);
 
-                if(fighter.eCreatureType == CreatureType.Monster)
+                if(this.eCreatureType == CreatureType.Monster)
                     AkSoundEngine.PostEvent("Play_" + "merchant" + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));
                 else
                     AkSoundEngine.PostEvent("Play_" + sName + "_hit", GameObject.FindGameObjectWithTag("MainCamera"));

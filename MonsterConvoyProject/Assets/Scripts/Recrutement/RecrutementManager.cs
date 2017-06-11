@@ -86,6 +86,12 @@ public class RecrutementManager : MonoBehaviour {
         if(isAtCapital)
             InitialiseSlots();
         FillSlots();
+
+        GameObject g = GameObject.FindGameObjectWithTag("CaravaneUI");
+        if (g != null)
+        {
+            g.GetComponent<CaravaneUI>().UpdateUI();
+        }
     }
 	
     

@@ -9,6 +9,7 @@ public class InvasionManager : MonoBehaviour
 {
 
     static int loop = 0;
+    static bool doOnceHotfix = false;
     int turn = 0;
     GameObject[] pawns;
     bool[] activeInvasions = new bool[25];
@@ -598,15 +599,18 @@ public class InvasionManager : MonoBehaviour
                 SceneManager.LoadSceneAsync(sceneType, LoadSceneMode.Additive);
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneType));
             }
-
-            newLoop();
+            loop++;
+            /*
+            if (!doOnceHotfix)
+            { loop++; doOnceHotfix = true; }
+            else { newLoop(); }*/
         }
         turn++;
     }
 
-    void newLoop()
+    public void newLoop()
     {
-        loop++;
+        //loop++;
         for (int i = 0; i < 35; ++i)
         {
             pawns[i].GetComponent<PlaceType>().invasionStatus = false;
@@ -620,7 +624,7 @@ public class InvasionManager : MonoBehaviour
         turn = -1;
 
         PawnManager.Instance().RegenerateMap();
-
+        
         pawns = GameObject.FindGameObjectsWithTag("MapNode");
 
         //Sort this array based on id.
