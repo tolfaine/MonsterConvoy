@@ -11,7 +11,7 @@ public class MouseOverAction : MouseOver
     private CombatManager combatManager;
 
     public  bool bIsActive = true;
-
+    bool remainHighlighted = false; //Hotfix
     public void  SetActive(bool active)
     {
         bIsActive = active;
@@ -31,11 +31,13 @@ public class MouseOverAction : MouseOver
     {
         base.Start();
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+        if (action == ActionType.ActionEnum.Attack)
+        { remainHighlighted = true; }
     }
 
     protected override void ProcessStates()
     {
-      //  base.ProcessStates();
+        //  base.ProcessStates();
 
         if (bMouseClicking && bMouseOver && bIsActive)
         {
@@ -45,9 +47,17 @@ public class MouseOverAction : MouseOver
 
             GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
 
-        }else if (bIsActive)
+        } else if (bIsActive && !remainHighlighted)
         {
             GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
+        }
+        else if (remainHighlighted && !combatManager.bTargetChoosed == false)
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
+        }
+        else if (bIsActive)
+        {
+           // GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
         }
 
     }
