@@ -39,8 +39,15 @@
 							</PositioningInfo>
 						</Bus>
 						<Bus Name="Music" ID="{36276505-11F0-49ED-B76E-5C5A54FEDA02}"/>
-						<Bus Name="Amb" ID="{576F8800-A4B1-4631-BF9E-53AE469B3376}"/>
-						<AuxBus Name="RVB" ID="{BBC63CFA-0E8A-4C42-9567-356D8184C1BD}"/>
+						<Bus Name="Amb" ID="{576F8800-A4B1-4631-BF9E-53AE469B3376}">
+							<PropertyList>
+								<Property Name="BusVolume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+						</Bus>
 					</ChildrenList>
 				</Bus>
 				<Bus Name="Master Secondary Bus" ID="{D2E0BC7E-7B3F-4FFE-A670-FAE02761B631}"/>

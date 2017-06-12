@@ -106,6 +106,9 @@
 							</TransitionList>
 							<Playlist>
 								<MusicPlaylistItem Name="" ID="{5E6A68F4-9929-47F6-B31E-E70B37443D02}" ShortID="157148939">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
 									<ChildrenList>
 										<MusicPlaylistItem Name="" ID="{87A0D961-1B9C-4BA0-9F20-8AC657596071}" ShortID="943908988">
 											<PropertyList>
@@ -840,7 +843,7 @@
 									<PropertyList>
 										<Property Name="DestinationContextType" Type="int16" Value="2"/>
 										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
-										<Property Name="ExitSourceAt" Type="int16" Value="2"/>
+										<Property Name="ExitSourceAt" Type="int16" Value="3"/>
 										<Property Name="SourceContextType" Type="int16" Value="2"/>
 										<Property Name="UseTransitionObject" Type="bool" Value="True"/>
 									</PropertyList>

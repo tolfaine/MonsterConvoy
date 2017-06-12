@@ -33,7 +33,10 @@ public class HumandexDataHandler : MonoBehaviour
         if(!newTip)
             JumpToPage(0);
     }
-
+    private void OnEnable()
+    {
+        Start();
+    }
     public void JumpToPage(int newPageNumber)
     {
         pageNumber = newPageNumber;

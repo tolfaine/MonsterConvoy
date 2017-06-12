@@ -26,10 +26,6 @@
 							<Position X="1" Y="0"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="DEPART" ID="{931BA9DF-B253-4A34-B0D3-9C75EF845AA9}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
-							<Position X="1" Y="1"/>
-						</Module>
-						<Module>
 							<ObjectRef Name="MONTAGNE" ID="{79AC4C40-C4AA-42B3-AC2B-22C3F37EFA61}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
 							<Position X="1" Y="2"/>
 						</Module>
@@ -148,10 +144,6 @@
 							<Position X="0" Y="6"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="CombatWin" ID="{68A8F0C0-A3B1-4D8E-AC52-F4E327A2776E}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
-							<Position X="0" Y="7"/>
-						</Module>
-						<Module>
 							<ObjectRef Name="Play_SpiderTalk" ID="{FF3125F1-2E11-46A1-9B27-6FFF49095603}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
 							<Position X="1" Y="0"/>
 						</Module>
@@ -172,7 +164,7 @@
 							<Position X="1" Y="4"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="DEPART" ID="{931BA9DF-B253-4A34-B0D3-9C75EF845AA9}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
+							<ObjectRef Name="DEPART" ID="{CB7DDECE-A898-456D-823E-A6923F61DAC7}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
 							<Position X="1" Y="5"/>
 						</Module>
 						<Module>
@@ -304,12 +296,16 @@
 							<Position X="6" Y="1"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="Play_MageTuto" ID="{F9C9D8B8-1DCE-4B31-8E1A-1E541FD46F20}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
+							<ObjectRef Name="Play_TutoMage" ID="{F9C9D8B8-1DCE-4B31-8E1A-1E541FD46F20}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
 							<Position X="6" Y="2"/>
 						</Module>
 						<Module>
 							<ObjectRef Name="Play_CannibalAttack" ID="{D216A660-69CF-4E6B-9FB7-6ECD3C0BA207}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
 							<Position X="6" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="CombatWin" ID="{68A8F0C0-A3B1-4D8E-AC52-F4E327A2776E}" WorkUnitID="{0843CC26-FA19-4AE6-B1DA-9D1BFB506A2D}"/>
+							<Position X="6" Y="4"/>
 						</Module>
 					</ModuleList>
 					<RTPCValueList ShowAll="true">

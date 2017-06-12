@@ -18,7 +18,7 @@
 					</ValueList>
 				</Property>
 				<Property Name="LicenseKey" Type="string" Value="PHByb2plY3QgaWQ9IjQwNjAiIG1hc2s9IkhEWkw5NTM5IiBlbmM9IjAiPjxsaWNlbnNlIGlkPSIxIiBuYW1lPSJXd2lzZSIgdHlwZT0iMyIgcGxhdGZvcm1zPSI0LDEwLDE0IiBleHBpcmVzPSIyMDE3LTA2LTMwIiAgLz48bGljZW5zZSBpZD0iMjEiIG5hbWU9Ik1haW50ZW5hbmNlIiB0eXBlPSIzIiBwbGF0Zm9ybXM9IjQsMTAsMTQiIGV4cGlyZXM9IjIwMTctMDYtMzAiICAvPjxsaWNlbnNlIGlkPSIyMiIgbmFtZT0iTGV2ZWwgQSBMaWNlbnNlIiB0eXBlPSIzIiBwbGF0Zm9ybXM9IjQsMTAsMTQiIGV4cGlyZXM9IjIwMTctMDYtMzAiICAvPjwvcHJvamVjdD4=|MRvIACo66ehMJBfAu+R9fKEg+HiPOOalamV7AVWcTZgQtGn1hDHW868doXerY6huqehDVRiGqOZCWRlt8+cNOXgCDfLcJIFlDPhpcfomZLOKaNJ3SHv1qqoJgcTy4J9mQf/DIL9Q+v+WhxERtza2GkTDMdfbfSO0dexvqinjksLpWgtsVfVWmAkhElWS4C8Jra0aB/rVIcChIaBz9asfqBVNYlS/tVPIkuqGUAzRwZfDMeVIbBfaoYBl/ZtQEoW+21soDAZRi0EUq5q2eYGgJpgzJhFr8r/q8Vejl+9CMlVOOrP1qaQ5zw4D2bxZu/rVM90pwCz0BcEy2mJ7e88uRQ==" />
-				<Property Name="SoundBankGenerateHeaderFile" Type="bool" Value="True" /><Property Name="SoundBankGenerateMaxAttenuationInfo" Type="bool" Value="True" /><Property Name="SoundBankHeaderFilePath" Type="string" Value="D:\Tolfaine\Documents\MonsterConvoy\MonsterConvoyProject\Assets\StreamingAssets\Audio\GeneratedSoundBanks" />
+				<Property Name="SoundBankGenerateHeaderFile" Type="bool" Value="True" /><Property Name="SoundBankGenerateMaxAttenuationInfo" Type="bool" Value="True" /><Property Name="SoundBankHeaderFilePath" Type="string" Value="C:\Users\user\Documents\MonsterConvoy\MonsterConvoyProject\Assets\StreamingAssets\Audio\GeneratedSoundBanks\" />
 				<Property Name="SoundBankPaths" Type="string">
 					<ValueList>
 						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>

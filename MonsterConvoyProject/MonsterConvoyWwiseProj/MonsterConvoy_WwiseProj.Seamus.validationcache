@@ -1,42 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ValidationCache Version="1" SchemaVersion="75">
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2418467973" DateHigh="30595630"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Actor-Mixer Hierarchy\Factory SoundSeed Air Objects.wwu" DateLow="1561565203" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Actor-Mixer Hierarchy\Factory Synth One.wwu" DateLow="1567283143" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Attenuations\Default Work Unit.wwu" DateLow="1567443562" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Audio Devices\Default Work Unit.wwu" DateLow="1567583935" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Control Surface Sessions\Default Work Unit.wwu" DateLow="1567829589" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Conversion Settings\Default Work Unit.wwu" DateLow="1567909802" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1567964948" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1568060204" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Default Work Unit.wwu" DateLow="1568145424" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory Auro Headphone.wwu" DateLow="1568511194" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory Effects.wwu" DateLow="1568726770" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory iZotope Box Modeler.wwu" DateLow="1569072694" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory iZotope Delay.wwu" DateLow="1569127836" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory iZotope Dynamics.wwu" DateLow="1569188000" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory iZotope Filters.wwu" DateLow="1569589066" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory iZotope Hybrid Reverb Effects.wwu" DateLow="1569784593" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory iZotope Multiband Distortion.wwu" DateLow="1570045275" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory iZotope Singleband Distortion.wwu" DateLow="1570732211" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Effects\Factory McDSP Effects.wwu" DateLow="1568942339" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Events\Default Work Unit.wwu" DateLow="2418513105" DateHigh="30595630"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Game Parameters\Default Work Unit.wwu" DateLow="1571584388" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Game Parameters\Factory SoundSeed Air Game Syncs.wwu" DateLow="1571644525" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="2418568523" DateHigh="30595630"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2418618390" DateHigh="30595630"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Mixing Sessions\Default Work Unit.wwu" DateLow="2418668521" DateHigh="30595630"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Modulators\Default Work Unit.wwu" DateLow="1572967206" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\MonsterConvoy_WwiseProj.wproj" DateLow="1573227982" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Presets\Default Work Unit.wwu" DateLow="2020233257" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Queries\Default Work Unit.wwu" DateLow="2020263331" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Queries\Factory Queries.wwu" DateLow="2020318469" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\SoundBanks\Default Work Unit.wwu" DateLow="2020353565" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Soundcaster Sessions\Default Work Unit.wwu" DateLow="2491060028" DateHigh="30595630"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\States\Default Work Unit.wwu" DateLow="2020438793" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Switches\Default Work Unit.wwu" DateLow="2020488932" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoy_WwiseProj\Triggers\Default Work Unit.wwu" DateLow="2020524028" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2418467973" DateHigh="30595630"/>
+	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2881157081" DateHigh="30597983"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Factory SoundSeed Air Objects.wwu" DateLow="1561565203" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Actor-Mixer Hierarchy\Factory Synth One.wwu" DateLow="1567283143" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Attenuations\Default Work Unit.wwu" DateLow="1567443562" DateHigh="30590006"/>
@@ -47,7 +11,7 @@
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1568060204" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Default Work Unit.wwu" DateLow="1568145424" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory Auro Headphone.wwu" DateLow="1568511194" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory Effects.wwu" DateLow="1568726770" DateHigh="30590006"/>
+	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory Effects.wwu" DateLow="3855437915" DateHigh="30597211"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory iZotope Box Modeler.wwu" DateLow="1569072694" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory iZotope Delay.wwu" DateLow="1569127836" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory iZotope Dynamics.wwu" DateLow="1569188000" DateHigh="30590006"/>
@@ -56,19 +20,19 @@
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory iZotope Multiband Distortion.wwu" DateLow="1570045275" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory iZotope Singleband Distortion.wwu" DateLow="1570732211" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Effects\Factory McDSP Effects.wwu" DateLow="1568942339" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Events\Default Work Unit.wwu" DateLow="2882102826" DateHigh="30595637"/>
+	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Events\Default Work Unit.wwu" DateLow="2882165267" DateHigh="30597983"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Game Parameters\Default Work Unit.wwu" DateLow="1571584388" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Game Parameters\Factory SoundSeed Air Game Syncs.wwu" DateLow="1571644525" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="2418568523" DateHigh="30595630"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2418618390" DateHigh="30595630"/>
+	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="3855658509" DateHigh="30597211"/>
+	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="3855723668" DateHigh="30597211"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Mixing Sessions\Default Work Unit.wwu" DateLow="2418668521" DateHigh="30595630"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Modulators\Default Work Unit.wwu" DateLow="1572967206" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\MonsterConvoy_WwiseProj.wproj" DateLow="1573227982" DateHigh="30590006"/>
+	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\MonsterConvoy_WwiseProj.wproj" DateLow="3856811279" DateHigh="30597211"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Presets\Default Work Unit.wwu" DateLow="2020233257" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Queries\Default Work Unit.wwu" DateLow="2020263331" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Queries\Factory Queries.wwu" DateLow="2020318469" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\SoundBanks\Default Work Unit.wwu" DateLow="2020353565" DateHigh="30590006"/>
-	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Soundcaster Sessions\Default Work Unit.wwu" DateLow="2882162982" DateHigh="30595637"/>
+	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Soundcaster Sessions\Default Work Unit.wwu" DateLow="2893545526" DateHigh="30597983"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\States\Default Work Unit.wwu" DateLow="2020438793" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Switches\Default Work Unit.wwu" DateLow="2020488932" DateHigh="30590006"/>
 	<ValidationCacheItem File="C:\Users\Seamus\Documents\GitHub\MonsterConvoy\MonsterConvoyProject\MonsterConvoyWwiseProj\Triggers\Default Work Unit.wwu" DateLow="2020524028" DateHigh="30590006"/>
