@@ -12,6 +12,9 @@ public class MouseOverAction : MouseOver
 
     public  bool bIsActive = true;
     bool remainHighlighted = false; //Hotfix
+    bool hasBeenClicked = false;
+
+
     public void  SetActive(bool active)
     {
         bIsActive = active;
@@ -19,11 +22,15 @@ public class MouseOverAction : MouseOver
         if (!bIsActive)
         {
             GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
-            
-        }else
+
+        }
+        else
         {
-            GetComponentInChildren<SpriteRenderer>().color = Color.white;
-            GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
+            if (!remainHighlighted || !hasBeenClicked)
+            {
+                GetComponentInChildren<SpriteRenderer>().color = Color.white;
+                GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
+            }
         }
     }
 
@@ -38,28 +45,28 @@ public class MouseOverAction : MouseOver
     protected override void ProcessStates()
     {
         //  base.ProcessStates();
+        GameObject g = GameObject.FindGameObjectWithTag("ProtoManager");
 
-        if (bMouseClicking && bMouseOver && bIsActive)
+        if (g == null)
+        {
+            hasBeenClicked = false;
+        }
+            if (bMouseClicking && bMouseOver && bIsActive)
         {
             bMouseClicking = false;
             bMouseOver = false;
             combatManager.PlayerClickedAction(ActionType.GetActionTypeWithID((int)action));
-
+            hasBeenClicked = true;
             GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
 
         } else if (bIsActive && !remainHighlighted)
         {
             GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
         }
-        else if (remainHighlighted && !combatManager.bTargetChoosed == false)
+        else if (remainHighlighted && combatManager.bTargetChoosed)
         {
             GetComponentInChildren<SpriteRenderer>().sprite = clickSprite;
         }
-        else if (bIsActive)
-        {
-           // GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
-        }
-
     }
 
     protected override void OnMouseOver()
